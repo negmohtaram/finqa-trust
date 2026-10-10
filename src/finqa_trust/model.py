@@ -6,6 +6,7 @@ import json
 import os
 import ssl
 import time
+import urllib.error
 import urllib.request
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -19,7 +20,8 @@ class ModelRequest:
     model: str
     messages: tuple[tuple[str, str], ...]     # ((role, content), ...)
     temperature: float = 0.0
-    max_tokens: int = 512
+    max_tokens: int = 2048
+    reasoning_effort: str | None = None       # "low" / "medium" / "high" for reasoning models
 
 
 @dataclass(frozen=True)
@@ -28,6 +30,9 @@ class ModelResponse:
     input_tokens: int = 0
     output_tokens: int = 0
     latency_s: float = 0.0
+
+
+DEFAULT_MODEL = "openai/gpt-oss-120b"
 
 
 class ModelClient(Protocol):
@@ -100,6 +105,8 @@ class GroqClient:
             "temperature": request.temperature,
             "max_tokens": request.max_tokens,
         }
+        if request.reasoning_effort:
+            body["reasoning_effort"] = request.reasoning_effort
         http = urllib.request.Request(
             GROQ_URL,
             data=json.dumps(body).encode(),
@@ -107,8 +114,12 @@ class GroqClient:
                      "User-Agent": "finqa-trust/0.1"},
         )
         start = time.perf_counter()
-        with urllib.request.urlopen(http, timeout=self.timeout_s, context=_TLS) as resp:
-            data = json.loads(resp.read())
+        try:
+            with urllib.request.urlopen(http, timeout=self.timeout_s, context=_TLS) as resp:
+                data = json.loads(resp.read())
+        except urllib.error.HTTPError as err:
+            detail = err.read().decode(errors="replace")[:300]
+            raise RuntimeError(f"Groq returned {err.code} for model {request.model!r}: {detail}") from None
         usage = data.get("usage", {})
         return ModelResponse(
             text=data["choices"][0]["message"]["content"] or "",

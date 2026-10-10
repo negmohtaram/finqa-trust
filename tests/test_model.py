@@ -9,10 +9,11 @@ from finqa_trust.model import (ModelRequest, ModelResponse, RecordingClient, Rep
 
 @pytest.fixture(autouse=True)
 def no_network(monkeypatch):
-    """Any attempt to open a network connection fails the test."""
+    """Any attempt to look up a host or open a connection fails the test, online or offline."""
     def guard(*args, **kwargs):
         raise RuntimeError("tests must not use the network")
     monkeypatch.setattr(socket.socket, "connect", guard)
+    monkeypatch.setattr(socket, "getaddrinfo", guard)
 
 
 @dataclass
@@ -70,7 +71,9 @@ def test_missing_recording_fails_loudly(tmp_path):
 
 def test_network_is_really_blocked():
     with pytest.raises(RuntimeError, match="network"):
-        socket.create_connection(("example.com", 80), timeout=1)
+        socket.create_connection(("example.com", 80), timeout=1)      # host lookup
+    with pytest.raises(RuntimeError, match="network"):
+        socket.create_connection(("192.0.2.1", 80), timeout=1)        # raw IP: connect
 
 
 def test_groq_client_sends_the_right_request(monkeypatch):
@@ -92,6 +95,7 @@ def test_groq_client_sends_the_right_request(monkeypatch):
     assert sent["body"]["temperature"] == 0.3 and sent["body"]["model"] == "m1"
     assert sent["body"]["messages"] == [{"role": "user", "content": "What was revenue growth?"}]
     assert sent["auth"] == "Bearer test-key"
+    assert "reasoning_effort" not in sent["body"]           # only sent when asked for
     assert (response.text, response.input_tokens, response.output_tokens) == ("12.5", 40, 2)
 
 
@@ -99,6 +103,7 @@ def test_recorded_fixture_answers_replay_and_score_offline():
     from pathlib import Path
     from finqa_trust.checker import is_correct
     from finqa_trust.data import load
+    from finqa_trust.model import DEFAULT_MODEL
     from finqa_trust.prompts import direct_messages
     fixtures = Path(__file__).parent / "fixtures"
     if not (fixtures / "model").exists():
@@ -106,6 +111,6 @@ def test_recorded_fixture_answers_replay_and_score_offline():
     client = ReplayClient(fixtures / "model")
     records = (load("finqa", "dev", fixtures) + load("tatqa", "dev", fixtures))[:5]
     for r in records:
-        response = client.complete(ModelRequest(model="llama-3.3-70b-versatile",
-                                                messages=direct_messages(r)))
+        response = client.complete(ModelRequest(model=DEFAULT_MODEL, messages=direct_messages(r),
+                                                reasoning_effort="low"))
         assert isinstance(is_correct(response.text, r), bool)
