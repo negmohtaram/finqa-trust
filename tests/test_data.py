@@ -51,3 +51,24 @@ def test_full_dev_and_test_sets_load():
         records = load_all(split)
         assert len(records) > 2500
         assert len({r.id for r in records}) == len(records)    # ids are unique
+
+
+def test_finqa_items_with_conflicting_answers_are_flagged():
+    from finqa_trust.data import _finqa_record
+    item = {"id": "X/1", "pre_text": [], "post_text": [], "table": [["a", "1"]],
+            "qa": {"question": "q", "answer": "25%", "exe_ans": 0.19495, "program": "divide(1, 2)"}}
+    assert _finqa_record(item, "dev").ambiguous_gold is True
+    item["qa"]["answer"] = "19.5%"
+    assert _finqa_record(item, "dev").ambiguous_gold is False
+    item["qa"]["answer"] = "19%"                     # coarse rounding is not a disagreement
+    assert _finqa_record(item, "dev").ambiguous_gold is False
+
+
+def test_report_gives_all_and_clean_accuracy():
+    from finqa_trust.checker import report
+    base = dict(source="finqa", split="dev", question="q", text=[], table=[], answer_type="arithmetic")
+    records = [Record(id="a", gold_answer=1.0, **base),
+               Record(id="b", gold_answer=2.0, ambiguous_gold=True, **base)]
+    result = report({"a": 1.0, "b": 9.0}, records)
+    assert result["all"][0.005] == 0.5 and result["clean"][0.005] == 1.0
+    assert (result["n_all"], result["n_clean"]) == (2, 1)

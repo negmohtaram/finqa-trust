@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 
+from .checker import agrees_up_to_rounding
 from .schema import Record
 
 RAW = Path(__file__).resolve().parents[2] / "data" / "raw"
@@ -22,7 +23,7 @@ def _finqa_record(item: dict, split: str) -> Record:
         gold, answer_type = float(exe), "arithmetic"
     # FinQA marks percentages only in the text answer ("12.5%"); exe_ans is the fraction (0.125)
     scale = "percent" if str(qa.get("answer", "")).strip().endswith("%") else ""
-    return Record(
+    record = Record(
         id=f"finqa/{item['id']}",
         source="finqa",
         split=split,
@@ -34,6 +35,11 @@ def _finqa_record(item: dict, split: str) -> Record:
         scale=scale,
         program=qa.get("program"),
     )
+    # FinQA gives each answer twice: computed (exe_ans, our gold) and as text. When they
+    # disagree beyond rounding, nobody knows which is right, so the item is flagged.
+    if answer_type == "arithmetic" and not agrees_up_to_rounding(qa.get("answer", ""), record):
+        record = record.model_copy(update={"ambiguous_gold": True})
+    return record
 
 
 def _tatqa_records(doc: dict, split: str) -> list[Record]:
