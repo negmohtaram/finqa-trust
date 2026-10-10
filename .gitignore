@@ -1,0 +1,14 @@
+# Data is downloaded, never committed
+data/
+results/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# Local
+.env
+.DS_Store
