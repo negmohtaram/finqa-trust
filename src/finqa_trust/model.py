@@ -3,9 +3,15 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import ssl
+import time
+import urllib.request
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Protocol
+
+import certifi
 
 
 @dataclass(frozen=True)
@@ -72,3 +78,41 @@ class RecordingClient:
         (self.folder / f"{key}.json").write_text(json.dumps(record, indent=2))
         self.recorded.append(key)
         return response
+
+
+GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+# Use certifi's certificate list: some Python installs (e.g. Homebrew) ship without one.
+_TLS = ssl.create_default_context(cafile=certifi.where())
+
+
+@dataclass
+class GroqClient:
+    """Calls Groq's OpenAI-compatible chat API. The key comes from GROQ_API_KEY."""
+    api_key: str = field(default_factory=lambda: os.environ.get("GROQ_API_KEY", ""), repr=False)
+    timeout_s: float = 60.0
+
+    def complete(self, request: ModelRequest) -> ModelResponse:
+        if not self.api_key:
+            raise RuntimeError("GROQ_API_KEY is not set")
+        body = {
+            "model": request.model,
+            "messages": [{"role": role, "content": content} for role, content in request.messages],
+            "temperature": request.temperature,
+            "max_tokens": request.max_tokens,
+        }
+        http = urllib.request.Request(
+            GROQ_URL,
+            data=json.dumps(body).encode(),
+            headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json",
+                     "User-Agent": "finqa-trust/0.1"},
+        )
+        start = time.perf_counter()
+        with urllib.request.urlopen(http, timeout=self.timeout_s, context=_TLS) as resp:
+            data = json.loads(resp.read())
+        usage = data.get("usage", {})
+        return ModelResponse(
+            text=data["choices"][0]["message"]["content"] or "",
+            input_tokens=usage.get("prompt_tokens", 0),
+            output_tokens=usage.get("completion_tokens", 0),
+            latency_s=round(time.perf_counter() - start, 3),
+        )

@@ -71,3 +71,41 @@ def test_missing_recording_fails_loudly(tmp_path):
 def test_network_is_really_blocked():
     with pytest.raises(RuntimeError, match="network"):
         socket.create_connection(("example.com", 80), timeout=1)
+
+
+def test_groq_client_sends_the_right_request(monkeypatch):
+    import io
+    import json as _json
+    import urllib.request
+    from finqa_trust.model import GroqClient
+    sent = {}
+
+    def fake_urlopen(http, timeout, context=None):
+        sent["body"] = _json.loads(http.data)
+        sent["auth"] = http.headers["Authorization"]
+        payload = {"choices": [{"message": {"content": "12.5"}}],
+                   "usage": {"prompt_tokens": 40, "completion_tokens": 2}}
+        return io.BytesIO(_json.dumps(payload).encode())
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    response = GroqClient(api_key="test-key").complete(req(temperature=0.3))
+    assert sent["body"]["temperature"] == 0.3 and sent["body"]["model"] == "m1"
+    assert sent["body"]["messages"] == [{"role": "user", "content": "What was revenue growth?"}]
+    assert sent["auth"] == "Bearer test-key"
+    assert (response.text, response.input_tokens, response.output_tokens) == ("12.5", 40, 2)
+
+
+def test_recorded_fixture_answers_replay_and_score_offline():
+    from pathlib import Path
+    from finqa_trust.checker import is_correct
+    from finqa_trust.data import load
+    from finqa_trust.prompts import direct_messages
+    fixtures = Path(__file__).parent / "fixtures"
+    if not (fixtures / "model").exists():
+        pytest.skip("no recordings yet: run scripts/record_fixtures.py once")
+    client = ReplayClient(fixtures / "model")
+    records = (load("finqa", "dev", fixtures) + load("tatqa", "dev", fixtures))[:5]
+    for r in records:
+        response = client.complete(ModelRequest(model="llama-3.3-70b-versatile",
+                                                messages=direct_messages(r)))
+        assert isinstance(is_correct(response.text, r), bool)
