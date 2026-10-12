@@ -27,3 +27,15 @@ def test_eval_formula(formula, expected):
 @pytest.mark.parametrize("formula", ["__import__('os')", "2 ** 10", "x + 1", "1 / 0", "", "sum([1, 2])"])
 def test_eval_formula_refuses_anything_else(formula):
     assert eval_formula(formula) is None
+
+
+def test_values_written_as_in_the_report():
+    reply = ('{"values": [{"name": "a", "value": "4,206"}, {"name": "b", "value": "$668"}, '
+             '{"name": "c", "value": "61%"}, {"name": "d", "value": "(1.9)"}], "formula": "", "answer": 1}')
+    assert [v.value for v in parse_structured(reply).values] == [4206, 668, 61, -1.9]
+
+
+def test_abs_is_allowed_but_no_other_function():
+    assert eval_formula("abs(27.4 - 33.5)") == pytest.approx(6.1)
+    assert eval_formula("abs(1, 2)") is None
+    assert eval_formula("max(1, 2)") is None
