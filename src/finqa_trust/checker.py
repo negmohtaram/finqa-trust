@@ -46,6 +46,7 @@ def parse_number(raw: object) -> ParsedNumber | None:
     else:
         return None
     text = text.replace("\\n", " ").strip().lower().rstrip(".").strip()   # literal "\n" left in some data
+    text = re.sub(r"^[$€£¥]\s*", "", text)                     # "$(9,982)": currency outside the brackets
     negative = False
     if text.startswith("(") and text.endswith(")"):          # accounting notation
         negative, text = True, text[1:-1].strip()

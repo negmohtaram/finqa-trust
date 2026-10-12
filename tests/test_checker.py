@@ -78,3 +78,7 @@ def test_every_fixture_gold_matches_itself():
     fixtures = Path(__file__).parent / "fixtures"
     for r in load("finqa", "dev", fixtures) + load("tatqa", "dev", fixtures):
         assert is_correct(r.gold_answer, r), r.id
+
+
+def test_currency_outside_accounting_brackets():
+    assert parse_number("$(9,982)").value == -9982

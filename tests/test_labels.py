@@ -82,3 +82,21 @@ def test_step_table_mean_and_spread():
     assert by_label["correct"]["mean"] == pytest.approx(0.75)
     assert by_label["correct"]["min"] == 0.5 and by_label["correct"]["max"] == 1.0
     assert by_label["formula"]["sd"] == pytest.approx(0.5 ** 0.5 * 0.5)
+
+
+def test_opposite_sign_is_its_own_label():
+    r = record(program="subtract(47.0, 70.1), divide(#0, 70.1)", gold=-0.32953)
+    assert label(reply([70.1, 47.0], "(70.1 - 47.0) / 70.1 * 100", "32.95"), r)["label"] == "sign"
+
+
+def test_not_lucky_when_gold_uses_a_number_the_model_derived():
+    # gold divides a precomputed difference (-380); the model computes it from 891 and 1271
+    r = record(program="divide(-380, 1271)", gold=-0.29898)
+    out = label(reply([1271, 891], "(891 - 1271) / 1271 * 100", "-29.9"), r)
+    assert out["label"] == "correct" and not out["lucky"]
+
+
+def test_hundred_as_a_gold_number_is_not_swapped():
+    r = record(program="subtract(104.11, 100.00), divide(#0, 100.00)", gold=0.0411)
+    out = label(reply([100.0, 104.11], "(104.11 - 100.00) / 100.00 * 100", "4.11"), r)
+    assert out["label"] == "correct" and out["equivalent"] is True and not out["lucky"]

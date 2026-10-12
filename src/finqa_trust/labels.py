@@ -1,7 +1,9 @@
 """Label each answer by the first step that broke: extraction, formula, arithmetic or format.
 
     unreadable  the reply is not the JSON we asked for
-    correct     the answer matches gold (flagged lucky if its formula is not equivalent to gold)
+    correct     the answer matches gold (flagged lucky if it used every gold number but its
+                formula is not equivalent to gold)
+    sign        the answer is the gold with the opposite sign ("32.95" for a decline of -32.95%)
     extraction  a number the gold calculation needs is missing from the model's values
     formula     the values are right but the formula is not equivalent to the gold one
     arithmetic  the formula is right but the written answer is not what it computes to
@@ -22,12 +24,13 @@ from .checker import _clean, is_correct, numbers_match, parse_number
 from .schema import Record
 from .structured import StructuredAnswer, eval_formula, parse_structured
 
-LABELS = ("correct", "extraction", "formula", "arithmetic", "format", "unreadable", "unchecked")
+LABELS = ("correct", "sign", "extraction", "formula", "arithmetic", "format", "unreadable", "unchecked")
 VALUE_TOL = 0.001          # a copied number must match the report within 0.1%
 ANSWER_TOL = 0.005         # same tolerance the checker uses for answers
 SAME_TOL = 1e-6            # two formulas agree on swapped inputs
 SCALE_FORMS = (1.0, 100.0, 0.01)   # 12.5 and 0.125 are the same percentage
 SWAPS = 5
+FIXED = (100.0, 1000.0)    # read as constants, not swapped, even when the gold lists them as numbers
 
 _FINQA_OPS = {"add": "+", "subtract": "-", "multiply": "*", "divide": "/"}
 _STEP = re.compile(r"([a-z_]+)\(([^()]*)\)")
@@ -101,6 +104,7 @@ def formulas_equivalent(model_formula: str, gold_expr: str, operands: list[float
                         seed: int = 0) -> bool | None:
     """True if both formulas give the same result (up to a ×100 percent factor) on the original
     operands and on SWAPS random replacements of them. None if either cannot be computed."""
+    operands = [g for g in operands if g not in FIXED]
     rng = random.Random(seed)
     trials = [{g: g for g in operands}]
     trials += [{g: g * rng.uniform(0.5, 1.5) for g in operands} for _ in range(SWAPS)]
@@ -142,9 +146,15 @@ def label(reply: str, record: Record, seed: int = 0) -> dict:
     found = has_operands([v.value for v in parsed.values], operands)
     equivalent = (formulas_equivalent(parsed.formula, gold_expr, operands, seed)
                   if gold_expr and parsed.formula else None)
-    facts = {"correct": correct, "equivalent": equivalent, "lucky": correct and equivalent is False}
+    # Lucky needs every gold number in the values: when the gold uses a number the model
+    # derived itself (a difference or total), the swap test cannot compare the two formulas.
+    facts = {"correct": correct, "equivalent": equivalent,
+             "lucky": correct and found and equivalent is False}
     if correct:
         return {"label": "correct", **facts}
+    number = parse_number(parsed.answer)
+    if number is not None and is_correct(-number.value * number.multiplier, record):
+        return {"label": "sign", **facts}
     if gold_expr is None:
         return {"label": "unchecked", **facts}
     if not found:
