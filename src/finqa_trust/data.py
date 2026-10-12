@@ -65,7 +65,7 @@ def _tatqa_records(doc: dict, split: str) -> list[Record]:
             gold_answer=gold,
             answer_type=answer_type,
             scale=q.get("scale", ""),
-            program=None,
+            program=q.get("derivation") or None,
         ))
     return records
 

@@ -22,6 +22,8 @@ class ModelRequest:
     temperature: float = 0.0
     max_tokens: int = 2048
     reasoning_effort: str | None = None       # "low" / "medium" / "high" for reasoning models
+    json_mode: bool = False                   # ask the API for a JSON object reply
+    run: int = 0                              # repeat number when the same question is asked again on purpose; never sent
 
 
 @dataclass(frozen=True)
@@ -47,6 +49,10 @@ def request_key(request: ModelRequest) -> str:
     """A stable id for a request: the same request always gives the same key, and any
     change that could change the answer (model, messages, temperature, limits) gives a new one."""
     fields = asdict(request)
+    # Fields added later are left out at their default, so older recordings keep their keys.
+    for name in ("json_mode", "run"):
+        if not fields[name]:
+            del fields[name]
     text = json.dumps(fields, sort_keys=True)
     digest = hashlib.sha256(text.encode()).hexdigest()
     return digest[:16]
@@ -107,6 +113,8 @@ class GroqClient:
         }
         if request.reasoning_effort:
             body["reasoning_effort"] = request.reasoning_effort
+        if request.json_mode:
+            body["response_format"] = {"type": "json_object"}
         http = urllib.request.Request(
             GROQ_URL,
             data=json.dumps(body).encode(),

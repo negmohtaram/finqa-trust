@@ -114,3 +114,20 @@ def test_recorded_fixture_answers_replay_and_score_offline():
         response = client.complete(ModelRequest(model=DEFAULT_MODEL, messages=direct_messages(r),
                                                 reasoning_effort="low"))
         assert isinstance(is_correct(response.text, r), bool)
+
+
+def test_repeat_runs_get_their_own_recordings(tmp_path):
+    live = FakeLive()
+    recorder = RecordingClient(live, tmp_path)
+    for run in range(5):
+        recorder.complete(ModelRequest(model="m1", messages=(("user", "q"),), run=run))
+    assert len(set(recorder.recorded)) == 5
+    assert len(list(tmp_path.glob("*.json"))) == 5
+
+
+def test_new_fields_at_default_keep_old_keys():
+    """Recordings made before run and json_mode existed must still replay."""
+    assert request_key(req()) == request_key(ModelRequest(
+        model="m1", messages=(("user", "What was revenue growth?"),), run=0, json_mode=False))
+    assert request_key(req()) != request_key(ModelRequest(
+        model="m1", messages=(("user", "What was revenue growth?"),), run=1))
