@@ -135,3 +135,19 @@ class GroqClient:
             output_tokens=usage.get("completion_tokens", 0),
             latency_s=round(time.perf_counter() - start, 3),
         )
+
+
+@dataclass
+class ResumingClient:
+    """Replays a request if it was already recorded, otherwise calls the real client and
+    records it. An interrupted run restarts without paying again for finished calls."""
+    inner: ModelClient
+    folder: Path
+    live_calls: int = 0
+
+    def complete(self, request: ModelRequest) -> ModelResponse:
+        try:
+            return ReplayClient(self.folder).complete(request)
+        except ReplayMiss:
+            self.live_calls += 1
+            return RecordingClient(self.inner, self.folder).complete(request)

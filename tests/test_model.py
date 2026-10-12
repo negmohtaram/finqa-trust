@@ -131,3 +131,14 @@ def test_new_fields_at_default_keep_old_keys():
         model="m1", messages=(("user", "What was revenue growth?"),), run=0, json_mode=False))
     assert request_key(req()) != request_key(ModelRequest(
         model="m1", messages=(("user", "What was revenue growth?"),), run=1))
+
+
+def test_resuming_client_only_pays_for_new_calls(tmp_path):
+    from finqa_trust.model import ResumingClient
+    live = FakeLive()
+    first = ResumingClient(live, tmp_path)
+    first.complete(req("q1"))
+    again = ResumingClient(live, tmp_path)
+    again.complete(req("q1"))
+    again.complete(req("q2"))
+    assert (first.live_calls, again.live_calls, live.calls) == (1, 1, 2)
