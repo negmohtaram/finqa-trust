@@ -1,5 +1,7 @@
 # finqa-trust
 
+[![CI](https://github.com/negmohtaram/finqa-trust/actions/workflows/ci.yml/badge.svg)](https://github.com/negmohtaram/finqa-trust/actions/workflows/ci.yml)
+
 Which steps of financial question answering can a language model be trusted with: finding the right numbers in a report, calculating with them, or neither? And what does each common fix (temperature 0, majority voting, letting the model write code) buy in accuracy and cost?
 
 ## Data
