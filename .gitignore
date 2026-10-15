@@ -1,6 +1,9 @@
 # Data is downloaded, never committed
 data/
-results/
+results/*
+
+# Recorded model calls are kept so the baseline replays without an API key
+!results/recordings/
 
 # Python
 .venv/

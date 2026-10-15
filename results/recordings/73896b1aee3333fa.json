@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nstock performance graph this performance graph shall not be deemed 201cfiled 201d for purposes of section 18 of the securities exchange act of 1934 , as amended ( the 201cexchange act 201d ) or otherwise subject to the liabilities under that section and shall not be deemed to be incorporated by reference into any filing of tractor supply company under the securities act of 1933 , as amended , or the exchange act .\nthe following graph compares the cumulative total stockholder return on our common stock from december 28 , 2013 to december 29 , 2018 ( the company 2019s fiscal year-end ) , with the cumulative total returns of the s&p 500 index and the s&p retail index over the same period .\nthe comparison assumes that $ 100 was invested on december 28 , 2013 , in our common stock and in each of the foregoing indices and in each case assumes reinvestment of dividends .\nthe historical stock price performance shown on this graph is not indicative of future performance. .\n.\n\nTable:\n | 12/28/2013 | 12/27/2014 | 12/26/2015 | 12/31/2016 | 12/30/2017 | 12/29/2018\ntractor supply company | $ 100.00 | $ 104.11 | $ 115.45 | $ 103.33 | $ 103.67 | $ 117.18\ns&p 500 | $ 100.00 | $ 115.76 | $ 116.64 | $ 129.55 | $ 157.84 | $ 149.63\ns&p retail index | $ 100.00 | $ 111.18 | $ 140.22 | $ 148.53 | $ 193.68 | $ 217.01\n\nQuestion: what was the percentage growth of the stock price performance from 2013 to 2014 for the tractor supply company"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2013 value\",\"value\":100.00},{\"name\":\"2014 value\",\"value\":104.11}],\"formula\":\"(104.11 - 100.00) / 100.00 * 100\",\"answer\":4.11}",
+    "input_tokens": 661,
+    "output_tokens": 107,
+    "latency_s": 1.446
+  }
+}

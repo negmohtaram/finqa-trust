@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nrepublic services , inc .\nnotes to consolidated financial statements 2014 ( continued ) the following table summarizes the activity in our gross unrecognized tax benefits for the years ended december 31: .\nduring 2015 , we settled tax matters in various states and puerto rico which reduced our gross unrecognized tax benefits by $ 13.9 million .\nduring 2014 , we settled tax matters in various jurisdictions and reduced our gross unrecognized tax benefits by $ 1.5 million .\nduring 2013 , we settled with the irs appeals division and the joint committee on taxation our 2009 and 2010 tax years .\nthe resolution of these tax periods in addition to various state tax resolutions during the year reduced our gross unrecognized tax benefits by $ 20.7 million .\nincluded in our gross unrecognized tax benefits as of december 31 , 2015 and 2014 are $ 30.5 million and $ 45.6 million of unrecognized tax benefits ( net of the federal benefit on state matters ) that , if recognized , would affect our effective income tax rate in future periods .\nwe recognize interest and penalties as incurred within the provision for income taxes in our consolidated statements of income .\nrelated to the unrecognized tax benefits previously noted , we recorded interest expense of approximately $ 1.2 million during 2015 and , in total as of december 31 , 2015 , have recognized a liability for penalties of $ 0.5 million and interest of $ 10.3 million .\nduring 2014 , we accrued interest of approximately $ 1.5 million and , in total as of december 31 , 2014 , had recognized a liability for penalties of $ 0.5 million and interest of $ 18.7 million .\nduring 2013 , we accrued interest of approximately $ 1.2 million and , in total as of december 31 , 2013 , had recognized a liability for penalties of $ 0.5 million and interest of $ 17.0 million .\ngross unrecognized benefits that we expect to settle in the following twelve months are in the range of $ 0 to $ 10 million ; however , it is reasonably possible that the amount of unrecognized tax benefits may either increase or decrease in the next twelve months .\nwe are currently under examination or administrative review by state and local taxing authorities for various tax years .\nthese state audits are ongoing .\nwe believe the recorded liabilities for uncertain tax positions are adequate .\nhowever , a significant assessment against us in excess of the liabilities recorded could have a material adverse effect on our consolidated financial position , results of operations or cash flows. .\n\nTable:\n | 2015 | 2014 | 2013\nbalance at beginning of year | $ 70.1 | $ 72.0 | $ 84.7\nadditions based on tax positions related to current year | 0.2 | 0.8 | 0.3\nadditions for tax positions of prior years | 1.4 | 5.0 | 11.4\nreductions for tax positions of prior years | -10.2 ( 10.2 ) | -6.0 ( 6.0 ) | -2.4 ( 2.4 )\nreductions for tax positions resulting from lapse of statute of limitations | -0.6 ( 0.6 ) | -0.2 ( 0.2 ) | -1.3 ( 1.3 )\nsettlements | -13.9 ( 13.9 ) | -1.5 ( 1.5 ) | -20.7 ( 20.7 )\nbalance at end of year | $ 47.0 | $ 70.1 | $ 72.0\n\nQuestion: as of december 31 , 2015 what was the percentage decline in the gross unrecognized tax benefits from 2014 to 2015"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"balance_2014\",\"value\":70.1},{\"name\":\"balance_2015\",\"value\":47.0}],\"formula\":\"(70.1 - 47.0) / 70.1 * 100\",\"answer\":32.95}",
+    "input_tokens": 1051,
+    "output_tokens": 151,
+    "latency_s": 1.191
+  }
+}

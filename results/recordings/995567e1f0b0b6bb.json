@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\ndish network corporation notes to consolidated financial statements - continued 9 .\nacquisitions dbsd north america and terrestar transactions on march 2 , 2012 , the fcc approved the transfer of 40 mhz of aws-4 wireless spectrum licenses held by dbsd north america and terrestar to us .\non march 9 , 2012 , we completed the dbsd transaction and the terrestar transaction , pursuant to which we acquired , among other things , certain satellite assets and wireless spectrum licenses held by dbsd north america and terrestar .\nin addition , during the fourth quarter 2011 , we and sprint entered into a mutual release and settlement agreement ( the 201csprint settlement agreement 201d ) pursuant to which all issues then being disputed relating to the dbsd transaction and the terrestar transaction were resolved between us and sprint , including , but not limited to , issues relating to costs allegedly incurred by sprint to relocate users from the spectrum then licensed to dbsd north america and terrestar .\nthe total consideration to acquire the dbsd north america and terrestar assets was approximately $ 2.860 billion .\nthis amount includes $ 1.364 billion for the dbsd transaction , $ 1.382 billion for the terrestar transaction , and the net payment of $ 114 million to sprint pursuant to the sprint settlement agreement .\nsee note 16 for further information .\nas a result of these acquisitions , we recognized the acquired assets and assumed liabilities based on our estimates of fair value at their acquisition date , including $ 102 million in an uncertain tax position in 201clong-term deferred revenue , distribution and carriage payments and other long-term liabilities 201d on our consolidated balance sheets .\nsubsequently , in the third quarter 2013 , this uncertain tax position was resolved and $ 102 million was reversed and recorded as a decrease in 201cincome tax ( provision ) benefit , net 201d on our consolidated statements of operations and comprehensive income ( loss ) for the year ended december 31 , 2013 .\n10 .\ndiscontinued operations as of december 31 , 2013 , blockbuster had ceased all material operations .\naccordingly , our consolidated balance sheets , consolidated statements of operations and comprehensive income ( loss ) and consolidated statements of cash flows have been recast to present blockbuster as discontinued operations for all periods presented and the amounts presented in the notes to our consolidated financial statements relate only to our continuing operations , unless otherwise noted .\nduring the years ended december 31 , 2013 , 2012 and 2011 , the revenue from our discontinued operations was $ 503 million , $ 1.085 billion and $ 974 million , respectively .\n201cincome ( loss ) from discontinued operations , before income taxes 201d for the same periods was a loss of $ 54 million , $ 62 million and $ 3 million , respectively .\nin addition , 201cincome ( loss ) from discontinued operations , net of tax 201d for the same periods was a loss of $ 47 million , $ 37 million and $ 7 million , respectively .\nas of december 31 , 2013 , the net assets from our discontinued operations consisted of the following : december 31 , 2013 ( in thousands ) .\n.\n\nTable:\n | as of december 31 2013 ( in thousands )\ncurrent assets from discontinued operations | $ 68239\nnoncurrent assets from discontinued operations | 9965\ncurrent liabilities from discontinued operations | -49471 ( 49471 )\nlong-term liabilities from discontinued operations | -19804 ( 19804 )\nnet assets from discontinued operations | $ 8929\n\nQuestion: what was the average revenue from discontinued operations in 2013 and 2011 , in millions?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2013 revenue\",\"value\":503},{\"name\":\"2011 revenue\",\"value\":974}],\"formula\":\"(503+974)/2\",\"answer\":738.5}",
+    "input_tokens": 1010,
+    "output_tokens": 125,
+    "latency_s": 1.217
+  }
+}

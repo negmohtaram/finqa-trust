@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nentergy corporation and subsidiaries notes to financial statements ( a ) consists of pollution control revenue bonds and environmental revenue bonds , some of which are secured by collateral first mortgage bonds .\n( b ) these notes do not have a stated interest rate , but have an implicit interest rate of 4.8% ( 4.8 % ) .\n( c ) pursuant to the nuclear waste policy act of 1982 , entergy 2019s nuclear owner/licensee subsidiaries have contracts with the doe for spent nuclear fuel disposal service .\nthe contracts include a one-time fee for generation prior to april 7 , 1983 .\nentergy arkansas is the only entergy company that generated electric power with nuclear fuel prior to that date and includes the one-time fee , plus accrued interest , in long-term debt .\n( d ) see note 10 to the financial statements for further discussion of the waterford 3 and grand gulf lease obligations .\n( e ) the fair value excludes lease obligations of $ 109 million at entergy louisiana and $ 34 million at system energy , long-term doe obligations of $ 181 million at entergy arkansas , and the note payable to nypa of $ 35 million at entergy , and includes debt due within one year .\nfair values are classified as level 2 in the fair value hierarchy discussed in note 16 to the financial statements and are based on prices derived from inputs such as benchmark yields and reported trades .\nthe annual long-term debt maturities ( excluding lease obligations and long-term doe obligations ) for debt outstanding as of december 31 , 2015 , for the next five years are as follows : amount ( in thousands ) .\nin november 2000 , entergy 2019s non-utility nuclear business purchased the fitzpatrick and indian point 3 power plants in a seller-financed transaction .\nentergy issued notes to nypa with seven annual installments of approximately $ 108 million commencing one year from the date of the closing , and eight annual installments of $ 20 million commencing eight years from the date of the closing .\nthese notes do not have a stated interest rate , but have an implicit interest rate of 4.8% ( 4.8 % ) .\nin accordance with the purchase agreement with nypa , the purchase of indian point 2 in 2001 resulted in entergy becoming liable to nypa for an additional $ 10 million per year for 10 years , beginning in september 2003 .\nthis liability was recorded upon the purchase of indian point 2 in september 2001 .\nas part of the purchase agreement with nypa , entergy recorded a liability representing the net present value of the payments entergy would be liable to nypa for each year that the fitzpatrick and indian point 3 power plants would run beyond their respective original nrc license expiration date .\nwith the planned shutdown of fitzpatrick at the end of its current fuel cycle , entergy reduced this liability by $ 26.4 million in 2015 pursuant to the terms of the purchase agreement .\nunder a provision in a letter of credit supporting these notes , if certain of the utility operating companies or system energy were to default on other indebtedness , entergy could be required to post collateral to support the letter of credit .\nentergy louisiana , entergy mississippi , entergy texas , and system energy have obtained long-term financing authorizations from the ferc that extend through october 2017 .\nentergy arkansas has obtained long-term financing authorization from the apsc that extends through december 2018 .\nentergy new orleans has obtained long-term financing authorization from the city council that extends through july 2016 .\ncapital funds agreement pursuant to an agreement with certain creditors , entergy corporation has agreed to supply system energy with sufficient capital to: .\n\nTable:\n | amount ( in thousands )\n2016 | $ 204079\n2017 | $ 766451\n2018 | $ 822690\n2019 | $ 768588\n2020 | $ 1631181\n\nQuestion: what was the sum of the annual long-term debt maturities due in five years"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2016\",\"value\":\"204079\"},{\"name\":\"2017\",\"value\":\"766451\"},{\"name\":\"2018\",\"value\":\"822690\"},{\"name\":\"2019\",\"value\":\"768588\"},{\"name\":\"2020\",\"value\":\"1631181\"}],\"formula\":\"204079+766451+822690+768588+1631181\",\"answer\":4192989}",
+    "input_tokens": 1092,
+    "output_tokens": 242,
+    "latency_s": 1.425
+  }
+}

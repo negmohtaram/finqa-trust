@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\n5. Property and Equipment, Net\nProperty and equipment at March 31, 2019 and 2018 is as follows:\nTotal depreciation expense on property and equipment was $2.5 million, $2.6 million, and $2.4 million during fiscal 2019, 2018 and 2017, respectively.\nThe Company capitalizes internal-use software, including software used exclusively in providing services or that is only made available to customers as a software service, as property and equipment under ASC 350-40, Internal-Use Software. Total amortization expense on capitalized internal-use software was $2.5 million, $1.8 million and $1.4 million during fiscal 2019, 2018, and 2017, respectively.\n\nTable:\n | Year ended March 31, | \n(In thousands) | 2019 | 2018\nFurniture and equipment | $11,604 | $10,671\nSoftware | 16,427 | 11,885\nLeasehold improvements | 6,981 | 6,819\nProject expenditures not yet in use | 1,014 | 4,187\n | 36,026 | 33,562\nAccumulated depreciation and amortization | (20,188) | (16,050)\nProperty and equipment, net | $15,838 | $17,512\n\nQuestion: What was the average leasehold improvements for 2018 and 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Leasehold improvements 2019\",\"value\":\"6,981\"},{\"name\":\"Leasehold improvements 2018\",\"value\":\"6,819\"}],\"formula\":\"(6981 + 6819) / 2\",\"answer\":6900}",
+    "input_tokens": 550,
+    "output_tokens": 131,
+    "latency_s": 1.202
+  }
+}

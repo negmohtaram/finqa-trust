@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nnet sales increased $ 29.9 million , or 6.3% ( 6.3 % ) , due to higher sales volume driven primarily by continuing improvement in the u.s .\nhome products market and the benefit from new product introductions and price increases to help mitigate cumulative raw material cost increases .\noperating income increased $ 12.6 million , or 20.4% ( 20.4 % ) , due to higher net sales , the benefits from productivity improvements and leveraging sales on our existing fixed cost base .\nsecurity net sales increased $ 12.8 million , or 2.2% ( 2.2 % ) , due to higher sales volume and price increases to help mitigate cumulative raw material cost increases .\nthese benefits were partially offset by the impact of our exiting of two product lines in our commercial distribution channel .\noperating income increased $ 5.8 million , or 8.7% ( 8.7 % ) , primarily due to the higher net sales , the benefits from productivity improvements , lower restructuring and other charges ( approximately $ 6 million ) relating to the completion in 2016 of a manufacturing facility relocation , favorable foreign exchange and the related cost savings resulting from the facility relocation .\ncorporate corporate expenses increased by $ 5.7 million mainly due to the impairment of a long lived asset and recognition of an actuarial gain versus an actuarial loss in 2016 and higher defined benefit plan income during 2017 compared to 2016 .\n( in millions ) 2017 2016 .\nin future periods the company may record , in the corporate segment , material expense or income associated with actuarial gains and losses arising from periodic remeasurement of our liabilities for defined benefit plans .\nat a minimum the company will remeasure its defined benefit plan liabilities in the fourth quarter of each year .\nremeasurements due to plan amendments and settlements may also occur in interim periods during the year .\nremeasurement of these liabilities attributable to updating our liability discount rates and expected return on assets may , in particular , result in material income or expense recognition .\n2016 compared to 2015 total fortune brands net sales net sales increased $ 405.5 million , or 9% ( 9 % ) .\nthe increase was due to higher sales volume primarily from the continuing improvement in u.s .\nmarket conditions for home products , the benefit from the acquisitions in our cabinets and plumbing segments and price increases to help mitigate cumulative raw material cost increases and the effect of unfavorable foreign exchange .\nthese benefits were partially offset by unfavorable foreign exchange of approximately $ 27 million and higher sales rebates .\ncost of products sold cost of products sold increased $ 182.8 million , or 6% ( 6 % ) , due to higher net sales , including the impact of the acquisitions in our cabinets and plumbing segments , partially offset by the benefit of productivity improvements. .\n\nTable:\n( in millions ) | 2017 | 2016\ngeneral and administrative expense | $ -90.3 ( 90.3 ) | $ -80.9 ( 80.9 )\ndefined benefit plan income | 4.2 | 2.9\ndefined benefit plan recognition of actuarial gains ( losses ) | 0.5 | -1.9 ( 1.9 )\ntotal corporate expenses | $ -85.6 ( 85.6 ) | $ -79.9 ( 79.9 )\n\nQuestion: what was the percentage growth in the defined benefit plan income from 2016 to 2017"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"defined benefit plan income 2017\",\"value\":4.2},{\"name\":\"defined benefit plan income 2016\",\"value\":2.9}],\"formula\":\"(4.2 - 2.9) / 2.9 * 100\",\"answer\":44.82758620689655}",
+    "input_tokens": 964,
+    "output_tokens": 177,
+    "latency_s": 1.345
+  }
+}

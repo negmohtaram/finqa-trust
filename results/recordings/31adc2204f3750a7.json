@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nperformance and revenue growth depends , in part , on the reliability and functionality of this infrastructure as a means of delivering human resources services .\nthe internet is a key mechanism for delivering our human resources services to our hr solutions clients efficiently and cost effectively .\nour clients may not be receptive to human resource services delivered over the internet due to concerns regarding transaction security , user privacy , the reliability and quality of internet service and other reasons .\nour clients 2019 concerns may be heightened by the fact we use the internet to transmit extremely confidential information about our clients and their employees , such as compensation , medical information and other personally identifiable information .\nin order to maintain the level of security , service and reliability that our clients require , we may be required to make significant investments in our online methods of delivering human resources services .\nin addition , websites and proprietary online services have experienced service interruptions and other delays occurring throughout their infrastructure .\nthe adoption of additional laws or regulations with respect to the internet may impede the efficiency of the internet as a medium of exchange of information and decrease the demand for our services .\nif we cannot use the internet effectively to deliver our services , our revenue growth and results of operation may be impaired .\nwe may lose client data as a result of major catastrophes and other similar problems that may materially adversely impact our operations .\nwe have multiple processing centers around the world that use various commercial methods for disaster recovery capabilities .\nour main data processing center is located near the aon hewitt headquarters in lincolnshire , illinois .\nin the event of a disaster , our business continuity may not be sufficient , and the data recovered may not be sufficient for the administration of our clients 2019 human resources programs and processes .\nitem 1b .\nunresolved staff comments .\nitem 2 .\nproperties .\nwe have offices in various locations throughout the world .\nsubstantially all of our offices are located in leased premises .\nwe maintain our corporate headquarters at 200 e .\nrandolph street in chicago , illinois , where we occupy approximately 327000 square feet of space under an operating lease agreement that expires in 2013 .\nthere are two five-year renewal options at current market rates .\nwe own one building at pallbergweg 2-4 , amsterdam , the netherlands ( 150000 square feet ) .\nthe following are additional significant leased properties , along with the occupied square footage and expiration. .\n7201 hewitt associates drive , charlotte , north carolina .\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n218000 2015 the locations in lincolnshire , illinois , the woodlands , texas , orlando , florida , and charlotte north carolina , each of which were acquired as part of the hewitt acquisition , are primarily dedicated to our hr solutions business .\nthe other locations listed above house personnel from each of our business segments. .\n\nTable:\nproperty: | occupied square footage | lease expiration dates\n4 overlook point and other locations lincolnshire illinois | 1279000 | 2014 - 2019\n2601 research forest drive the woodlands texas | 414000 | 2020\n2300 discovery drive orlando florida | 364000 | 2020\ndevonshire square and other locations london uk | 339000 | 2018 - 2028\n199 water street new york new york | 337000 | 2018\n1000 n . milwaukee avenue glenview illinois | 233000 | 2017\n7201 hewitt associates drive charlotte north carolina | 218000 | 2015\n\nQuestion: from the data given , how many square feet have an expiry date in 2020?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2601 research forest drive\",\"value\":414000},{\"name\":\"2300 discovery drive\",\"value\":364000},{\"name\":\"devonshire square and other locations\",\"value\":339000}],\"formula\":\"414000 + 364000 + 339000\",\"answer\":1117000}",
+    "input_tokens": 1009,
+    "output_tokens": 253,
+    "latency_s": 1.677
+  }
+}

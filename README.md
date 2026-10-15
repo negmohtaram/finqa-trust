@@ -42,8 +42,9 @@ How formulas are compared: a formula that matches the gold number once could be 
 Reproduce:
 ```bash
 python scripts/make_samples.py
-python scripts/run_baseline.py --runs 2      # replays recorded calls when present
+python scripts/run_baseline.py --runs 2
 ```
+The model calls behind these numbers are stored in `results/recordings/`, so this replays them with no API key and no network. Questions without a recording are sent to Groq, which needs `GROQ_API_KEY`.
 
 ## How many questions are enough?
 On one fixed sample, two approaches can be compared question by question. Only the questions where they disagree carry information, which makes paired comparisons much cheaper than comparing two separate test sets:

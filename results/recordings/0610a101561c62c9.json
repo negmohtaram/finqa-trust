@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nResults of Continuing Operations\nThe analysis presented below is organized to provide the information we believe will facilitate an understanding of our historical performance and relevant trends going forward, and should be read in conjunction with our Consolidated Financial Statements, including the notes thereto, in Item 8 \"Financial Statements and Supplementary Data\" of this Annual Report on Form 10 - K.\nThe following table sets forth, for the periods indicated, certain data derived from our Consolidated Statements of Operations (in thousands):\n\nTable:\n | Year Ended December 31, | \n | 2019 | 2018\nSales | $788,948 | $718,892\nGross profit | 315,652 | 365,607\nOperating expenses | 261,264 | 194,054\nOperating income from continuing operations | 54,388 | 171,553\nOther income (expense), net | 12,806 | 823\nIncome from continuing operations before income taxes | 67,194 | 172,376\nProvision for income taxes | 10,699 | 25,227\nIncome from continuing operations, net of income taxes | $ 56,495 | $ 147,149\n\nQuestion: What was the change in sales between 2018 and 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Sales 2019\",\"value\":\"788,948\"},{\"name\":\"Sales 2018\",\"value\":\"718,892\"}],\"formula\":\"788,948 - 718,892\",\"answer\":70056}",
+    "input_tokens": 508,
+    "output_tokens": 88,
+    "latency_s": 1.134
+  }
+}

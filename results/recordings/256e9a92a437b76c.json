@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nedwards lifesciences corporation notes to consolidated financial statements ( continued ) 7 .\nacquisitions ( continued ) 12 months after the acquisition date will be disbursed to harpoon medical , inc . 2019s former shareholders .\nacquisition-related costs of $ 0.4 million were recorded in 201cselling , general , and administrative expenses 201d during the year ended december 31 , 2017 .\nharpoon medical , inc .\nis a medical technology company pioneering beating-heart repair for degenerative mitral regurgitation .\nthe company plans to add this technology to its portfolio of mitral and tricuspid repair products .\nthe acquisition was accounted for as a business combination .\ntangible and intangible assets acquired were recorded based on their estimated fair values at the acquisition date .\nthe excess of the purchase price over the fair value of net assets acquired was recorded to goodwill .\nthe following table summarizes the fair values of the assets acquired and liabilities assumed ( in millions ) : .\ngoodwill includes expected synergies and other benefits the company believes will result from the acquisition .\ngoodwill was assigned to the company 2019s united states segment and is not deductible for tax purposes .\nipr&d has been capitalized at fair value as an intangible asset with an indefinite life and will be assessed for impairment in subsequent periods .\nthe fair value of the ipr&d was determined using the income approach .\nthis approach determines fair value based on cash flow projections which are discounted to present value using a risk-adjusted rate of return .\nthe discount rates used to determine the fair value of the ipr&d ranged from 18.0% ( 18.0 % ) to 19.0% ( 19.0 % ) .\ncompletion of successful design developments , bench testing , pre-clinical studies and human clinical studies are required prior to selling any product .\nthe risks and uncertainties associated with completing development within a reasonable period of time include those related to the design , development , and manufacturability of the product , the success of pre-clinical and clinical studies , and the timing of regulatory approvals .\nthe valuation assumed $ 41.4 million of additional research and development expenditures would be incurred prior to the date of product introduction .\nin the valuation , net cash inflows were modeled to commence in europe in 2018 , and in the united states and japan in 2022 .\nupon completion of development , the underlying research and development asset will be amortized over its estimated useful life .\nthe results of operations for harpoon medical , inc .\nhave been included in the accompanying consolidated financial statements from the date of acquisition .\npro forma results have not been presented as the results of harpoon medical , inc .\nare not material in relation to the consolidated financial statements of the company .\nvaltech cardio ltd .\non november 26 , 2016 , the company entered into an agreement and plan of merger to acquire valtech cardio ltd .\n( 201cvaltech 201d ) for approximately $ 340.0 million , subject to certain adjustments , with the potential for up to an additional $ 350.0 million in pre-specified milestone-driven payments over the next 10 years .\nthe .\n\nTable:\ncurrent assets | $ 3.6\nproperty and equipment net | 0.3\ngoodwill | 142.1\nipr&d | 53.1\nother assets | 0.1\ncurrent liabilities assumed | -0.8 ( 0.8 )\ndeferred income taxes | -12.7 ( 12.7 )\ntotal purchase price | 185.7\nless : cash acquired | -3.5 ( 3.5 )\ntotal purchase price net of cash acquired | $ 182.2\n\nQuestion: what percentage of the total purchase price net of cash acquired is ipr&d ?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"ipr&d\",\"value\":\"53.1\"},{\"name\":\"total purchase price net of cash acquired\",\"value\":\"182.2\"}],\"formula\":\"(53.1/182.2)*100\",\"answer\":29.15}",
+    "input_tokens": 1028,
+    "output_tokens": 124,
+    "latency_s": 1.201
+  }
+}
