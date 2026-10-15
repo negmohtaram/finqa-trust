@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nBALANCE SHEET DATA\n(In thousands)\n(1) Working capital consists of current assets less current liabilities. Amounts prior to 2016 have been recast to conform to the current period\u2019s presentation as a result of our adoption of Accounting Standards Update 2015-17, Balance Sheet Classification of Deferred Taxes. See Note 1 of Notes to Consolidated Financial Statements, included in Part II, Item 8 of this report for additional information.\n(2) Total debt outstanding consisted of taxable revenue bonds due to the State of Alabama Industrial Development Authority. The bonds matured on January 1, 2020 and were repaid in full on January 2, 2020. See Note 12 of Notes to Consolidated Financial Statements, included in Part II, Item 8 of this report for additional information.\n\nTable:\nAs of December 31, | 2019 | 2018 | 2017 | 2016 | 2015\nWorking capital (1) | $207,599 | $237,416 | $306,296 | $226,367 | $219,219\nTotal assets | $545,118 | $628,027 | $669,094 | $667,235 | $632,904\nTotal debt (2) | $24,600 | $25,600 | $26,700 | $27,800 | $28,900\nStockholders\u2019 equity | $380,426 | $446,279 | $497,911 | $479,517 | $480,160\n\nQuestion: What was the change in total debt between 2017 and 2018?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Total debt 2017\",\"value\":\"$26,700\"},{\"name\":\"Total debt 2018\",\"value\":\"$25,600\"}],\"formula\":\"25600 - 26700\",\"answer\":-1100}",
+    "input_tokens": 581,
+    "output_tokens": 104,
+    "latency_s": 1.26
+  }
+}

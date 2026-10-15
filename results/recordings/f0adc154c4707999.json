@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\ndebt-related activities certain measures relating to our total debt were as follows: .\n( a ) represents shareholders 2019 equity , net non-current deferred income tax liabilities , and debt .\nthe decrease in short-term debt as a percentage of total debt at september 30 , 2019 was primarily driven by the payment of certain short-term notes as well as the issuance of long-term notes in 2019 .\nthe increase in short-term debt as a percentage of total debt at september 30 , 2018 was primarily driven by the reclassification of certain notes from long-term to short-term .\nadditional disclosures regarding our debt instruments are provided in note 16 to the consolidated financial statements contained in item 8 .\nfinancial statements and supplementary data .\ncash and short-term investments at september 30 , 2019 , total worldwide cash and short-term investments were $ 620 million , including restricted cash , which was primarily held in jurisdictions outside of the united states .\nfinancing facilities in may 2017 , we entered into a five-year senior unsecured revolving credit facility which provides borrowing of up to $ 2.25 billion .\nthis facility will expire in december 2022 .\nwe are able to issue up to $ 100 million in letters of credit under this new revolving credit facility and it also includes a provision that enables bd , subject to additional commitments made by the lenders , to access up to an additional $ 500 million in financing through the facility for a maximum aggregate commitment of $ 2.75 billion .\nwe use proceeds from this facility to fund general corporate needs .\nborrowings outstanding under the revolving credit facility at september 30 , 2019 were $ 485 million .\nthe agreement for our revolving credit facility contained the following financial covenants .\nwe were in compliance with these covenants as of september 30 , 2019 .\n2022 we are required to maintain an interest expense coverage ratio of not less than 4-to-1 as of the last day of each fiscal quarter .\n2022 we are required to have a leverage coverage ratio of no more than : 25e6 6-to-1 from the closing date of the bard acquisition until and including the first fiscal quarter- end thereafter ; 25e6 5.75-to-1 for the subsequent four fiscal quarters thereafter ; 25e6 5.25-to-1 for the subsequent four fiscal quarters thereafter ; 25e6 4.5-to-1 for the subsequent four fiscal quarters thereafter ; 25e6 4-to-1 for the subsequent four fiscal quarters thereafter ; 25e6 3.75-to-1 thereafter .\nwe also have informal lines of credit outside the united states .\nduring the fourth quarter of 2019 , the company fully repaid its borrowings outstanding on a 364-day senior unsecured term loan facility that the company entered in september 2018 .\nthe company had no commercial paper borrowings outstanding as of september 30 , 2019 .\nwe may , from time to time , sell certain trade receivable assets to third parties as we manage working capital over the normal course of our business activities. .\n\nTable:\n | 2019 | 2018 | 2017\ntotal debt ( millions of dollars ) | $ 19390 | $ 21496 | $ 18870\nshort-term debt as a percentage of total debt | 6.8% ( 6.8 % ) | 12.1% ( 12.1 % ) | 1.1% ( 1.1 % )\nweighted average cost of total debt | 2.9% ( 2.9 % ) | 3.2% ( 3.2 % ) | 3.3% ( 3.3 % )\ntotal debt as a percentage of total capital ( a ) | 45.6% ( 45.6 % ) | 47.8% ( 47.8 % ) | 57.5% ( 57.5 % )\n\nQuestion: in 2019 what was the percent of the financing structure that was based on the equity"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"total debt % of total capital 2019\",\"value\":\"45.6%\"}],\"formula\":\"100 - 45.6\",\"answer\":54.4}",
+    "input_tokens": 1081,
+    "output_tokens": 93,
+    "latency_s": 1.152
+  }
+}

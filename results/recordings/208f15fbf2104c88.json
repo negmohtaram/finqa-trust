@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nfive-year performance comparison 2013 the following graph provides an indicator of cumulative total shareholder returns for the corporation as compared to the peer group index ( described above ) , the dj trans , and the s&p 500 .\nthe graph assumes that $ 100 was invested in the common stock of union pacific corporation and each index on december 31 , 2006 and that all dividends were reinvested .\npurchases of equity securities 2013 during 2011 , we repurchased 15340810 shares of our common stock at an average price of $ 96.08 .\nthe following table presents common stock repurchases during each month for the fourth quarter of 2011 : period total number of shares purchased [a] average price paid per share total number of shares purchased as part of a publicly announced plan or program [b] maximum number of shares that may yet be purchased under the plan or program [b] .\n[a] total number of shares purchased during the quarter includes approximately 30137 shares delivered or attested to upc by employees to pay stock option exercise prices , satisfy excess tax withholding obligations for stock option exercises or vesting of retention units , and pay withholding obligations for vesting of retention shares .\n[b] on april 1 , 2011 , our board of directors authorized the repurchase of up to 40 million shares of our common stock by march 31 , 2014 .\nthese repurchases may be made on the open market or through other transactions .\nour management has sole discretion with respect to determining the timing and amount of these transactions. .\n\nTable:\nperiod | total number ofsharespurchased [a] | averageprice paidper share | total number of sharespurchased as part ofapublicly announced planor program [b] | maximum number ofshares that may yetbe purchased under the planor program [b]\noct . 1 through oct . 31 | 379488 | 87.46 | 371639 | 31370427\nnov . 1 through nov . 30 | 1748964 | 98.41 | 1733877 | 29636550\ndec . 1 through dec . 31 | 1787343 | 100.26 | 1780142 | 27856408\ntotal | 3915795 | $ 98.19 | 3885658 | n/a\n\nQuestion: for all of 2011 , approximately how much was spent on stock repurchases?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"total shares\",\"value\":3915795},{\"name\":\"average price\",\"value\":98.19}],\"formula\":\"3915795 * 98.19\",\"answer\":384491911.05}",
+    "input_tokens": 752,
+    "output_tokens": 254,
+    "latency_s": 1.549
+  }
+}

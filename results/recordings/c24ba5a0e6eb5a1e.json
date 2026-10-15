@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nnotes to consolidated financial statements ( continued ) note 6 2014income taxes ( continued ) a reconciliation of the provision for income taxes , with the amount computed by applying the statutory federal income tax rate ( 35% ( 35 % ) in 2005 , 2004 , and 2003 ) to income before provision for income taxes , is as follows ( in millions ) : .\nduring 2005 , the company reversed certain tax contingency reserves and recorded a corresponding benefit to income tax expense primarily as a result of a change in the estimated outcome of certain tax disputes .\nadditionally , during the fourth quarter of 2005 , the company recorded a benefit to tax expense to adjust its net deferred tax assets as a result of the company 2019s year-end review of its deferred tax accounts , the impact of which was not material to the current or prior periods 2019 results of operations .\nthe total benefit to income tax expense from the reversal of these tax contingency reserves and adjustments to net deferred tax assets was $ 67 million .\nthe company also recorded a $ 14 million credit to income tax expense resulting from a reduction of the valuation allowance .\nthe internal revenue service ( irs ) has completed its field audit of the company 2019s federal income tax returns for all years prior to 2002 and proposed certain adjustments .\ncertain of these adjustments are being contested through the irs appeals office .\nsubstantially all irs audit issues for these years have been resolved .\nin addition , the company is also subject to audits by state , local , and foreign tax authorities .\nmanagement believes that adequate provisions have been made for any adjustments that may result from tax examinations .\nhowever , the outcome of tax audits cannot be predicted with certainty .\nshould any issues addressed in the company 2019s tax audits be resolved in a manner not consistent with management 2019s expectations , the company could be required to adjust its provision for income tax in the period such resolution occurs .\nnote 7 2014shareholders 2019 equity preferred stock the company has 5 million shares of authorized preferred stock , none of which is outstanding .\nunder the terms of the company 2019s restated articles of incorporation , the board of directors is authorized to determine or alter the rights , preferences , privileges and restrictions of the company 2019s authorized but unissued shares of preferred stock. .\n\nTable:\n | 2005 | 2004 | 2003\ncomputed expected tax | $ 636 | $ 134 | $ 32\nstate taxes net of federal effect | -19 ( 19 ) | -5 ( 5 ) | -4 ( 4 )\nindefinitely invested earnings of foreign subsidiaries | -98 ( 98 ) | -31 ( 31 ) | -13 ( 13 )\nnondeductible executive compensation | 11 | 10 | 5\nresearch and development credit net | -26 ( 26 ) | -5 ( 5 ) | -7 ( 7 )\nother items | -24 ( 24 ) | 4 | 11\nprovision for income taxes | $ 480 | $ 107 | $ 24\neffective tax rate | 26% ( 26 % ) | 28% ( 28 % ) | 26% ( 26 % )\n\nQuestion: what was the lowest amount of research and development credit net in the three year period , in millions?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"research and development credit net 2005\",\"value\":\"-26\"}],\"formula\":\"\",\"answer\":-26}",
+    "input_tokens": 945,
+    "output_tokens": 132,
+    "latency_s": 1.209
+  }
+}

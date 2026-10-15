@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nNorth America\nNorth America net revenues increased $710,000 in 2019 compared to 2018 (see \u201cRevenues\u201d above). North America expenses decreased $2.2 million from 2018 to 2019 primarily due to a $1.7 million decrease in salary and employee related expenses, $742,000 decrease in professional service expenses, a $584,000 decrease in customer service costs and a $498,000 decrease in trade and brand marketing expenses, offset partially by a $1.2 million increase in member acquisition costs.\n\nTable:\n | Year Ended December 31, | \n | 2019 | 2018\n(In thousands) |  | \nRevenues | $68,024 | $67,314\nIncome from operations | $12,491 | $9,587\nIncome from operations as a % of revenues | 18% | 14%\n\nQuestion: What is the percentage change in revenues from 2018 to 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Revenue 2019\",\"value\":\"68,024\"},{\"name\":\"Revenue 2018\",\"value\":\"67,314\"}],\"formula\":\"(68024 - 67314) / 67314 * 100\",\"answer\":1.0543}",
+    "input_tokens": 450,
+    "output_tokens": 202,
+    "latency_s": 1.432
+  }
+}

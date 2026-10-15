@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\n22. Directors and key management compensation\nThis note details the total amounts earned by the Company\u2019s Directors and members of the Executive Committee.\nDirectors\nAggregate emoluments of the Directors of the Company were as follows:\nNotes: 1 Excludes gains from long-term incentive plans.\n2 Includes the value of the cash allowance taken by some individuals in lieu of pension contributions\nNo Directors serving during the year exercised share options in the year ended 31 March 2019 (2018: one Director, gain \u20ac0.1 million; gain 2017: one Director, \u20ac0.7 million\n\nTable:\n | 2019 \u20acm | 2018 \u20acm | 2017 \u20acm\nSalaries and fees | 4 | 4 | 4\nIncentive schemes1 | 2 | 3 | 2\nOther benefits2 | \u2013 | 1 | 1\n | 6 | 8 | 7\n\nQuestion: What is the average incentive schemes between 2018 and 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Incentive schemes 2019\",\"value\":2},{\"name\":\"Incentive schemes 2018\",\"value\":3}],\"formula\":\"(2 + 3) / 2\",\"answer\":2.5}",
+    "input_tokens": 461,
+    "output_tokens": 109,
+    "latency_s": 1.06
+  }
+}

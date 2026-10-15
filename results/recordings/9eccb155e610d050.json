@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nFiscal 2019 Actions\nDuring fiscal 2019, we initiated a restructuring program associated with footprint consolidation and structural improvements impacting all segments. In connection with this program, during fiscal 2019, we recorded net restructuring charges of $254 million. We expect to complete all restructuring actions commenced during fiscal 2019 by the end of fiscal 2021 and to incur additional charges of approximately $35 million related primarily to employee severance and facility exit costs in the Transportation Solutions and Industrial Solutions segments.\nThe following table summarizes expected, incurred, and remaining charges for the fiscal 2019 program by segment:\n\nTable:\n | Total Expected Charges | Cumulative Charges Incurred | Remaining Expected Charges\n |  | (in millions) | \nTransportation Solutions | $  160 | $  144 | $  16\nIndustrial Solutions | 80 | 66 | 14\nCommunications Solutions | 49 | 44 | 5\nTotal | $  289 | $  254 | $  35\n\nQuestion: What was the average amount of total expected charges per segment?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Transportation Solutions total expected\",\"value\":\"160\"},{\"name\":\"Industrial Solutions total expected\",\"value\":\"80\"},{\"name\":\"Communications Solutions total expected\",\"value\":\"49\"}],\"formula\":\"(160+80+49)/3\",\"answer\":96.3333333333}",
+    "input_tokens": 471,
+    "output_tokens": 146,
+    "latency_s": 1.221
+  }
+}

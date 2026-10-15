@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nthe pnc financial services group , inc .\n2013 form 10-k 155 of such other legal proceedings will have a material adverse effect on our financial position .\nhowever , we cannot now determine whether or not any claims asserted against us or others to whom we may have indemnification obligations , whether in the proceedings or other matters described above or otherwise , will have a material adverse effect on our results of operations in any future reporting period , which will depend on , among other things , the amount of the loss resulting from the claim and the amount of income otherwise reported for the reporting period .\nnote 20 commitments in the normal course of business , we have various commitments outstanding , certain of which are not included on our consolidated balance sheet .\nthe following table presents our outstanding commitments to extend credit along with significant other commitments as of december 31 , 2018 and 2017 , respectively .\ntable 94 : commitments to extend credit and other commitments in millions december 31 december 31 .\ncommitments to extend credit , or net unfunded loan commitments , represent arrangements to lend funds or provide liquidity subject to specified contractual conditions .\nthese commitments generally have fixed expiration dates , may require payment of a fee , and generally contain termination clauses in the event the customer 2019s credit quality deteriorates .\nnet outstanding standby letters of credit we issue standby letters of credit and share in the risk of standby letters of credit issued by other financial institutions , in each case to support obligations of our customers to third parties , such as insurance requirements and the facilitation of transactions involving capital markets product execution .\napproximately 91% ( 91 % ) of our net outstanding standby letters of credit were rated as pass at both december 31 , 2018 and 2017 , with the remainder rated as criticized .\nan internal credit rating of pass indicates the expected risk of loss is currently low , while a rating of criticized indicates a higher degree of risk .\nif the customer fails to meet its financial or performance obligation to the third party under the terms of the contract or there is a need to support a remarketing program , then upon a draw by a beneficiary , subject to the terms of the letter of credit , we would be obligated to make payment to them .\nthe standby letters of credit outstanding on december 31 , 2018 had terms ranging from less than one year to six years .\nas of december 31 , 2018 , assets of $ 1.1 billion secured certain specifically identified standby letters of credit .\nin addition , a portion of the remaining standby letters of credit issued on behalf of specific customers is also secured by collateral or guarantees that secure the customers 2019 other obligations to us .\nthe carrying amount of the liability for our obligations related to standby letters of credit and participations in standby letters of credit was $ .2 billion at december 31 , 2018 and is included in other liabilities on our consolidated balance sheet. .\n\nTable:\nin millions | december 31 2018 | december 312017\ncommitments to extend credit |  | \ntotal commercial lending | $ 120165 | $ 112125\nhome equity lines of credit | 16944 | 17852\ncredit card | 27100 | 24911\nother | 5069 | 4753\ntotal commitments to extend credit | 169278 | 159641\nnet outstanding standby letters of credit ( a ) | 8655 | 8651\nreinsurance agreements ( b ) | 1549 | 1654\nstandby bond purchase agreements ( c ) | 1000 | 843\nother commitments ( d ) | 1130 | 1732\ntotal commitments to extend credit and other commitments | $ 181612 | $ 172521\n\nQuestion: what was the percentage increase total commitments to extend credit and other commitments"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"total commitments 2018\",\"value\":181612},{\"name\":\"total commitments 2017\",\"value\":172521}],\"formula\":\"(181612-172521)/172521*100\",\"answer\":5.27}",
+    "input_tokens": 1020,
+    "output_tokens": 155,
+    "latency_s": 1.195
+  }
+}

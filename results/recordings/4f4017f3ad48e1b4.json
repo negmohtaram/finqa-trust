@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nperformance graph comparison of five-year cumulative total return the following graph and table compare the cumulative total return on citi 2019s common stock , which is listed on the nyse under the ticker symbol 201cc 201d and held by 65691 common stockholders of record as of january 31 , 2018 , with the cumulative total return of the s&p 500 index and the s&p financial index over the five-year period through december 31 , 2017 .\nthe graph and table assume that $ 100 was invested on december 31 , 2012 in citi 2019s common stock , the s&p 500 index and the s&p financial index , and that all dividends were reinvested .\ncomparison of five-year cumulative total return for the years ended date citi s&p 500 financials .\n.\n\nTable:\ndate | citi | s&p 500 | s&p financials\n31-dec-2012 | 100.0 | 100.0 | 100.0\n31-dec-2013 | 131.8 | 132.4 | 135.6\n31-dec-2014 | 137.0 | 150.5 | 156.2\n31-dec-2015 | 131.4 | 152.6 | 153.9\n31-dec-2016 | 152.3 | 170.8 | 188.9\n31-dec-2017 | 193.5 | 208.1 | 230.9\n\nQuestion: as of 2017 what was the ratio of the overall five-year cumulative total return for s&p 500 compared to citi"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"S&P 500 2017\",\"value\":\"208.1\"},{\"name\":\"Citi 2017\",\"value\":\"193.5\"}],\"formula\":\"208.1 / 193.5\",\"answer\":1.0755}",
+    "input_tokens": 592,
+    "output_tokens": 201,
+    "latency_s": 1.361
+  }
+}

@@ -1,7 +1,11 @@
 """Download the FinQA and TAT-QA dev and test files into data/raw/."""
+import shutil
+import ssl
 import sys
 import urllib.request
 from pathlib import Path
+
+import certifi
 
 RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
 URLS = {
@@ -10,6 +14,8 @@ URLS = {
     "tatqa_dev.json": "https://raw.githubusercontent.com/NExTplusplus/TAT-QA/master/dataset_raw/tatqa_dataset_dev.json",
     "tatqa_test_gold.json": "https://raw.githubusercontent.com/NExTplusplus/TAT-QA/master/dataset_raw/tatqa_dataset_test_gold.json",
 }
+# Some Python installs (e.g. Homebrew) ship without a certificate list.
+_TLS = ssl.create_default_context(cafile=certifi.where())
 
 
 def main() -> int:
@@ -20,7 +26,8 @@ def main() -> int:
             print(f"have  {name}")
             continue
         print(f"fetch {name}")
-        urllib.request.urlretrieve(url, target)
+        with urllib.request.urlopen(url, context=_TLS) as response, open(target, "wb") as out:
+            shutil.copyfileobj(response, out)
     return 0
 
 

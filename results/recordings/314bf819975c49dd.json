@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nThe tax effects of temporary differences that gave rise to significant portions of deferred tax assets and liabilities are as follows (in thousands):\nThe Company considered both positive and negative evidence, including future reversals of existing taxable temporary differences, projected future taxable income, tax planning strategies, historic book profit/loss, prior taxable income/loss, and results of future operations, and determined that a valuation allowance was not required for a significant portion of its deferred tax assets. A valuation allowance of $31.4 million and $28.5 million remained as of July 31, 2019 and 2018, respectively.\nThe increase of $2.9 million in the valuation allowance in the current fiscal year relates primarily to net operating losses and income tax credits incurred in certain tax jurisdictions for which no tax benefit was recognized.\n\nTable:\n | As of July 31, | \n | 2019 | 2018\nAccruals and reserves | $7,870 | $12,129\nStock-based compensation | 6,353 | 7,658\nDeferred revenue | 2,316 | 4,023\nProperty and equipment | \u2014 | 1,268\nNet operating loss carryforwards | 55,881 | 56,668\nTax credits | 74,819 | 60,450\nTotal deferred tax assets | 147,239 | 142,196\nLess valuation allowance | 31,421 | 28,541\nNet deferred tax assets | 115,818 | 113,655\nLess deferred tax liabilities: |  | \nIntangible assets | 7,413 | 11,461\nConvertible debt | 10,274 | 11,567\nProperty and equipment | 1,435 | \u2014\nUnremitted foreign earnings | 302 | 258\nCapitalized commissions | 6,086 | \u2014\nTotal deferred tax liabilities | 25,510 | 23,286\nDeferred tax assets, net | 90,308 | 90,369\nLess foreign deferred revenue | \u2014 | 69\nLess foreign capitalized commissions | 906 | \u2014\nTotal net deferred tax assets | 89,402 | 90,300\n\nQuestion: What was the average Stock-based compensation for 2018 and 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Stock-based compensation 2019\",\"value\":\"6,353\"},{\"name\":\"Stock-based compensation 2018\",\"value\":\"7,658\"}],\"formula\":\"(6353+7658)/2\",\"answer\":7005.5}",
+    "input_tokens": 713,
+    "output_tokens": 122,
+    "latency_s": 1.572
+  }
+}

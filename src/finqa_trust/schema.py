@@ -21,7 +21,8 @@ class Record(BaseModel):
     gold_answer: float | str | list[str]
     answer_type: AnswerType
     scale: Scale = ""
-    program: str | None = None      # FinQA only, e.g. "subtract(1350, 1200), divide(#0, 1200)"
+    program: str | None = None      # FinQA: "subtract(1350, 1200), divide(#0, 1200)"; TAT-QA: "(1350-1200)/1200"
+    ambiguous_gold: bool = False    # FinQA only: the dataset's text answer disagrees with its computed answer
 
     @field_validator("question")
     @classmethod

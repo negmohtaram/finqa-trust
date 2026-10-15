@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nnotes to consolidated financial statements 2014 ( continued ) in connection with these discover related purchases , we have sold the contractual rights to future commissions on discover transactions to certain of our isos .\ncontractual rights sold totaled $ 7.6 million during the year ended may 31 , 2008 and $ 1.0 million during fiscal 2009 .\nsuch sale proceeds are generally collected in installments over periods ranging from three to nine months .\nduring fiscal 2009 , we collected $ 4.4 million of such proceeds , which are included in the proceeds from sale of investment and contractual rights in our consolidated statement of cash flows .\nwe do not recognize gains on these sales of contractual rights at the time of sale .\nproceeds are deferred and recognized as a reduction of the related commission expense .\nduring fiscal 2009 , we recognized $ 1.2 million of such deferred sales proceeds as other long-term liabilities .\nother 2008 acquisitions during fiscal 2008 , we acquired a majority of the assets of euroenvios money transfer , s.a .\nand euroenvios conecta , s.l. , which we collectively refer to as lfs spain .\nlfs spain consisted of two privately- held corporations engaged in money transmittal and ancillary services from spain to settlement locations primarily in latin america .\nthe purpose of the acquisition was to further our strategy of expanding our customer base and market share by opening additional branch locations .\nduring fiscal 2008 , we acquired a series of money transfer branch locations in the united states .\nthe purpose of these acquisitions was to increase the market presence of our dolex-branded money transfer offering .\nthe following table summarizes the preliminary purchase price allocations of all these fiscal 2008 business acquisitions ( in thousands ) : .\nthe customer-related intangible assets have amortization periods of up to 14 years .\nthe contract-based intangible assets have amortization periods of 3 to 10 years .\nthese business acquisitions were not significant to our consolidated financial statements and accordingly , we have not provided pro forma information relating to these acquisitions .\nin addition , during fiscal 2008 , we acquired a customer list and long-term merchant referral agreement in our canadian merchant services channel for $ 1.7 million .\nthe value assigned to the customer list of $ 0.1 million was expensed immediately .\nthe remaining value was assigned to the merchant referral agreement and is being amortized on a straight-line basis over its useful life of 10 years .\nfiscal 2007 on july 24 , 2006 , we completed the purchase of a fifty-six percent ownership interest in the asia-pacific merchant acquiring business of the hongkong and shanghai banking corporation limited , or hsbc asia pacific .\nthis business provides card payment processing services to merchants in the asia-pacific region .\nthe .\n\nTable:\n | total\ngoodwill | $ 13536\ncustomer-related intangible assets | 4091\ncontract-based intangible assets | 1031\nproperty and equipment | 267\nother current assets | 502\ntotal assets acquired | 19427\ncurrent liabilities | -2347 ( 2347 )\nminority interest in equity of subsidiary ( at historical cost ) | -486 ( 486 )\nnet assets acquired | $ 16594\n\nQuestion: what percent of assets acquired by the acquisition are non-tangible assets?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"goodwill\",\"value\":13536},{\"name\":\"customer-related intangible assets\",\"value\":4091},{\"name\":\"contract-based intangible assets\",\"value\":1031},{\"name\":\"total assets acquired\",\"value\":19427}],\"formula\":\"(13536+4091+1031)/19427*100\",\"answer\":96.04}",
+    "input_tokens": 922,
+    "output_tokens": 262,
+    "latency_s": 1.57
+  }
+}
