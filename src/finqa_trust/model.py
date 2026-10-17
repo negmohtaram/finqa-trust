@@ -145,9 +145,36 @@ class ResumingClient:
     folder: Path
     live_calls: int = 0
 
+    def is_recorded(self, request: ModelRequest) -> bool:
+        return (self.folder / f"{request_key(request)}.json").exists()
+
     def complete(self, request: ModelRequest) -> ModelResponse:
         try:
             return ReplayClient(self.folder).complete(request)
         except ReplayMiss:
             self.live_calls += 1
             return RecordingClient(self.inner, self.folder).complete(request)
+
+
+class DailyLimit(RuntimeError):
+    """The provider's daily quota is used up. Waiting minutes will not help; rerun tomorrow."""
+
+
+def ask(client: ModelClient, request: ModelRequest, pause: float = 2.0) -> ModelResponse:
+    """Call with a pause after each live call. A per-minute 429 waits and retries;
+    a per-day 429 stops at once, since recordings let the run resume later."""
+    for attempt in range(6):
+        before = getattr(client, "live_calls", 0)
+        try:
+            response = client.complete(request)
+        except RuntimeError as err:
+            if "429" not in str(err) or attempt == 5:
+                raise
+            if "per day" in str(err):
+                raise DailyLimit(str(err)) from None
+            time.sleep(30 * (attempt + 1))
+            continue
+        if getattr(client, "live_calls", 0) > before:
+            time.sleep(pause)
+        return response
+    raise AssertionError("unreachable")

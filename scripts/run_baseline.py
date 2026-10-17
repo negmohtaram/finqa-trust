@@ -6,33 +6,16 @@ Usage: python scripts/run_baseline.py [--runs 5] [--temperature 1.0] [--pause 2.
 """
 import argparse
 import json
-import time
 from pathlib import Path
 
 from finqa_trust.data import load_all
 from finqa_trust.labels import label, step_table
-from finqa_trust.model import DEFAULT_MODEL, GroqClient, ModelRequest, ResumingClient
+from finqa_trust.model import DEFAULT_MODEL, GroqClient, ModelRequest, ResumingClient, ask
 from finqa_trust.prompts import structured_messages
 from finqa_trust.sample import SAMPLES, load_ids
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
-
-
-def ask(client, request, pause):
-    """Call with a pause between live calls; wait and retry on rate limits."""
-    for attempt in range(6):
-        before = client.live_calls
-        try:
-            response = client.complete(request)
-        except RuntimeError as err:
-            if "429" not in str(err) or attempt == 5:
-                raise
-            time.sleep(30 * (attempt + 1))
-            continue
-        if client.live_calls > before:
-            time.sleep(pause)
-        return response
 
 
 def main() -> None:
