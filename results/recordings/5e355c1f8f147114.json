@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\naon has certain contractual contingent guarantees for premium payments owed by clients to certain insurance companies .\nthe maximum exposure with respect to such contractual contingent guarantees was approximately $ 48 million at december 31 , 2011 .\naon has provided commitments to fund certain limited partnerships in which it has an interest in the event that the general partners request funding .\nsome of these commitments have specific expiration dates and the maximum potential funding under these commitments was $ 64 million at december 31 , 2011 .\nduring 2011 , the company funded $ 15 million of these commitments .\naon expects that as prudent business interests dictate , additional guarantees and indemnifications may be issued from time to time .\n17 .\nrelated party transactions during 2011 , the company , in the ordinary course of business , provided retail brokerage , consulting and financial advisory services to , and received wholesale brokerage services from , an entity that is controlled by one of the company 2019s stockholders .\nthese transactions were negotiated at an arms-length basis and contain customary terms and conditions .\nduring 2011 , commissions and fee revenue from these transactions was approximately $ 9 million .\n18 .\nsegment information the company has two reportable operating segments : risk solutions and hr solutions .\nunallocated income and expenses , when combined with the operating segments and after the elimination of intersegment revenues and expenses , total to the amounts in the consolidated financial statements .\nreportable operating segments have been determined using a management approach , which is consistent with the basis and manner in which aon 2019s chief operating decision maker ( 2018 2018codm 2019 2019 ) uses financial information for the purposes of allocating resources and assessing performance .\nthe codm assesses performance based on operating segment operating income and generally accounts for intersegment revenue as if the revenue were from third parties and at what management believes are current market prices .\nthe company does not present net assets by segment as this information is not reviewed by the codm .\nrisk solutions acts as an advisor and insurance and reinsurance broker , helping clients manage their risks , via consultation , as well as negotiation and placement of insurance risk with insurance carriers through aon 2019s global distribution network .\nhr solutions partners with organizations to solve their most complex benefits , talent and related financial challenges , and improve business performance by designing , implementing , communicating and administering a wide range of human capital , retirement , investment management , health care , compensation and talent management strategies .\naon 2019s total revenue is as follows ( in millions ) : .\n.\n\nTable:\nyears ended december 31 | 2011 | 2010 | 2009\nrisk solutions | $ 6817 | $ 6423 | $ 6305\nhr solutions | 4501 | 2111 | 1267\nintersegment elimination | -31 ( 31 ) | -22 ( 22 ) | -26 ( 26 )\ntotal operating segments | 11287 | 8512 | 7546\nunallocated | 2014 | 2014 | 49\ntotal revenue | $ 11287 | $ 8512 | $ 7595\n\nQuestion: what was the percent of the increase in the aons revenues for risk solutions from 2010 to 2011"
+      ]
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"risk solutions 2011\",\"value\":6817},{\"name\":\"risk solutions 2010\",\"value\":6423}],\"formula\":\"(6817 - 6423) / 6423 * 100\",\"answer\":6.124825236406618}",
+    "input_tokens": 908,
+    "output_tokens": 94,
+    "latency_s": 0.98
+  }
+}

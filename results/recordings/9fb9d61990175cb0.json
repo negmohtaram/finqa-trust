@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nedwards lifesciences corporation notes to consolidated financial statements ( continued ) 13 .\ncommon stock ( continued ) the company also maintains the nonemployee directors stock incentive compensation program ( the 2018 2018nonemployee directors program 2019 2019 ) .\nunder the nonemployee directors program , upon a director 2019s initial election to the board , the director receives an initial grant of stock options or restricted stock units equal to a fair market value on grant date of $ 0.2 million , not to exceed 20000 shares .\nthese grants vest over three years from the date of grant , subject to the director 2019s continued service .\nin addition , annually each nonemployee director may receive up to 40000 stock options or 16000 restricted stock units of the company 2019s common stock , or a combination thereof , provided that in no event may the total value of the combined annual award exceed $ 0.2 million .\nthese grants generally vest over one year from the date of grant .\nunder the nonemployee directors program , an aggregate of 2.8 million shares of the company 2019s common stock has been authorized for issuance .\nthe company has an employee stock purchase plan for united states employees and a plan for international employees ( collectively 2018 2018espp 2019 2019 ) .\nunder the espp , eligible employees may purchase shares of the company 2019s common stock at 85% ( 85 % ) of the lower of the fair market value of edwards lifesciences common stock on the effective date of subscription or the date of purchase .\nunder the espp , employees can authorize the company to withhold up to 12% ( 12 % ) of their compensation for common stock purchases , subject to certain limitations .\nthe espp is available to all active employees of the company paid from the united states payroll and to eligible employees of the company outside the united states , to the extent permitted by local law .\nthe espp for united states employees is qualified under section 423 of the internal revenue code .\nthe number of shares of common stock authorized for issuance under the espp was 13.8 million shares .\nthe fair value of each option award and employee stock purchase subscription is estimated on the date of grant using the black-scholes option valuation model that uses the assumptions noted in the following tables .\nthe risk-free interest rate is estimated using the u.s .\ntreasury yield curve and is based on the expected term of the award .\nexpected volatility is estimated based on a blend of the weighted-average of the historical volatility of edwards lifesciences 2019 stock and the implied volatility from traded options on edwards lifesciences 2019 stock .\nthe expected term of awards granted is estimated from the vesting period of the award , as well as historical exercise behavior , and represents the period of time that awards granted are expected to be outstanding .\nthe company uses historical data to estimate forfeitures and has estimated an annual forfeiture rate of 6.0% ( 6.0 % ) .\nthe black-scholes option pricing model was used with the following weighted-average assumptions for options granted during the following periods : option awards .\n.\n\nTable:\n | 2016 | 2015 | 2014\naverage risk-free interest rate | 1.1% ( 1.1 % ) | 1.4% ( 1.4 % ) | 1.5% ( 1.5 % )\nexpected dividend yield | none | none | none\nexpected volatility | 33% ( 33 % ) | 30% ( 30 % ) | 31% ( 31 % )\nexpected life ( years ) | 4.5 | 4.6 | 4.6\nfair value per share | $ 31.00 | $ 18.13 | $ 11.75\n\nQuestion: what is the value , in millions of dollars , of the total issuable stock in 2014?"
+      ]
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"ESPP shares\",\"value\":13.8},{\"name\":\"Nonemployee director shares\",\"value\":2.8},{\"name\":\"Fair value per share 2014\",\"value\":11.75}],\"formula\":\"(13.8+2.8)*11.75\",\"answer\":195.05}",
+    "input_tokens": 1066,
+    "output_tokens": 348,
+    "latency_s": 1.531
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\npart ii item 5 .\nmarket for registrant 2019s common equity , related stockholder matters and issuer purchases of equity securities .\nthe company 2019s common stock is listed on the new york stock exchange .\nprior to the separation of alcoa corporation from the company , the company 2019s common stock traded under the symbol 201caa . 201d in connection with the separation , on november 1 , 2016 , the company changed its stock symbol and its common stock began trading under the symbol 201carnc . 201d on october 5 , 2016 , the company 2019s common shareholders approved a 1-for-3 reverse stock split of the company 2019s outstanding and authorized shares of common stock ( the 201creverse stock split 201d ) .\nas a result of the reverse stock split , every three shares of issued and outstanding common stock were combined into one issued and outstanding share of common stock , without any change in the par value per share .\nthe reverse stock split reduced the number of shares of common stock outstanding from approximately 1.3 billion shares to approximately 0.4 billion shares , and proportionately decreased the number of authorized shares of common stock from 1.8 billion to 0.6 billion shares .\nthe company 2019s common stock began trading on a reverse stock split-adjusted basis on october 6 , 2016 .\non november 1 , 2016 , the company completed the separation of its business into two independent , publicly traded companies : the company and alcoa corporation .\nthe separation was effected by means of a pro rata distribution by the company of 80.1% ( 80.1 % ) of the outstanding shares of alcoa corporation common stock to the company 2019s shareholders .\nthe company 2019s shareholders of record as of the close of business on october 20 , 2016 ( the 201crecord date 201d ) received one share of alcoa corporation common stock for every three shares of the company 2019s common stock held as of the record date .\nthe company retained 19.9% ( 19.9 % ) of the outstanding common stock of alcoa corporation immediately following the separation .\nsee disposition of retained shares in note c to the consolidated financial statements in part ii item 8 of this form 10-k .\nthe following table sets forth , for the periods indicated , the high and low sales prices and quarterly dividend amounts per share of the company 2019s common stock as reported on the new york stock exchange , adjusted to take into account the reverse stock split effected on october 6 , 2016 .\nthe prices listed below for those dates prior to november 1 , 2016 reflect stock trading prices of alcoa inc .\nprior to the separation of alcoa corporation from the company on november 1 , 2016 , and therefore are not comparable to the company 2019s post-separation prices. .\nthe number of holders of record of common stock was approximately 12271 as of february 16 , 2018. .\n\nTable:\nquarter | 2017 high | 2017 low | 2017 dividend | 2017 high | 2017 low | dividend\nfirst | $ 30.69 | $ 18.64 | $ 0.06 | $ 30.66 | $ 18.42 | $ 0.09\nsecond | 28.65 | 21.76 | 0.06 | 34.50 | 26.34 | 0.09\nthird | 26.84 | 22.67 | 0.06 | 32.91 | 27.09 | 0.09\nfourth ( separation occurred on november 1 2016 ) | 27.85 | 22.74 | 0.06 | 32.10 | 16.75 | 0.09\nyear | $ 30.69 | $ 18.64 | $ 0.24 | $ 34.50 | $ 16.75 | $ 0.36\n\nQuestion: considering the second quarter of 2017 , what is the average sale price per share of the company 2019s common stock?"
+      ]
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"high\",\"value\":28.65},{\"name\":\"low\",\"value\":21.76}],\"formula\":\"(28.65+21.76)/2\",\"answer\":25.205}",
+    "input_tokens": 1131,
+    "output_tokens": 213,
+    "latency_s": 1.256
+  }
+}

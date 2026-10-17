@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nCredit risk\nThe carrying amount of financial assets, previously recognised as loans and receivables under IAS 39 now classified as amortised cost under IFRS 9, represents the maximum credit exposure. The maximum exposure to credit risk at 31 March 2019 was \u00a359.1m (2018: \u00a356.5m).\nThe maximum exposure to credit risk for trade receivables at the reporting date by geographic region was:\n\nTable:\n |  | 2019 | 2018\n | Note | \u00a3m | \u00a3m\nUK |  | 24.5 | 24.9\nIreland |  | 0.4 | 0.5\nTotal |  | 24.9 | 25.4\n\nQuestion: What was the percentage change in the amount for Ireland?"
+      ]
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Ireland 2019\",\"value\":\"0.4\"},{\"name\":\"Ireland 2018\",\"value\":\"0.5\"}],\"formula\":\"(0.4-0.5)/0.5*100\",\"answer\":-20}",
+    "input_tokens": 415,
+    "output_tokens": 133,
+    "latency_s": 1.184
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nItem 5. Market for Registrant's Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities\nMarket Information\nSince August 18, 2004, our common stock has been trading on the NASDAQ Global Select Market under the symbol \u201cTZOO.\u201d The following table sets forth, for the periods indicated, the high and low sales prices per share of our common stock as reported by NASDAQ.\nOn March 3, 2020, the last reported sales price of our common stock on the NASDAQ Global Select Market was $8.64 per share.\nAs of March 3, 2020, there were approximately 197 stockholders of record of our shares.\n\nTable:\n | High | Low\n2019: |  | \nFourth Quarter | $11.44 | $9.47\nThird Quarter | $14.96 | $10.26\nSecond Quarter | $20.91 | $12.61\nFirst Quarter | $18.19 | $8.87\n2018: |  | \nFourth Quarter | $12.16 | $7.43\nThird Quarter | $20.60 | $10.95\nSecond Quarter | $18.30 | $6.70\nFirst Quarter | $7.35 | $6.00\n\nQuestion: What is the difference in the high and low prices of the common stock in the fourth quarter of 2019?"
+      ]
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Q4 2019 High\",\"value\":\"$11.44\"},{\"name\":\"Q4 2019 Low\",\"value\":\"$9.47\"}],\"formula\":\"11.44 - 9.47\",\"answer\":1.97}",
+    "input_tokens": 541,
+    "output_tokens": 112,
+    "latency_s": 1.063
+  }
+}
