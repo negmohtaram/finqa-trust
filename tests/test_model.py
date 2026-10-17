@@ -142,3 +142,38 @@ def test_resuming_client_only_pays_for_new_calls(tmp_path):
     again.complete(req("q1"))
     again.complete(req("q2"))
     assert (first.live_calls, again.live_calls, live.calls) == (1, 1, 2)
+
+
+def _http_error(code, payload):
+    import io
+    import urllib.error
+    return urllib.error.HTTPError("https://x", code, "err", {}, io.BytesIO(payload.encode()))
+
+
+def test_json_the_model_failed_to_write_becomes_an_unreadable_reply(monkeypatch):
+    import json as _json
+    import urllib.request
+    from finqa_trust.model import GroqClient
+    from finqa_trust.structured import parse_structured
+    broken = '{"values":[{"name":"Diluted 2018","value":58,640}]'
+    body = _json.dumps({"error": {"code": "json_validate_failed", "failed_generation": broken}})
+
+    def fake_urlopen(http, timeout, context=None):
+        raise _http_error(400, body)
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    response = GroqClient(api_key="k").complete(req())
+    assert response.text == broken and response.error == "json_validate_failed"
+    assert parse_structured(response.text) is None          # the labeler will call it unreadable
+
+
+def test_other_client_errors_still_raise(monkeypatch):
+    import urllib.request
+    from finqa_trust.model import GroqClient
+
+    def fake_urlopen(http, timeout, context=None):
+        raise _http_error(400, '{"error": {"code": "model_not_found"}}')
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    with pytest.raises(RuntimeError, match="400"):
+        GroqClient(api_key="k").complete(req())

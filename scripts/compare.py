@@ -12,7 +12,8 @@ from finqa_trust.stats import bootstrap_ci, paired_bootstrap_diff
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
-FILES = {"alone": "alone.jsonl", "code": "code.jsonl", "temp0": "temp0.jsonl", "vote k=5": "vote_k5.jsonl"}
+FILES = {"alone": "alone.jsonl", "code": "code.jsonl", "temp0": "temp0.jsonl", "vote k=3": "vote_k3.jsonl",
+         "vote k=5": "vote_k5.jsonl"}
 # Groq list price for openai/gpt-oss-120b (console.groq.com, checked 2026-10-17). The runs used the
 # free tier, so these are what the same calls would cost on a paid account.
 PRICE_IN, PRICE_OUT = 0.15 / 1e6, 0.60 / 1e6
@@ -35,10 +36,11 @@ def main() -> None:
     base = [row["correct"] for row in runs["alone"]]
     n = len(ids)
 
-    lines = [f"Paired comparison on the same {n} questions (model alone = temperature 1.0, one answer).", "",
+    lines = [f"Paired comparison on the same {n} questions (model alone = temperature 1.0, one answer). "
+             "Runs used the free tier; the price column is Groq's list price for the same tokens.", "",
              "| approach | correct | 95% CI | vs alone | 95% CI of difference | alone wrong → right | "
-             "alone right → wrong | calls | tokens | latency serial / parallel (s) | cost per 1,000 questions "
-             "| cost per 1,000 correct |",
+             "alone right → wrong | calls | tokens per question | tokens per correct answer | "
+             "latency serial / parallel (s) | list price per 1,000 correct |",
              "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for approach, rows in runs.items():
         flags = [row["correct"] for row in rows]
@@ -54,7 +56,7 @@ def main() -> None:
         vs = "" if approach == "alone" else f"{diff:+.0%}"
         dci = "" if approach == "alone" else f"[{dlo:+.0%}, {dhi:+.0%}]"
         lines.append(f"| {approach} | {pct(acc)} | [{pct(lo)}, {pct(hi)}] | {vs} | {dci} | {fixed} | {broke} | "
-                     f"{calls:.0f} | {tokens:,.0f} | {serial:.1f} / {parallel:.1f} | ${cost / n * 1000:.2f} | "
+                     f"{calls:.0f} | {tokens:,.0f} | {tokens * n / max(sum(flags), 1):,.0f} | {serial:.1f} / {parallel:.1f} | "
                      f"${cost / max(sum(flags), 1) * 1000:.2f} |")
 
     used = [label for label in LABELS if any(r["label"] == label for rows in runs.values() for r in rows)]

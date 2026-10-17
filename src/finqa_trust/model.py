@@ -32,6 +32,7 @@ class ModelResponse:
     input_tokens: int = 0
     output_tokens: int = 0
     latency_s: float = 0.0
+    error: str = ""                           # set when the model's own output was rejected, e.g. invalid JSON
 
 
 DEFAULT_MODEL = "openai/gpt-oss-120b"
@@ -96,6 +97,18 @@ GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 _TLS = ssl.create_default_context(cafile=certifi.where())
 
 
+def _failed_generation(code: int, body: str) -> str | None:
+    if code != 400:
+        return None
+    try:
+        error = json.loads(body).get("error", {})
+    except json.JSONDecodeError:
+        return None
+    if error.get("code") != "json_validate_failed":
+        return None
+    return error.get("failed_generation", "")
+
+
 @dataclass
 class GroqClient:
     """Calls Groq's OpenAI-compatible chat API. The key comes from GROQ_API_KEY."""
@@ -126,8 +139,14 @@ class GroqClient:
             with urllib.request.urlopen(http, timeout=self.timeout_s, context=_TLS) as resp:
                 data = json.loads(resp.read())
         except urllib.error.HTTPError as err:
-            detail = err.read().decode(errors="replace")[:300]
-            raise RuntimeError(f"Groq returned {err.code} for model {request.model!r}: {detail}") from None
+            detail = err.read().decode(errors="replace")
+            failed = _failed_generation(err.code, detail)
+            if failed is not None:
+                # The model wrote broken JSON and Groq refused to return it. That is the model's
+                # answer failing, not the request: keep it as a reply so it is scored, not retried.
+                return ModelResponse(text=failed, error="json_validate_failed",
+                                     latency_s=round(time.perf_counter() - start, 3))
+            raise RuntimeError(f"Groq returned {err.code} for model {request.model!r}: {detail[:300]}") from None
         usage = data.get("usage", {})
         return ModelResponse(
             text=data["choices"][0]["message"]["content"] or "",
