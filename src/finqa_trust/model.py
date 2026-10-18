@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import random
 import ssl
 import time
 import urllib.error
@@ -181,11 +182,17 @@ class DailyLimit(RuntimeError):
 
 def ask(client: ModelClient, request: ModelRequest, pause: float = 2.0) -> ModelResponse:
     """Call with a pause after each live call. A per-minute 429 waits and retries;
-    a per-day 429 stops at once, since recordings let the run resume later."""
+    a per-day 429 stops at once, since recordings let the run resume later.
+    A timeout or dropped connection is retried with capped backoff and full jitter."""
     for attempt in range(6):
         before = getattr(client, "live_calls", 0)
         try:
             response = client.complete(request)
+        except (TimeoutError, ConnectionError, urllib.error.URLError) as err:
+            if isinstance(err, urllib.error.HTTPError) or attempt == 5:
+                raise
+            time.sleep(random.uniform(0, min(60, 5 * 2 ** attempt)))
+            continue
         except RuntimeError as err:
             if "429" not in str(err) or attempt == 5:
                 raise

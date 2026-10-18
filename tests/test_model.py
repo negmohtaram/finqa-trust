@@ -177,3 +177,27 @@ def test_other_client_errors_still_raise(monkeypatch):
     monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
     with pytest.raises(RuntimeError, match="400"):
         GroqClient(api_key="k").complete(req())
+
+
+def test_a_timeout_is_retried_and_a_bad_request_is_not(monkeypatch):
+    import time as _time
+    from finqa_trust.model import ask
+    monkeypatch.setattr(_time, "sleep", lambda s: None)
+
+    class Flaky:
+        def __init__(self, error, failures):
+            self.error, self.failures, self.calls = error, failures, 0
+
+        def complete(self, request):
+            self.calls += 1
+            if self.calls <= self.failures:
+                raise self.error
+            return ModelResponse(text="ok")
+
+    slow = Flaky(TimeoutError("The read operation timed out"), failures=2)
+    assert ask(slow, req(), pause=0).text == "ok" and slow.calls == 3
+
+    bad = Flaky(RuntimeError("Groq returned 400 for model 'm1': bad request"), failures=1)
+    with pytest.raises(RuntimeError, match="400"):
+        ask(bad, req(), pause=0)
+    assert bad.calls == 1
