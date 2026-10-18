@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import random
 import ssl
 import time
 import urllib.error
@@ -32,6 +33,7 @@ class ModelResponse:
     input_tokens: int = 0
     output_tokens: int = 0
     latency_s: float = 0.0
+    error: str = ""                           # set when the model's own output was rejected, e.g. invalid JSON
 
 
 DEFAULT_MODEL = "openai/gpt-oss-120b"
@@ -96,6 +98,18 @@ GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 _TLS = ssl.create_default_context(cafile=certifi.where())
 
 
+def _failed_generation(code: int, body: str) -> str | None:
+    if code != 400:
+        return None
+    try:
+        error = json.loads(body).get("error", {})
+    except json.JSONDecodeError:
+        return None
+    if error.get("code") != "json_validate_failed":
+        return None
+    return error.get("failed_generation", "")
+
+
 @dataclass
 class GroqClient:
     """Calls Groq's OpenAI-compatible chat API. The key comes from GROQ_API_KEY."""
@@ -126,8 +140,14 @@ class GroqClient:
             with urllib.request.urlopen(http, timeout=self.timeout_s, context=_TLS) as resp:
                 data = json.loads(resp.read())
         except urllib.error.HTTPError as err:
-            detail = err.read().decode(errors="replace")[:300]
-            raise RuntimeError(f"Groq returned {err.code} for model {request.model!r}: {detail}") from None
+            detail = err.read().decode(errors="replace")
+            failed = _failed_generation(err.code, detail)
+            if failed is not None:
+                # The model wrote broken JSON and Groq refused to return it. That is the model's
+                # answer failing, not the request: keep it as a reply so it is scored, not retried.
+                return ModelResponse(text=failed, error="json_validate_failed",
+                                     latency_s=round(time.perf_counter() - start, 3))
+            raise RuntimeError(f"Groq returned {err.code} for model {request.model!r}: {detail[:300]}") from None
         usage = data.get("usage", {})
         return ModelResponse(
             text=data["choices"][0]["message"]["content"] or "",
@@ -145,9 +165,42 @@ class ResumingClient:
     folder: Path
     live_calls: int = 0
 
+    def is_recorded(self, request: ModelRequest) -> bool:
+        return (self.folder / f"{request_key(request)}.json").exists()
+
     def complete(self, request: ModelRequest) -> ModelResponse:
         try:
             return ReplayClient(self.folder).complete(request)
         except ReplayMiss:
             self.live_calls += 1
             return RecordingClient(self.inner, self.folder).complete(request)
+
+
+class DailyLimit(RuntimeError):
+    """The provider's daily quota is used up. Waiting minutes will not help; rerun tomorrow."""
+
+
+def ask(client: ModelClient, request: ModelRequest, pause: float = 2.0) -> ModelResponse:
+    """Call with a pause after each live call. A per-minute 429 waits and retries;
+    a per-day 429 stops at once, since recordings let the run resume later.
+    A timeout or dropped connection is retried with capped backoff and full jitter."""
+    for attempt in range(6):
+        before = getattr(client, "live_calls", 0)
+        try:
+            response = client.complete(request)
+        except (TimeoutError, ConnectionError, urllib.error.URLError) as err:
+            if isinstance(err, urllib.error.HTTPError) or attempt == 5:
+                raise
+            time.sleep(random.uniform(0, min(60, 5 * 2 ** attempt)))
+            continue
+        except RuntimeError as err:
+            if "429" not in str(err) or attempt == 5:
+                raise
+            if "per day" in str(err):
+                raise DailyLimit(str(err)) from None
+            time.sleep(30 * (attempt + 1))
+            continue
+        if getattr(client, "live_calls", 0) > before:
+            time.sleep(pause)
+        return response
+    raise AssertionError("unreachable")

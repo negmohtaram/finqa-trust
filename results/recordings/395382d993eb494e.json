@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\namerican tower corporation and subsidiaries notes to consolidated financial statements ( 3 ) consists of customer-related intangibles of approximately $ 15.5 million and network location intangibles of approximately $ 19.8 million .\nthe customer-related intangibles and network location intangibles are being amortized on a straight-line basis over periods of up to 20 years .\n( 4 ) the company expects that the goodwill recorded will be deductible for tax purposes .\nthe goodwill was allocated to the company 2019s international rental and management segment .\nuganda acquisition 2014on december 8 , 2011 , the company entered into a definitive agreement with mtn group to establish a joint venture in uganda .\nthe joint venture is controlled by a holding company of which a wholly owned subsidiary of the company ( the 201catc uganda subsidiary 201d ) holds a 51% ( 51 % ) interest and a wholly owned subsidiary of mtn group ( the 201cmtn uganda subsidiary 201d ) holds a 49% ( 49 % ) interest .\nthe joint venture is managed and controlled by the company and owns a tower operations company in uganda .\npursuant to the agreement , the joint venture agreed to purchase a total of up to 1000 existing communications sites from mtn group 2019s operating subsidiary in uganda , subject to customary closing conditions .\non june 29 , 2012 , the joint venture acquired 962 communications sites for an aggregate purchase price of $ 171.5 million , subject to post-closing adjustments .\nthe aggregate purchase price was subsequently increased to $ 173.2 million , subject to future post-closing adjustments .\nunder the terms of the purchase agreement , legal title to certain of these communications sites will be transferred upon fulfillment of certain conditions by mtn group .\nprior to the fulfillment of these conditions , the company will operate and maintain control of these communications sites , and accordingly , reflect these sites in the allocation of purchase price and the consolidated operating results .\nthe following table summarizes the preliminary allocation of the aggregate purchase price consideration paid and the amounts of assets acquired and liabilities assumed based upon their estimated fair value at the date of acquisition ( in thousands ) : preliminary purchase price allocation .\n( 1 ) consists of customer-related intangibles of approximately $ 36.5 million and network location intangibles of approximately $ 27.0 million .\nthe customer-related intangibles and network location intangibles are being amortized on a straight-line basis over periods of up to 20 years .\n( 2 ) the company expects that the goodwill recorded will be not be deductible for tax purposes .\nthe goodwill was allocated to the company 2019s international rental and management segment .\ngermany acquisition 2014on november 14 , 2012 , the company entered into a definitive agreement to purchase communications sites from e-plus mobilfunk gmbh & co .\nkg .\non december 4 , 2012 , the company completed the purchase of 2031 communications sites , for an aggregate purchase price of $ 525.7 million. .\n\nTable:\n | preliminary purchase price allocation\nnon-current assets | $ 2258\nproperty and equipment | 102366\nintangible assets ( 1 ) | 63500\nother non-current liabilities | -7528 ( 7528 )\nfair value of net assets acquired | $ 160596\ngoodwill ( 2 ) | 12564\n\nQuestion: for the mtn deal , what was the total post closing adjustments , in millions?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 2
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"aggregate purchase price increased\",\"value\":\"173.2 million\"},{\"name\":\"original purchase price\",\"value\":\"171.5 million\"}],\"formula\":\"173.2 - 171.5\",\"answer\":1.7}",
+    "input_tokens": 970,
+    "output_tokens": 131,
+    "latency_s": 1.082,
+    "error": ""
+  }
+}

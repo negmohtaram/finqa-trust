@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nNOTES TO CONSOLIDATED FINANCIAL STATEMENTS (in thousands, except for share and per share data)\nNOTE 21 \u2014 Quarterly Financial Data\nQuarterly Results of Operations (Unaudited)\n\nTable:\n | First | Second | Third | Fourth\n2019 |  |  |  | \nNet sales | $117,625 | $120,684 | $115,651 | $115,040\nGross margin | $40,615 | $41,204 | $37,057 | $38,700\nOperating earnings | $14,218 | $17,083 | $10,124 | $12,391\nNet earnings | $11,419 | $11,943 | $2,722 | $10,062\nBasic earnings per share | $0.35 | $0.36 | $0.08 | $0.31\nDiluted earnings per share | $0.34 | $0.36 | $0.08 | $0.31\n2018 |  |  |  | \nNet sales | $113,530 | $118,021 | $118,859 | $120,073\nGross margin | $38,433 | $41,813 | $42,082 | $42,645\nOperating earnings | $13,359 | $14,544 | $16,118 | $17,017\nNet earnings | $ 11,54 | $7,209 | $10,211 | $17,564\nBasic earnings per share | $0.35 | $0.22 | $0.31 | $0.53\nDiluted earnings per share | $0.34 | $0.21 | $0.30 | $0.52\n\nQuestion: What was the change in the net sales between the third and fourth quarter?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 2
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Q3 Net sales 2019\",\"value\":\"115,651\"},{\"name\":\"Q4 Net sales 2019\",\"value\":\"115,040\"}],\"formula\":\"115040 - 115651\",\"answer\":-611}",
+    "input_tokens": 626,
+    "output_tokens": 117,
+    "latency_s": 1.91,
+    "error": ""
+  }
+}

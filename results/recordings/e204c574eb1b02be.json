@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nNote 18\u2014Composition of Certain Financial Statement Captions\n(1) During the year ended January 3, 2020 and December 28, 2018, the Company recognized $417 million and $146 million, respectively, of amortization related to its transition costs and project assets. (2) Balance represents items that are not individually significant to disclose separately.\n(3) Balances are net of $25 million and $29 million of dividends received during fiscal 2019 and fiscal 2018, respectively, that were recorded in cash flows provided by operating activities of continuing operations on the consolidated statements of cash flows.\n(4) During the year ended January 3, 2020, the Company combined \"Dividends payable and \"Income taxes payable\" with \"Accounts payable and accrued liabilities\" on the consolidated balance sheets. As a result, the prior year activity has been reclassified to conform with the current year presentation.\n\nTable:\nBalance Sheet | January 3, 2020 | December 28, 2018\n | (in millions) | \nOther current assets: |  | \nTransition costs and project assets(1) | $98 | $145\nPre-contract costs | 6 | 41\nOther(2) | 306 | 357\n | $410 | $543\nOther assets: |  | \nTransition costs and project assets(1) | $207 | $22\nEquity method investments(3) | 19 | 26\nOther(2) | 200 | 134\n | $426 | $182\nAccounts payable and accrued liabilities: |  | \nAccrued liabilities | $822 | $650\nAccounts payable | 592 | 547\nDeferred revenue | 400 | 276\nOther(2)(4) | 23 | 18\n | $1,837 | $1,491\nAccrued payroll and employee benefits: |  | \nAccrued vacation | $232 | $225\nSalaries, bonuses and amounts withheld from employees\u2019 compensation | 203 | 248\n | $435 | $473\n\nQuestion: What was the change in the Equity method investments from 2018 to 2020?"
+      ]
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Equity method investments 2020\",\"value\":19},{\"name\":\"Equity method investments 2018\",\"value\":26}],\"formula\":\"19 - 26\",\"answer\":-7}",
+    "input_tokens": 704,
+    "output_tokens": 109,
+    "latency_s": 1.891
+  }
+}

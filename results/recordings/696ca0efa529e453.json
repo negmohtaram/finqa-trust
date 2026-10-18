@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\n15. Net Income per Share\nThe following is a calculation of basic and diluted net income per share (in millions, except per share amounts):\nPotential shares from outstanding employee equity awards totaling 1 million, 1 million and 6 million for fiscal 2019, 2018 and 2017, respectively, were excluded from the diluted net income per share calculations as their inclusion would have been anti-dilutive.\n\nTable:\n |  | Year Ended | \n | April 26, 2019 | April 27, 2018 | April 28, 2017\nNumerator: |  |  | \nNet income | $ 1,169 | $ 116 | $ 481\nDenominator: |  |  | \nShares used in basic computation | 254 | 268 | 275\nDilutive impact of employee equity award plans | 5 | 8 | 6\nShares used in diluted computation | 259 | 276 | 281\nNet Income per Share: |  |  | \nBasic | $ 4.60 | $ 0.43 | $ 1.75\nDiluted | $ 4.51 | $ 0.42 | $ 1.71\n\nQuestion: What was the change in the Dilutive impact of employee equity award plans between 2018 and 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 3
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Dilutive impact 2019\",\"value\":5},{\"name\":\"Dilutive impact 2018\",\"value\":8}],\"formula\":\"5 - 8\",\"answer\":-3}",
+    "input_tokens": 529,
+    "output_tokens": 103,
+    "latency_s": 1.147
+  }
+}

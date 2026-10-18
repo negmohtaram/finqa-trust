@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nIn 2019 we recognized other income, net of expenses, of $103 million, increasing compared to $53 million in 2018, mainly benefitting from the grants associated with the programs part of the European Commission IPCEI in Italy and in France, partially offset by a higher level of start-up costs associated with the production ramp up of the 200 mm fab recently acquired from Micron Technology Inc. in Singapore.\nIn 2018 we recognized other income, net of expenses, of $53 million, slightly decreasing compared to $55 million in 2017, mainly due to lower level of R&D grants.\n\nTable:\n | Year Ended December 31, | Year Ended December 31, | Year Ended December 31,\n | 2019 | 2018 | 2017\n | (In millions) | (In millions) | (In millions)\nResearch and development funding | $132 | $52 | $65\nPhase-out and start-up costs | (38) | (1) | (8)\nExchange gain (loss), net | \u2014 | 4 | 4\nPatent costs | (1) | (8) | (9)\nGain on sale of businesses and non-current assets | 7 | 8 | 4\nOther, net | 3 | (2) | (1)\nOther income and expenses, net | $103 | $53 | $55\nAs percentage of net revenues | 1.1% | 0.5% | 0.7%\n\nQuestion: What is the increase/ (decrease) in Research and development funding from 2017 to 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 2
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Research and development funding 2019\",\"value\":\"$132\"},{\"name\":\"Research and development funding 2017\",\"value\":\"$65\"}],\"formula\":\"132 - 65\",\"answer\":67}",
+    "input_tokens": 587,
+    "output_tokens": 88,
+    "latency_s": 1.129,
+    "error": ""
+  }
+}

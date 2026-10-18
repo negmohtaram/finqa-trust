@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nGasLog Ltd. and its Subsidiaries\nNotes to the consolidated financial statements (Continued)\nFor the years ended December 31, 2017, 2018 and 2019\n(All amounts expressed in thousands of U.S. Dollars, except share and per share data)\n26. Derivative Financial Instruments (Continued)\nThe fair value of the derivative liabilities is as follows:\nInterest rate swap agreements\nThe Group enters into interest rate swap agreements which convert the floating interest rate exposure into a fixed interest rate in order to hedge a portion of the Group\u2019s exposure to fluctuations in prevailing market interest rates. Under the interest rate swaps, the bank counterparty effects quarterly floating-rate payments to the Group for the notional amount based on the U.S. dollar LIBOR, and the Group effects quarterly payments to the bank on the notional amount at the respective fixed rates.\nInterest rate swaps designated as cash flow hedging instruments\nAs of December 31, 2018 and 2019, there are no interest rate swaps designated as cash flow hedging instruments for accounting purposes.\n\nTable:\n | As of December 31, | \n | 2018 | 2019\nDerivative liabilities carried at fair value through profit or loss (FVTPL) |  | \nInterest rate swaps | 9,196 | 49,891\nForward foreign exchange contracts | 1,467 | 41\nDerivative liabilities designated and effective as hedging instruments carried at fair value |  | \nCross currency swaps | 1,429 | \u2014\nTotal | 12,092 | 49,932\nDerivative financial instruments, current liability | 2,091 | 8,095\nDerivative financial instruments, non-current liability | 10,001 | 41,837\nTotal | 12,092 | 49,932\n\nQuestion: What was the change in fair value of interest rate swaps from 2018 to 2019?"
+      ]
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Interest rate swaps 2018\",\"value\":\"9,196\"},{\"name\":\"Interest rate swaps 2019\",\"value\":\"49,891\"}],\"formula\":\"49,891 - 9,196\",\"answer\":40695}",
+    "input_tokens": 641,
+    "output_tokens": 99,
+    "latency_s": 1.178
+  }
+}

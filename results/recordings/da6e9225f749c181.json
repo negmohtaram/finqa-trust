@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nour ability to restructure or refinance our debt will depend on the condition of the capital markets and our financial condition at such time .\nany refinancing of our debt could be at higher interest rates and may require us to comply with more onerous covenants , which could further restrict our business operations .\nin addition , any failure to make payments of interest and principal on our outstanding indebtedness on a timely basis would likely result in a reduction of our credit rating , which could harm our ability to incur additional indebtedness .\nif our cash flows and available cash are insufficient to meet our debt service obligations , we could face substantial liquidity problems and might be required to dispose of material assets or operations to meet our debt service and other obligations .\nwe may not be able to consummate those dispositions or to obtain the proceeds that we could realize from them , and these proceeds may not be adequate to meet any debt service obligations then due .\nitem 1b .\nunresolved staff comments item 2 .\nproperties a summary of our significant locations at december 31 , 2013 is shown in the following table .\nall facilities are leased , except for 165000 square feet of our office in alpharetta , georgia .\nsquare footage amounts are net of space that has been sublet or part of a facility restructuring. .\nchicago , illinois ( 1 ) 36000 ( 1 ) includes approximately 25000 square footage related to g1 execution services , llc .\nwe entered into a definitive agreement to sell g1 execution services , llc to an affiliate of susquehanna .\nthe lease was assigned to susquehanna upon closing of the sale on february 10 , all of our facilities are used by either our trading and investing or balance sheet management segments , in addition to the corporate/other category .\nall other leased facilities with space of less than 25000 square feet are not listed by location .\nin addition to the significant facilities above , we also lease all 30 e*trade branches , ranging in space from approximately 2500 to 8000 square feet .\nwe believe our facilities space is adequate to meet our needs in 2014 .\nitem 3 .\nlegal proceedings on october 27 , 2000 , ajaxo , inc .\n( 201cajaxo 201d ) filed a complaint in the superior court for the state of california , county of santa clara .\najaxo sought damages and certain non-monetary relief for the company 2019s alleged breach of a non-disclosure agreement with ajaxo pertaining to certain wireless technology that ajaxo offered the company as well as damages and other relief against the company for their alleged misappropriation of ajaxo 2019s trade secrets .\nfollowing a jury trial , a judgment was entered in 2003 in favor of ajaxo against the company for $ 1.3 million for breach of the ajaxo non-disclosure agreement .\nalthough the jury found in favor of ajaxo on its claim against the company for misappropriation of trade secrets , the trial court subsequently denied ajaxo 2019s requests for additional damages and relief .\non december 21 , 2005 , the california court of appeal affirmed the above-described award against the company for breach of the nondisclosure agreement but remanded the case to the trial court for the limited purpose of determining what , if any , additional damages ajaxo may be entitled to as a result of the jury 2019s previous finding in favor of ajaxo on its claim against the company for misappropriation of trade secrets .\nalthough the company paid ajaxo the full amount due on the above-described judgment , the case was remanded back to the trial court , and on may 30 , 2008 , a jury returned a .\n\nTable:\nlocation | approximate square footage\nalpharetta georgia | 254000\njersey city new jersey | 107000\narlington virginia | 102000\nsandy utah | 66000\nmenlo park california | 63000\nnew york new york | 39000\nchicago illinois ( 1 ) | 36000\n\nQuestion: at december 31 , 2013 what was the percent of square feet of our office in alpharetta , georgia not leased"
+      ]
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"notLeased\",\"value\":165000},{\"name\":\"totalAlpharetta\",\"value\":254000}],\"formula\":\"(165000/254000)*100\",\"answer\":64.96}",
+    "input_tokens": 1112,
+    "output_tokens": 178,
+    "latency_s": 1.17
+  }
+}

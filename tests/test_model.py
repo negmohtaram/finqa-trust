@@ -142,3 +142,62 @@ def test_resuming_client_only_pays_for_new_calls(tmp_path):
     again.complete(req("q1"))
     again.complete(req("q2"))
     assert (first.live_calls, again.live_calls, live.calls) == (1, 1, 2)
+
+
+def _http_error(code, payload):
+    import io
+    import urllib.error
+    return urllib.error.HTTPError("https://x", code, "err", {}, io.BytesIO(payload.encode()))
+
+
+def test_json_the_model_failed_to_write_becomes_an_unreadable_reply(monkeypatch):
+    import json as _json
+    import urllib.request
+    from finqa_trust.model import GroqClient
+    from finqa_trust.structured import parse_structured
+    broken = '{"values":[{"name":"Diluted 2018","value":58,640}]'
+    body = _json.dumps({"error": {"code": "json_validate_failed", "failed_generation": broken}})
+
+    def fake_urlopen(http, timeout, context=None):
+        raise _http_error(400, body)
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    response = GroqClient(api_key="k").complete(req())
+    assert response.text == broken and response.error == "json_validate_failed"
+    assert parse_structured(response.text) is None          # the labeler will call it unreadable
+
+
+def test_other_client_errors_still_raise(monkeypatch):
+    import urllib.request
+    from finqa_trust.model import GroqClient
+
+    def fake_urlopen(http, timeout, context=None):
+        raise _http_error(400, '{"error": {"code": "model_not_found"}}')
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    with pytest.raises(RuntimeError, match="400"):
+        GroqClient(api_key="k").complete(req())
+
+
+def test_a_timeout_is_retried_and_a_bad_request_is_not(monkeypatch):
+    import time as _time
+    from finqa_trust.model import ask
+    monkeypatch.setattr(_time, "sleep", lambda s: None)
+
+    class Flaky:
+        def __init__(self, error, failures):
+            self.error, self.failures, self.calls = error, failures, 0
+
+        def complete(self, request):
+            self.calls += 1
+            if self.calls <= self.failures:
+                raise self.error
+            return ModelResponse(text="ok")
+
+    slow = Flaky(TimeoutError("The read operation timed out"), failures=2)
+    assert ask(slow, req(), pause=0).text == "ok" and slow.calls == 3
+
+    bad = Flaky(RuntimeError("Groq returned 400 for model 'm1': bad request"), failures=1)
+    with pytest.raises(RuntimeError, match="400"):
+        ask(bad, req(), pause=0)
+    assert bad.calls == 1

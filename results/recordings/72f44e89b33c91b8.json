@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\n10. Accrued Liabilities\nAccrued liabilities at April 30, 2019 and 2018, respectively, consisted of the following (in thousands):\n\nTable:\n | 2019 | 2018\nVacation and other compensation | $1,659 | $1,433\nIncentive compensation | 346 | 411\nPayroll taxes | 155 | 113\nDeferred revenue | - | 68\nWarranty reserve | 529 | 520\nCommissions | 378 | 307\nOther | 504 | 564\n | $3,571 | $3,416\n\nQuestion: What is the difference in the total accrued liabilities between 2018 and 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 2
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2019 total\",\"value\":\"3,571\"},{\"name\":\"2018 total\",\"value\":\"3,416\"}],\"formula\":\"(3571 - 3416)\",\"answer\":155}",
+    "input_tokens": 395,
+    "output_tokens": 160,
+    "latency_s": 1.324
+  }
+}

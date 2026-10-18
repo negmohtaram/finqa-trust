@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nwe have adequate access to capital markets to meet any foreseeable cash requirements , and we have sufficient financial capacity to satisfy our current liabilities .\ncash flows millions 2014 2013 2012 .\noperating activities higher net income in 2014 increased cash provided by operating activities compared to 2013 , despite higher income tax payments .\n2014 income tax payments were higher than 2013 primarily due to higher income , but also because we paid taxes previously deferred by bonus depreciation ( discussed below ) .\nhigher net income in 2013 increased cash provided by operating activities compared to 2012 .\nin addition , we made payments in 2012 for past wages as a result of national labor negotiations , which reduced cash provided by operating activities in 2012 .\nlower tax benefits from bonus depreciation ( as discussed below ) partially offset the increases .\nfederal tax law provided for 100% ( 100 % ) bonus depreciation for qualified investments made during 2011 and 50% ( 50 % ) bonus depreciation for qualified investments made during 2012-2013 .\nas a result , the company deferred a substantial portion of its 2011-2013 income tax expense , contributing to the positive operating cash flow in those years .\ncongress extended 50% ( 50 % ) bonus depreciation for 2014 , but this extension occurred in december and did not have a significant benefit on our income tax payments during 2014 .\ninvesting activities higher capital investments , including the early buyout of the long-term operating lease of our headquarters building for approximately $ 261 million , drove the increase in cash used in investing activities compared to 2013 .\nsignificant investments also were made for new locomotives , freight cars and containers , and capacity and commercial facility projects .\ncapital investments in 2014 also included $ 99 million for the early buyout of locomotives and freight cars under long-term operating leases , which we exercised due to favorable economic terms and market conditions .\nlower capital investments in locomotives and freight cars in 2013 drove the decrease in cash used in investing activities compared to 2012 .\nincluded in capital investments in 2012 was $ 75 million for the early buyout of 165 locomotives under long-term operating and capital leases during the first quarter of 2012 , which we exercised due to favorable economic terms and market conditions. .\n\nTable:\ncash flowsmillions | 2014 | 2013 | 2012\ncash provided by operating activities | $ 7385 | $ 6823 | $ 6161\ncash used in investing activities | -4249 ( 4249 ) | -3405 ( 3405 ) | -3633 ( 3633 )\ncash used in financing activities | -2982 ( 2982 ) | -3049 ( 3049 ) | -2682 ( 2682 )\nnet change in cash and cashequivalents | $ 154 | $ 369 | $ -154 ( 154 )\n\nQuestion: what was the percentage change in cash provided by operating activities from 2012 to 2013?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 3
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"cash provided by operating activities 2012\",\"value\":6161},{\"name\":\"cash provided by operating activities 2013\",\"value\":6823}],\"formula\":\"(6823 - 6161) / 6161 * 100\",\"answer\":10.74}",
+    "input_tokens": 882,
+    "output_tokens": 130,
+    "latency_s": 1.37
+  }
+}
