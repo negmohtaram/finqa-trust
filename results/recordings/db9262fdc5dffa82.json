@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nRESTRICTED STOCK UNITS\nThe following is a summary of RSUs award activity for the years ended December 31, 2019 and 2018:\nThe Company estimates the fair value of the granted shares using the market price of the Company\u2019s stock price at the grant date. For the years ended December 31, 2019, 2018 and 2017, the Company recognized $0.3 million, $0.9 million and $0.6 million, respectively of stock-based compensation expense related to the RSUs.\nAs of December 31, 2019, total compensation cost not yet recognized related to unvested RSUs was approximately $0.8 million, which is expected to be recognized over a weighted-average period of 2.3 years.\n\nTable:\n | 2019 |  | 2018 | \n | Number of Shares | Weighted Average Grant Date Fair Value | Number of Shares | Weighted Average Grant Date Fair Value\nNon-vested at beginning of year | 315,292 | $2.26 | 438,712 | $2.28\nShares granted | 253,113 | 2.17 | 200,000 | 3.16\nShares vested | 82,270 | 2.28 | 323,420 | 2.84\nNon-vested at end of year | 486,135 | $2.53 | 315,292 | $2.26\n\nQuestion: What is the change in the number of shares granted between 2018 and 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 3
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Shares granted 2019\",\"value\":253113},{\"name\":\"Shares granted 2018\",\"value\":200000}],\"formula\":\"(253113 - 200000)\",\"answer\":53113}",
+    "input_tokens": 571,
+    "output_tokens": 126,
+    "latency_s": 1.138
+  }
+}

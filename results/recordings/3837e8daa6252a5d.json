@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nPersonnel expenses for employees were as follows:\nPersonnel expenses are included in cost of sales and in operating expenses in the consolidated statement of profit or loss.\n\nTable:\n | December 31, | \n | 2018 | 2019\nWages and salaries | 158,371 | 191,459\nSocial security | 14,802 | 17,214\nPension expenses | 6,937 | 8,408\nShare-based payment expenses | 8,215 | 10,538\nRestructuring expenses | 178 | 108\nTotal | 188,503 | 227,727\n\nQuestion: What is the percentage change in total personnel expenses from 2018 to 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 2
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"total_2018\",\"value\":188503},{\"name\":\"total_2019\",\"value\":227727}],\"formula\":\"(227727 - 188503) / 188503 * 100\",\"answer\":20.81}",
+    "input_tokens": 396,
+    "output_tokens": 122,
+    "latency_s": 1.841,
+    "error": ""
+  }
+}

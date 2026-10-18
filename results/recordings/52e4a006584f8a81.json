@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nGreenSky, Inc. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS \u2014 (Continued) (United States Dollars in thousands, except per share data, unless otherwise stated)\nNote 13. Income Taxes\nGreenSky, Inc. is taxed as a corporation and pays corporate federal, state and local taxes on income allocated to it from GS Holdings based upon GreenSky, Inc.\u2019s economic interest held in GS Holdings. GS Holdings is treated as a pass-through partnership for income tax reporting purposes and not subject to federal income tax. Accordingly, the Company is not liable for income taxes on the portion of GS Holdings' earnings not allocated to it. The results for the year ended December 31, 2017 do not reflect income tax expense because, prior to the Reorganization Transactions, the consolidated GSLLC (and subsequently GS Holdings) pass-through entity was not subject to corporate tax.\nThe Company's income before income tax expense of $88,848, $133,514 and $138,668 during the years ended December 31, 2019, 2018 and 2017, respectively, consisted entirely of income earned in the United States.\nComponents of income tax expense consisted of the following for the years indicated: Year\n\nTable:\n | Year Ended December 31, | \n | 2019 | 2018\nCurrent income tax expense (benefit): |  | \nFederal | $5 | $4\nState | 10 | 5\nDeferred income tax expense (benefit): |  | \nFederal | 4,206 | 4,860\nState | (11,346) | 665\nIncome tax expense (benefit) | $(7,125) | $5,534\n\nQuestion: What was the change in Federal Deferred income tax expense between 2018 and 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 2
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Federal Deferred 2019\",\"value\":\"4,206\"},{\"name\":\"Federal Deferred 2018\",\"value\":\"4,860\"}],\"formula\":\"4,206 - 4,860\",\"answer\":-654}",
+    "input_tokens": 623,
+    "output_tokens": 113,
+    "latency_s": 1.017,
+    "error": ""
+  }
+}

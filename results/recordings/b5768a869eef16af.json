@@ -1,0 +1,26 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\n2 Alternative performance measures continued\nNet debt to earnings before interest, tax, depreciation and amortisation (EBITDA)\nTo assess the size of the net debt balance relative to the size of the earnings for the Group, we analyse net debt as a proportion of EBITDA. EBITDA is calculated by adding back depreciation and amortisation of owned property, plant and equipment, software and development to adjusted operating profit. Net debt excludes IFRS 16 lease liabilities. The net debt to EBITDA ratio is calculated as follows:\nThe components of net debt are disclosed in Note 24.\n\nTable:\n | 2019 | 2018\n | \u00a3m | \u00a3m\nAdjusted operating profit | 282.7 | 264.9\nDepreciation and amortisation of property, plant and equipment, software and development | 34.3 | 32.9\nEarnings before interest, tax, depreciation and amortisation | 317.0 | 297.8\nNet debt | 295.2 | 235.8\nNet debt to EBITDA | 0.9 | 0.8\n\nQuestion: What was the change in net debt from 2018 to 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 4
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Net debt 2019\",\"value\":295.2},{\"name\":\"Net debt 2018\",\"value\":235.8}],\"formula\":\"295.2 - 235.8\",\"answer\":59.4}",
+    "input_tokens": 489,
+    "output_tokens": 105,
+    "latency_s": 0.998
+  }
+}

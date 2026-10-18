@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Text:\nNOTE 7\u2014ACCOUNTS RECEIVABLE\nThe components of accounts receivable are as follows (in thousands):\nAmounts billed include $60.3 million and $80.5 million due on U.S. federal government contracts at September 30, 2019 and 2018, respectively. As further described in Note 2, effective October 1, 2018, the component of accounts receivable that consisted of unbilled contract receivables as reported under ASC 605 has been reclassified as contract assets under ASC 606.\nIn our normal course of business, we may sell trade receivables to financial institutions as a cash management technique. We do not retain financial or legal obligations for these receivables that would result in material losses. Our ongoing involvement is limited to the remittance of customer payments to the financial institutions with respect to the sold trade receivables; therefore, our sold trade receivables are not included in our Consolidated Balance Sheet in any period presented. As of September 30, 2019, we sold $31.1 million of outstanding trade receivables to financial institutions.\n\nTable:\n | September 30, | \n | 2019 | 2018\nAccounts receivable |  | \nBilled | $  127,406 | $  156,948\nUnbilled | \u2014 | 242,877\nAllowance for doubtful accounts | (1,392) | (1,324)\nTotal accounts receivable | 126,014 | 398,501\nLess estimated amounts not currently due | \u2014 | (6,134)\nCurrent accounts receivable | $  126,014 | $ 392,367\n\nQuestion: What is the sum of amounts billed due on U.S. federal government contracts in 2018 and 2019?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 2
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2019 billed contracts\",\"value\":60.3},{\"name\":\"2018 billed contracts\",\"value\":80.5}],\"formula\":\"60.3 + 80.5\",\"answer\":140.8}",
+    "input_tokens": 621,
+    "output_tokens": 125,
+    "latency_s": 1.66,
+    "error": ""
+  }
+}
