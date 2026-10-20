@@ -46,6 +46,34 @@ python scripts/run_baseline.py --runs 2
 ```
 The model calls behind these numbers are stored in `results/recordings/`, so this replays them with no API key and no network. Questions without a recording are sent to Groq, which needs `GROQ_API_KEY`.
 
+## Four approaches: what fails and what it costs
+
+The same 100 questions were answered four ways: the model alone, the model's formula run as code, temperature 0, and a majority vote over three samples. Prices are Groq's list price for the same tokens (the runs used the free tier). The full table is in `results/comparison.md`.
+
+| approach | correct (95% CI) | list price per 1,000 correct |
+|---|---|---|
+| alone | 77% (69 to 85) | $0.28 ($0.26 to $0.32) |
+| code | 77% (69 to 85) | $0.28 ($0.26 to $0.32) |
+| temperature 0 | 76% (67 to 84) | $0.29 |
+| vote, 3 samples | 78% (69 to 86) | $0.84 ($0.76 to $0.95) |
+
+![accuracy against cost](docs/cost_accuracy.png)
+
+I read all 25 questions that any approach got wrong and grouped them by cause.
+
+| cause | wrong answers (alone) |
+|---|---|
+| Gold answer is wrong; the model's answer is right or the gold cannot be trusted | 5 |
+| Question is ambiguous (sign, amount or percent, which base) and the model's reading is fair | 7 |
+| Right kind of number from the wrong row, segment or period | 4 |
+| Returned an input value or refused instead of computing the ratio | 4 |
+| Finance convention missed (cumulative return measured from a base of 100) | 2 |
+| Random slip seen in one sample only | 1 |
+
+Only one failure in 25 was a misread number. The automatic "extraction" label was too broad here. Most of those cases were the wrong row, a missing calculation or a broken gold answer. On the 95 questions with a trustworthy gold answer the model alone scores 81%. Most errors repeat in every approach, temperature 0 and voting included, so they are systematic and more samples do not remove them.
+
+**What I would ship.** The model alone, with its formula run as code. At list price it costs $0.28 per 1,000 correct answers, and the accuracy interval puts that between $0.26 and $0.32. Running the formula adds nothing to the price and protects against arithmetic slips. Voting triples the cost for one extra correct answer, which is within noise. Temperature 0 changed one answer net. The next step is a better input and a check, not more samples. When the formula is empty or the answer is not the ratio the question asks for, the model gets one retry with the reason. Each value will also name the row and column it came from, so code can verify it.
+
 ## How many questions are enough?
 On one fixed sample, two approaches can be compared question by question. Only the questions where they disagree carry information, which makes paired comparisons much cheaper than comparing two separate test sets:
 
