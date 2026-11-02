@@ -6,7 +6,8 @@ requires-python = ">=3.11"
 dependencies = ["pydantic>=2", "certifi"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff==0.15.20"]
+dev = ["pytest>=8", "ruff==0.15.20", "numpy>=2"]
+retrieval = ["sentence-transformers>=5"]
 plots = ["matplotlib>=3.8"]
 
 [build-system]
