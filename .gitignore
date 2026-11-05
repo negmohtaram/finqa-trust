@@ -18,4 +18,5 @@ __pycache__/
 !results/comparison.md
 !results/retrieval.md
 !results/rerank.md
+!results/hybrid_by_number.md
 !results/gold_vs_retrieved.md

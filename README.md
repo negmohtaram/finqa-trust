@@ -87,3 +87,37 @@ On one fixed sample, two approaches can be compared question by question. Only t
 ![interval width against number of questions](docs/ci_width.png)
 
 Code: `src/finqa_trust/stats.py`.
+
+## Retrieval: what it costs and how it fails
+
+Search runs over chunks of the same FinQA reports, on 883 dev questions. Tables stay whole in the `table_whole` chunks. The full tables are in `results/retrieval.md`, `results/rerank.md` and `results/hybrid_by_number.md`.
+
+**When does hybrid search beat dense search?** Hybrid beat dense in every setup we measured, and the gain grew as the search got harder. Recall@5 rose by 2.1 points on whole-table chunks inside the question's company and by 5.3 on fixed chunks. Across all companies the gains were 10.3 and 15.7. Questions with a number gained 2.2 points on whole-table chunks inside the company, and questions without one gained 1.8. A figure in the question does not explain the gain. Exact finance terms may explain it, because keyword search compares them word by word while dense search compares whole vectors, but we have not tested this. Keyword search alone was ahead of fusion by about a point on fixed chunks and behind it by 2.1 points on whole-table chunks.
+
+**Reranking.** A cross-encoder over the top 50 did not help. Recall@5 changed by -0.5 points [-1.9, +1.0] and recall@1 by +0.2 [-2.5, +2.9], at 2.84 seconds per question on a laptop CPU. It stays out of the pipeline.
+
+**Accuracy lost to retrieval.** The same 55 questions were answered twice from the full page and twice from the top 5 chunks, with the same model and answer format.
+
+| Questions | n | Full page | Top 5 chunks | Difference, points |
+|---|---|---|---|---|
+| All | 55 | 0.636 | 0.582 | -5.5 [-17.3, +6.4] |
+| All evidence in the top 5 | 46 | 0.641 | 0.652 | +1.1 [-10.9, +13.0] |
+| Some evidence missing | 9 | 0.611 | 0.222 | -38.9 [-72.2, -11.1] |
+
+The model is wrong on 36.4% of answers even with the full page, so most errors are not caused by retrieval. At this sample size, the interval around the 5.5-point drop includes zero. The loss shows up when evidence is missing.
+
+**How retrieval fails.** This covers all 141 questions with evidence missing from the top 5 (`table_whole`, fusion, inside the company). Each one gets the type of the first rule that matches.
+
+| Type | Rule | Count | Example question |
+|---|---|---|---|
+| Wrong page | no chunk from the question's page in the top 5 | 11 | percentage change in revenues from related parties, 2016 to 2017 (AES 2017) |
+| Never found | a missing piece is not in the top 50 | 5 | long-term debt due in the next 36 months (ETR 2013) |
+| Table ranked low | the table is on ranks 6 to 50 | 81 | percent change in long-term debt maturities, 2016 to 2017 (ETR 2015) |
+| Harmless sentence | only sentences without figures are missing | 5 | share of restricted cash from tax-exempt bonds (RSG 2009) |
+| Table without its sentence | the table is found, a sentence that explains it is not | 28 | percent change of securities, 2008 to 2009 (STT 2009) |
+| Sentence ranked low | only sentences are missing, no table evidence was found | 11 | ratio of the sales increase to its offsets (LMT 2016) |
+| **Total** | | **141** | |
+
+A sentence holding only a year counts as having a figure, so the harmless count is a lower bound. In most misses the right chunk was among the candidates and ranked too low.
+
+The code is in `src/finqa_trust/retrieval.py` and `scripts/retrieval_taxonomy.py`.
