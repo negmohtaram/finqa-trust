@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\ncurrent assets | $ 28.1\nproperty and equipment net | 0.2\ngoodwill | 258.9\nipr&d | 190.0\ncurrent liabilities assumed | -32.9 ( 32.9 )\ndeferred income taxes | -66.0 ( 66.0 )\ncontingent consideration | -30.3 ( 30.3 )\ntotal cash purchase price | 348.0\nless : cash acquired | -27.9 ( 27.9 )\ntotal cash purchase price net of cash acquired | $ 320.1\n\nExcerpt 2:\ncurrent assets | $ 3.6\nproperty and equipment net | 0.3\ngoodwill | 142.1\nipr&d | 53.1\nother assets | 0.1\ncurrent liabilities assumed | -0.8 ( 0.8 )\ndeferred income taxes | -12.7 ( 12.7 )\ntotal purchase price | 185.7\nless : cash acquired | -3.5 ( 3.5 )\ntotal purchase price net of cash acquired | $ 182.2\n\nExcerpt 3:\ngoodwill includes expected synergies and other benefits the company believes will result from the acquisition .\ngoodwill was assigned to the company 2019s united states segment and is not deductible for tax purposes .\nipr&d has been capitalized at fair value as an intangible asset with an indefinite life and will be assessed for impairment in subsequent periods .\nthe fair value of the ipr&d was determined using the income approach .\nthis approach determines fair value based on cash flow projections which are discounted to present value using a risk-adjusted rate of return .\nthe discount rate used to determine the fair value of the ipr&d was 16.5% ( 16.5 % ) .\ncompletion of successful design developments , bench testing , pre-clinical studies and human clinical studies are required prior to selling any product .\n\nExcerpt 4:\ngoodwill includes expected synergies and other benefits the company believes will result from the acquisition .\ngoodwill was assigned to the company 2019s united states segment and is not deductible for tax purposes .\nipr&d has been capitalized at fair value as an intangible asset with an indefinite life and will be assessed for impairment in subsequent periods .\nthe fair value of the ipr&d was determined using the income approach .\nthis approach determines fair value based on cash flow projections which are discounted to present value using a risk-adjusted rate of return .\nthe discount rates used to determine the fair value of the ipr&d ranged from 18.0% ( 18.0 % ) to 19.0% ( 19.0 % ) .\ncompletion of successful design developments , bench testing , pre-clinical studies and human clinical studies are required prior to selling any product .\n\nExcerpt 5:\nthis transaction resulted in an increase to goodwill of $ 258.9 million and ipr&d of $ 190.0 million. .\n\nQuestion: what percentage of the total purchase price net of cash acquired is ipr&d ?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"ipr&d\",\"value\":\"190.0\"},{\"name\":\"total cash purchase price net of cash acquired\",\"value\":\"320.1\"}],\"formula\":\"190.0/320.1*100\",\"answer\":59.37}",
+    "input_tokens": 888,
+    "output_tokens": 138,
+    "latency_s": 1.446,
+    "error": ""
+  }
+}

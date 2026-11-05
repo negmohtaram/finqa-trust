@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\n | 2005 | 2004 | 2003\ncomputed expected tax | $ 636 | $ 134 | $ 32\nstate taxes net of federal effect | -19 ( 19 ) | -5 ( 5 ) | -4 ( 4 )\nindefinitely invested earnings of foreign subsidiaries | -98 ( 98 ) | -31 ( 31 ) | -13 ( 13 )\nnondeductible executive compensation | 11 | 10 | 5\nresearch and development credit net | -26 ( 26 ) | -5 ( 5 ) | -7 ( 7 )\nother items | -24 ( 24 ) | 4 | 11\nprovision for income taxes | $ 480 | $ 107 | $ 24\neffective tax rate | 26% ( 26 % ) | 28% ( 28 % ) | 26% ( 26 % )\n\nExcerpt 2:\ngross margin gross margin for the three fiscal years ended september 27 , 2003 are as follows ( in millions , except gross margin percentages ) : .\n\nExcerpt 3:\ntable of contents notes to consolidated financial statements ( continued ) note 6 2014shareholders 2019 equity ( continued ) the following table summarizes activity in other comprehensive income related to derivatives , net of taxes , held by the company during the three fiscal years ended september 27 , 2008 ( in millions ) : the tax effect related to the changes in fair value of derivatives was $ ( 5 ) million , $ 1 million , and $ ( 8 ) million for 2008 , 2007 , and 2006 , respectively .\nthe tax effect related to derivative gains/losses reclassified from other comprehensive income to net income was $ ( 9 ) million , $ 2 million , and $ 8 million for 2008 , 2007 , and 2006 , respectively .\n\nExcerpt 4:\ncash used in financing activities of $ 37.5 billion during 2014 consisted primarily of cash used to repurchase common stock of $ 45.0 billion and cash used to pay dividends and dividend equivalents of $ 11.1 billion , partially offset by net proceeds from the issuance of long-term debt and commercial paper of $ 12.0 billion and $ 6.3 billion , respectively .\nduring 2013 , cash generated from operating activities of $ 53.7 billion was a result of $ 37.0 billion of net income , non-cash adjustments to net income of $ 10.2 billion and an increase in net change in operating assets and liabilities of $ 6.5 billion .\n\nExcerpt 5:\nduring 2014 , cash generated from operating activities of $ 59.7 billion was a result of $ 39.5 billion of net income , non-cash adjustments to net income of $ 13.2 billion and an increase in net change in operating assets and liabilities of $ 7.0 billion .\ncash used in investing activities of $ 22.6 billion during 2014 consisted primarily of cash used for purchases of marketable securities , net of sales and maturities , of $ 9.0 billion ; cash used to acquire property , plant and equipment of $ 9.6 billion ; and cash paid for business acquisitions , net of cash acquired , of $ 3.8 billion .\n\nQuestion: what was the lowest amount of research and development credit net in the three year period , in millions?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2005 R&D credit net\",\"value\":-26},{\"name\":\"2004 R&D credit net\",\"value\":-5},{\"name\":\"2003 R&D credit net\",\"value\":-7}],\"formula\":\"min(-26,-5,-7)\",\"answer\":-26}",
+    "input_tokens": 967,
+    "output_tokens": 158,
+    "latency_s": 1.716,
+    "error": ""
+  }
+}

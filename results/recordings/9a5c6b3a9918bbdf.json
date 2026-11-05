@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\ncash flowsmillions | 2014 | 2013 | 2012\ncash provided by operating activities | $ 7385 | $ 6823 | $ 6161\ncash used in investing activities | -4249 ( 4249 ) | -3405 ( 3405 ) | -3633 ( 3633 )\ncash used in financing activities | -2982 ( 2982 ) | -3049 ( 3049 ) | -2682 ( 2682 )\nnet change in cash and cashequivalents | $ 154 | $ 369 | $ -154 ( 154 )\n\nExcerpt 2:\noperating activities higher net income in 2014 increased cash provided by operating activities compared to 2013 , despite higher income tax payments .\n2014 income tax payments were higher than 2013 primarily due to higher income , but also because we paid taxes previously deferred by bonus depreciation ( discussed below ) .\nhigher net income in 2013 increased cash provided by operating activities compared to 2012 .\nin addition , we made payments in 2012 for past wages as a result of national labor negotiations , which reduced cash provided by operating activities in 2012 .\nlower tax benefits from bonus depreciation ( as discussed below ) partially offset the increases .\nfederal tax law provided for 100% ( 100 % ) bonus depreciation for qualified investments made during 2011 and 50% ( 50 % ) bonus depreciation for qualified investments made during 2012-2013 .\n\nExcerpt 3:\nmillions | 2015 | 2014 | 2013\ncash provided by operating activities | $ 7344 | $ 7385 | $ 6823\ncash used in investing activities | -4476 ( 4476 ) | -4249 ( 4249 ) | -3405 ( 3405 )\ncash used in financing activities | -3063 ( 3063 ) | -2982 ( 2982 ) | -3049 ( 3049 )\nnet change in cash and cash equivalents | $ -195 ( 195 ) | $ 154 | $ 369\n\nExcerpt 4:\noperating activities cash provided by operating activities decreased in 2015 compared to 2014 due to lower net income and changes in working capital , partially offset by the timing of tax payments .\nfederal tax law provided for 100% ( 100 % ) bonus depreciation for qualified investments made during 2011 and 50% ( 50 % ) bonus depreciation for qualified investments made during 2012-2013 .\nas a result , the company deferred a substantial portion of its 2011-2013 income tax expense , contributing to the positive operating cash flow in those years .\ncongress extended 50% ( 50 % ) bonus depreciation for 2014 , but this extension occurred in december , and the related benefit was realized in 2015 , rather than 2014 .\n\nExcerpt 5:\nresults of operations operating revenues millions 2014 2013 2012 % (  % ) change 2014 v 2013 % (  % ) change 2013 v 2012 .\n\nQuestion: what was the percentage change in cash provided by operating activities from 2012 to 2013?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2013 operating cash\",\"value\":6823},{\"name\":\"2012 operating cash\",\"value\":6161}],\"formula\":\"(6823 - 6161) / 6161 * 100\",\"answer\":10.75}",
+    "input_tokens": 919,
+    "output_tokens": 143,
+    "latency_s": 1.242,
+    "error": ""
+  }
+}

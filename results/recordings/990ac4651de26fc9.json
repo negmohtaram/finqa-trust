@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nthe following graph compares the cumulative 5-year total return to shareholders of cadence design systems , inc . 2019s common stock relative to the cumulative total returns of the s & p 500 index , the nasdaq composite index and the s & p information technology index .\nthe graph assumes that the value of the investment in the company 2019s common stock and in each of the indexes ( including reinvestment of dividends ) was $ 100 on december 29 , 2001 and tracks it through december 30 , 2006 .\ncomparison of 5 year cumulative total return* among cadence design systems , inc. , the s & p 500 index , the nasdaq composite index and the s & p information technology index 12/30/0612/31/051/1/051/3/0412/28/0212/29/01 cadence design systems , inc .\n\nExcerpt 2:\nstockholder return performance graphs the following graph compares the cumulative 5-year total stockholder return on our common stock relative to the cumulative total return of the nasdaq composite index and the s&p 400 information technology index .\nthe graph assumes that the value of the investment in our common stock and in each index ( including reinvestment of dividends ) was $ 100 on december 29 , 2007 and tracks it through december 29 , 2012 .\ncomparison of 5 year cumulative total return* among cadence design systems , inc. , the nasdaq composite index , and s&p 400 information technology cadence design systems , inc .\nnasdaq composite s&p 400 information technology 12/29/1212/31/111/1/111/2/101/3/0912/29/07 *$ 100 invested on 12/29/07 in stock or 12/31/07 in index , including reinvestment of dividends .\nindexes calculated on month-end basis .\ncopyright a9 2013 s&p , a division of the mcgraw-hill companies inc .\n\nExcerpt 3:\n | 12/29/2007 | 1/3/2009 | 1/2/2010 | 1/1/2011 | 12/31/2011 | 12/29/2012\ncadence design systems inc . | 100.00 | 22.55 | 35.17 | 48.50 | 61.07 | 78.92\nnasdaq composite | 100.00 | 59.03 | 82.25 | 97.32 | 98.63 | 110.78\ns&p 400 information technology | 100.00 | 54.60 | 82.76 | 108.11 | 95.48 | 109.88\n\nExcerpt 4:\n | 12/28/2013 | 1/3/2015 | 1/2/2016 | 12/31/2016 | 12/30/2017 | 12/29/2018\ncadence design systems inc . | $ 100.00 | $ 135.18 | $ 149.39 | $ 181.05 | $ 300.22 | $ 311.13\nnasdaq composite | 100.00 | 112.60 | 113.64 | 133.19 | 172.11 | 165.84\ns&p 500 | 100.00 | 110.28 | 109.54 | 129.05 | 157.22 | 150.33\ns&p 500 information technology | 100.00 | 115.49 | 121.08 | 144.85 | 201.10 | 200.52\n\nExcerpt 5:\nthe graph assumes that the value of the investment in our common stock and in each index on december 28 , 2013 ( including reinvestment of dividends ) was $ 100 and tracks it each year thereafter on the last day of our fiscal year through december 29 , 2018 and , for each index , on the last day of the calendar year .\ncomparison of 5 year cumulative total return* among cadence design systems , inc. , the nasdaq composite index , the s&p 500 index and the s&p 500 information technology index 12/29/181/2/16 12/30/1712/28/13 12/31/161/3/15 *$ 100 invested on 12/28/13 in stock or index , including reinvestment of dividends .\nfiscal year ending december 29 .\ncopyright a9 2019 standard & poor 2019s , a division of s&p global .\nall rights reserved .\nnasdaq compositecadence design systems , inc .\n\nQuestion: what was the difference in percentage cumulative 5-year total stockholder return for cadence design systems inc . compared to the nasdaq composite for the period ending 12/29/2018?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"cadence_12/29/2018\",\"value\":311.13},{\"name\":\"nasdaq_12/29/2018\",\"value\":165.84}],\"formula\":\"311.13 - 165.84\",\"answer\":145.29}",
+    "input_tokens": 1281,
+    "output_tokens": 121,
+    "latency_s": 1.192,
+    "error": ""
+  }
+}

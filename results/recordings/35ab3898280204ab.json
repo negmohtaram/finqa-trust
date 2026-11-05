@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nyears ended december 31 | 2014 | 2013 | 2012\nrevenue | $ 4264 | $ 4057 | $ 3925\noperating income | 485 | 318 | 289\noperating margin | 11.4% ( 11.4 % ) | 7.8% ( 7.8 % ) | 7.4% ( 7.4 % )\n\nExcerpt 2:\nreinsurance commissions , fees and other revenue decreased 2% ( 2 % ) in 2014 reflecting a 1% ( 1 % ) unfavorable impact from foreign currency exchange rates and 1% ( 1 % ) decline in organic revenue growth due primarily to a significant unfavorable market impact in treaty , partially offset by net new business growth in treaty placements globally and growth in capital markets transactions and advisory business , as well as facultative placements .\noperating income operating income increased $ 108 million , or 7% ( 7 % ) , from 2013 to $ 1.6 billion in 2014 .\nin 2014 , operating income margins in this segment were 21.0% ( 21.0 % ) , an increase of 120 basis points from 19.8% ( 19.8 % ) in 2013 .\n\nExcerpt 3:\nyears ended december 31, | 2009 | 2008 | 2007\nsegment revenue | $ 1267 | $ 1356 | $ 1345\nsegment operating income | 203 | 208 | 180\nsegment operating income margin | 16.0% ( 16.0 % ) | 15.3% ( 15.3 % ) | 13.4% ( 13.4 % )\n\nExcerpt 4:\nof exiting a business in japan , economic weakness in asia and political unrest in thailand , partially offset by growth in new zealand and certain emerging markets .\nreinsurance commissions , fees and other revenue increased 48% ( 48 % ) , due mainly to the benfield merger , partially offset by unfavorable foreign currency translation .\norganic revenue is even with 2008 , as growth in domestic treaty business and slightly higher pricing was offset by greater client retention , and declines in investment banking and facultative placements .\noperating income operating income increased $ 54 million or 6% ( 6 % ) from 2008 to $ 900 million in 2009 .\nin 2009 , operating income margins in this segment were 14.3% ( 14.3 % ) , up 60 basis points from 13.7% ( 13.7 % ) in 2008 .\n\nExcerpt 5:\nreportable operating segments have been determined using a management approach , which is consistent with the basis and manner in which aon 2019s chief operating decision maker ( 2018 2018codm 2019 2019 ) uses financial information for the purposes of allocating resources and assessing performance .\nthe codm assesses performance based on operating segment operating income and generally accounts for intersegment revenue as if the revenue were from third parties and at what management believes are current market prices .\nthe company does not present net assets by segment as this information is not reviewed by the codm .\nrisk solutions acts as an advisor and insurance and reinsurance broker , helping clients manage their risks , via consultation , as well as negotiation and placement of insurance risk with insurance carriers through aon 2019s global distribution network .\n\nQuestion: what is the total operating income in 2013 , ( in millions ) ?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\n  \"values\": [\n    {\"name\":\"Operating Income 2013\",\"value\":318}\n  ],\n  \"formula\": \"\",\n  \"answer\": 318\n}",
+    "input_tokens": 988,
+    "output_tokens": 140,
+    "latency_s": 1.284,
+    "error": ""
+  }
+}

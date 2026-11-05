@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\ncapital expenditures for property , plant and equipment amounted to $ 820 million in 2010 , $ 852 million in 2009 , and $ 926 million in 2008 .\nwe expect that our operating cash flows will continue to be sufficient to fund our annual capital expenditures over the next few years .\nacquisitions , divestitures and other activities 2013 acquisition activities include both the acquisition of businesses and investments in affiliates .\namounts paid in 2010 of $ 148 million primarily related to investments in affiliates .\nwe paid $ 435 million in 2009 for acquisition activities , compared with $ 233 million in 2008 .\nin 2010 , we received proceeds of $ 798 million from the sale of eig , net of $ 17 million in transaction costs ( see note 2 ) .\nthere were no material divestiture activities in 2009 and 2008 .\n\nExcerpt 2:\nthe decline in cash provided by operating working capital primarily was due to growth of receivables on various programs in the ms2 and gt&l lines of business at electronic systems and an increase in inventories on combat aircraft programs at aeronautics , which partially were offset by increases in customer advances and amounts in excess of costs incurred on government satellite programs at space systems and the timing of accounts payable activities .\ninvesting activities capital expenditures 2013 the majority of our capital expenditures relate to facilities infrastructure and equipment that are incurred to support new and existing programs across all of our business segments .\nwe also incur capital expenditures for it to support programs and general enterprise it infrastructure .\n\nExcerpt 3:\nnet cash provided by operating activities decreased by $ 1248 million to $ 3173 million in 2009 as compared to 2008 .\nthe decline primarily was attributable to an increase in our contributions to the defined benefit pension plan of $ 1373 million as compared to 2008 and an increase in our operating working capital accounts of $ 147 million .\npartially offsetting these items was the impact of lower net income tax payments in 2009 as compared to 2008 in the amount of $ 319 million .\n\nExcerpt 4:\noperating activities net cash provided by operating activities increased by $ 374 million to $ 3547 million in 2010 as compared to 2009 .\nthe increase primarily was attributable to an improvement in our operating working capital balances of $ 570 million as discussed below , and $ 187 million related to lower net income tax payments , as compared to 2009 .\npartially offsetting these improvements was a net reduction in cash from operations of $ 350 million related to our defined benefit pension plan .\nthis reduction was the result of increased contributions to the pension trust of $ 758 million as compared to 2009 , partially offset by an increase in the cas costs recovered on our contracts .\noperating working capital accounts consists of receivables , inventories , accounts payable , and customer advances and amounts in excess of costs incurred .\n\nExcerpt 5:\nfuture minimum lease commitments at december 31 , 2006 for all operating leases that have a remaining term of more than one year were $ 1.1 billion ( $ 288 million in 2007 , $ 254 million in 2008 , $ 211 million in 2009 , $ 153 million in 2010 , $ 118 million in 2011 and $ 121 million in later years ) .\ncertain major plant facilities and equipment are furnished by the u.s .\ngovernment under short-term or cancelable arrangements .\nnote 14 2013 legal proceedings , commitments and contingencies we are a party to or have property subject to litigation and other proceedings , including matters arising under provisions relating to the protection of the environment .\nwe believe the probability is remote that the outcome of these matters will have a material adverse effect on the corporation as a whole .\n\nQuestion: what was the percentage change in capital expenditures for property , plant and equipment from 2009 to 2010?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"CapEx 2010\",\"value\":820},{\"name\":\"CapEx 2009\",\"value\":852}],\"formula\":\"(820-852)/852*100\",\"answer\":-3.756140350877193}",
+    "input_tokens": 1059,
+    "output_tokens": 111,
+    "latency_s": 1.171,
+    "error": ""
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\n( in millions ) | 2009 | 2008 | 2007\nminimum rental ( a ) | $ 238 | $ 245 | $ 209\ncontingent rental | 19 | 22 | 33\nnet rental expense | $ 257 | $ 267 | $ 242\n\nExcerpt 2:\nmarathon oil corporation notes to consolidated financial statements of the $ 446 million present value of net minimum capital lease payments , $ 53 million was related to obligations assumed by united states steel under the financial matters agreement .\noperating lease rental expense was : ( in millions ) 2009 2008 2007 minimum rental ( a ) $ 238 $ 245 $ 209 .\n\nExcerpt 3:\n( in millions ) | 2009\nrevenues applicable to discontinued operations | $ 188\npretax income from discontinued operations | $ 80\n\nExcerpt 4:\n( in millions ) | 2007 | 2006 | 2005\nsales and transfers of oil and gas produced net of production transportation and administrative costs | $ -4887 ( 4887 ) | $ -5312 ( 5312 ) | $ -3754 ( 3754 )\nnet changes in prices and production transportation and administrative costs related to future production | 12845 | -1342 ( 1342 ) | 6648\nextensions discoveries and improved recovery less related costs | 1816 | 1290 | 700\ndevelopment costs incurred during the period | 1654 | 1251 | 1030\nchanges in estimated future development costs | -1727 ( 1727 ) | -527 ( 527 ) | -552 ( 552 )\nrevisions of previous quantity estimates | 290 | 1319 | 820\nnet changes in purchases and sales of minerals in place | 23 | 30 | 4557\naccretion of discount | 1726 | 1882 | 1124\nnet change in income taxes | -6751 ( 6751 ) | -660 ( 660 ) | -6694 ( 6694 )\ntiming and other | -12 ( 12 ) | -14 ( 14 ) | 307\nnet change for the year | 4977 | -2083 ( 2083 ) | 4186\nbeginning of year | 8518 | 10601 | 6415\nend of year | $ 13495 | $ 8518 | $ 10601\nnet change for the year from discontinued operations | $ 2013 | $ -216 ( 216 ) | $ 162\n\nExcerpt 5:\nsupplementary information on oil and gas producing activities ( unaudited ) c o n t i n u e d summary of changes in standardized measure of discounted future net cash flows relating to proved oil and gas reserves ( in millions ) 2007 2006 2005 sales and transfers of oil and gas produced , net of production , transportation and administrative costs $ ( 4887 ) $ ( 5312 ) $ ( 3754 ) net changes in prices and production , transportation and administrative costs related to future production 12845 ( 1342 ) 6648 .\n\nQuestion: how much did net rental expense increase from 2007 to 2009?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"net rental expense 2007\",\"value\":242},{\"name\":\"net rental expense 2009\",\"value\":257}],\"formula\":\"257 - 242\",\"answer\":15}",
+    "input_tokens": 931,
+    "output_tokens": 78,
+    "latency_s": 1.394,
+    "error": ""
+  }
+}

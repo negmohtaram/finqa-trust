@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nin millions | december 312016 | december 312015\ncommitments to extend credit |  | \ntotal commercial lending | $ 108256 | $ 101252\nhome equity lines of credit | 17438 | 17268\ncredit card | 22095 | 19937\nother | 4192 | 4032\ntotal commitments to extend credit | 151981 | 142489\nnet outstanding standby letters of credit ( a ) | 8324 | 8765\nreinsurance agreements ( b ) | 1835 | 2010\nstandby bond purchase agreements ( c ) | 790 | 911\nother commitments ( d ) | 967 | 966\ntotal commitments to extend credit and other commitments | $ 163897 | $ 155141\n\nExcerpt 2:\nin millions | december 31 2018 | december 312017\ncommitments to extend credit |  | \ntotal commercial lending | $ 120165 | $ 112125\nhome equity lines of credit | 16944 | 17852\ncredit card | 27100 | 24911\nother | 5069 | 4753\ntotal commitments to extend credit | 169278 | 159641\nnet outstanding standby letters of credit ( a ) | 8655 | 8651\nreinsurance agreements ( b ) | 1549 | 1654\nstandby bond purchase agreements ( c ) | 1000 | 843\nother commitments ( d ) | 1130 | 1732\ntotal commitments to extend credit and other commitments | $ 181612 | $ 172521\n\nExcerpt 3:\nthe following table presents our outstanding commitments to extend credit along with significant other commitments as of december 31 , 2018 and 2017 , respectively .\ntable 94 : commitments to extend credit and other commitments in millions december 31 december 31 .\n\nExcerpt 4:\nnote 20 commitments in the normal course of business , we have various commitments outstanding , certain of which are not included on our consolidated balance sheet .\nthe following table presents our outstanding commitments to extend credit along with significant other commitments as of december 31 , 2016 and december 31 , 2015 , respectively .\ntable 98 : commitments to extend credit and other commitments in millions december 31 december 31 .\n\nExcerpt 5:\ncommitments to extend credit , or net unfunded loan commitments , represent arrangements to lend funds or provide liquidity subject to specified contractual conditions .\nthese commitments generally have fixed expiration dates , may require payment of a fee , and contain termination clauses in the event the customer 2019s credit quality deteriorates .\nnet outstanding standby letters of credit we issue standby letters of credit and share in the risk of standby letters of credit issued by other financial institutions , in each case to support obligations of our customers to third parties , such as insurance requirements and the facilitation of transactions involving capital markets product execution .\n\nQuestion: what was the percentage increase total commitments to extend credit and other commitments"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2017 total commitments\",\"value\":172521},{\"name\":\"2018 total commitments\",\"value\":181612}],\"formula\":\"(181612-172521)/172521*100\",\"answer\":5.27}",
+    "input_tokens": 867,
+    "output_tokens": 167,
+    "latency_s": 1.508,
+    "error": ""
+  }
+}

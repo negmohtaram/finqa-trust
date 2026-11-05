@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nduring 2015 , we settled tax matters in various states and puerto rico which reduced our gross unrecognized tax benefits by $ 13.9 million .\nduring 2014 , we settled tax matters in various jurisdictions and reduced our gross unrecognized tax benefits by $ 1.5 million .\nduring 2013 , we settled with the irs appeals division and the joint committee on taxation our 2009 and 2010 tax years .\nthe resolution of these tax periods in addition to various state tax resolutions during the year reduced our gross unrecognized tax benefits by $ 20.7 million .\nincluded in our gross unrecognized tax benefits as of december 31 , 2015 and 2014 are $ 30.5 million and $ 45.6 million of unrecognized tax benefits ( net of the federal benefit on state matters ) that , if recognized , would affect our effective income tax rate in future periods .\n\nExcerpt 2:\nrepublic services , inc .\nnotes to consolidated financial statements 2014 ( continued ) the following table summarizes the activity in our gross unrecognized tax benefits for the years ended december 31: .\n\nExcerpt 3:\nwe recognize interest and penalties as incurred within the provision for income taxes in our consolidated statements of income .\nrelated to the unrecognized tax benefits previously noted , we recorded interest expense of approximately $ 1.2 million during 2015 and , in total as of december 31 , 2015 , have recognized a liability for penalties of $ 0.5 million and interest of $ 10.3 million .\nduring 2014 , we accrued interest of approximately $ 1.5 million and , in total as of december 31 , 2014 , had recognized a liability for penalties of $ 0.5 million and interest of $ 18.7 million .\nduring 2013 , we accrued interest of approximately $ 1.2 million and , in total as of december 31 , 2013 , had recognized a liability for penalties of $ 0.5 million and interest of $ 17.0 million .\n\nExcerpt 4:\ngross unrecognized benefits that we expect to settle in the following twelve months are in the range of $ 0 to $ 10 million ; however , it is reasonably possible that the amount of unrecognized tax benefits may either increase or decrease in the next twelve months .\nwe are currently under examination or administrative review by state and local taxing authorities for various tax years .\nthese state audits are ongoing .\nwe believe the recorded liabilities for uncertain tax positions are adequate .\nhowever , a significant assessment against us in excess of the liabilities recorded could have a material adverse effect on our consolidated financial position , results of operations or cash flows. .\n\nExcerpt 5:\ntotal ( loss ) gain recognized in other comprehensive ( loss ) income for fuel hedges ( the effective portion ) was $ ( 2.0 ) million , $ ( 24.2 ) million and $ 2.4 million , for the years ended december 31 , 2015 , 2014 and 2013 , respectively .\nrecycling commodity hedges revenue from the sale of recycled commodities is primarily from sales of old corrugated cardboard and old newspaper .\nfrom time to time we use derivative instruments such as swaps and costless collars designated as cash flow hedges to manage our exposure to changes in prices of these commodities .\nwe had no outstanding recycling commodity hedges as of december 31 , 2015 and 2014 .\n\nQuestion: as of december 31 , 2015 what was the percentage decline in the gross unrecognized tax benefits from 2014 to 2015"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2015 gross unrecognized tax benefits\",\"value\":30.5},{\"name\":\"2014 gross unrecognized tax benefits\",\"value\":45.6}],\"formula\":\"(45.6 - 30.5) / 45.6 * 100\",\"answer\":33.1}",
+    "input_tokens": 985,
+    "output_tokens": 174,
+    "latency_s": 1.382,
+    "error": ""
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nlong-term borrowings the carrying value and fair value of long-term borrowings estimated using market prices at december 31 , 2013 included the following : ( in millions ) maturity amount unamortized discount carrying value fair value .\n\nExcerpt 2:\nlong-term borrowings the carrying value and fair value of long-term borrowings estimated using market prices at december 31 , 2014 included the following : ( in millions ) maturity amount unamortized discount carrying value fair value .\n\nExcerpt 3:\n( in millions ) | maturity amount | unamortized discount | carrying value | fair value\n1.375% ( 1.375 % ) notes due 2015 | $ 750 | $ 2014 | $ 750 | $ 753\n6.25% ( 6.25 % ) notes due 2017 | 700 | -1 ( 1 ) | 699 | 785\n5.00% ( 5.00 % ) notes due 2019 | 1000 | -2 ( 2 ) | 998 | 1134\n4.25% ( 4.25 % ) notes due 2021 | 750 | -3 ( 3 ) | 747 | 825\n3.375% ( 3.375 % ) notes due 2022 | 750 | -3 ( 3 ) | 747 | 783\n3.50% ( 3.50 % ) notes due 2024 | 1000 | -3 ( 3 ) | 997 | 1029\ntotal long-term borrowings | $ 4950 | $ -12 ( 12 ) | $ 4938 | $ 5309\n\nExcerpt 4:\n( in millions ) | maturity amount | unamortized discount | carrying value | fair value\n3.50% ( 3.50 % ) notes due 2014 | $ 1000 | $ 2014 | $ 1000 | $ 1029\n1.375% ( 1.375 % ) notes due 2015 | 750 | 2014 | 750 | 759\n6.25% ( 6.25 % ) notes due 2017 | 700 | -2 ( 2 ) | 698 | 812\n5.00% ( 5.00 % ) notes due 2019 | 1000 | -2 ( 2 ) | 998 | 1140\n4.25% ( 4.25 % ) notes due 2021 | 750 | -3 ( 3 ) | 747 | 799\n3.375% ( 3.375 % ) notes due 2022 | 750 | -4 ( 4 ) | 746 | 745\ntotal long-term borrowings | $ 4950 | $ -11 ( 11 ) | $ 4939 | $ 5284\n\nExcerpt 5:\nthe fair value of the remaining aggregate contingent payments at december 31 , 2017 totaled $ 236 million , including $ 128 million related to the first reserve transaction , and is included in other liabilities on the consolidated statements of financial condition. .\n\nQuestion: how much higher is the fair value than carrying value ? in millions $ ."
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"carrying value\",\"value\":\"$ 4939\"},{\"name\":\"fair value\",\"value\":\"$ 5284\"}],\"formula\":\"5284 - 4939\",\"answer\":345}",
+    "input_tokens": 930,
+    "output_tokens": 146,
+    "latency_s": 1.223,
+    "error": ""
+  }
+}
