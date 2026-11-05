@@ -18,7 +18,7 @@ def _percentile(sorted_values: list[float], q: float) -> float:
     return sorted_values[lo] + (sorted_values[hi] - sorted_values[lo]) * (pos - lo)
 
 
-def bootstrap_ci(correct_flags: list[bool | int], n_boot: int = 2000, seed: int = 0,
+def bootstrap_ci(correct_flags: list[bool | int | float], n_boot: int = 2000, seed: int = 0,
                  level: float = 0.95) -> tuple[float, float, float]:
     """Accuracy and its percentile-bootstrap interval: (accuracy, low, high).
 
@@ -27,14 +27,14 @@ def bootstrap_ci(correct_flags: list[bool | int], n_boot: int = 2000, seed: int 
     n = len(correct_flags)
     if n == 0:
         raise ValueError("no answers")
-    flags = [int(f) for f in correct_flags]
+    flags = [float(f) for f in correct_flags]
     rng = random.Random(seed)
     stats = sorted(sum(flags[rng.randrange(n)] for _ in range(n)) / n for _ in range(n_boot))
     tail = (1 - level) / 2
     return sum(flags) / n, _percentile(stats, tail), _percentile(stats, 1 - tail)
 
 
-def paired_bootstrap_diff(a_flags: list[bool | int], b_flags: list[bool | int], n_boot: int = 2000,
+def paired_bootstrap_diff(a_flags: list[bool | int | float], b_flags: list[bool | int | float], n_boot: int = 2000,
                           seed: int = 0, level: float = 0.95) -> tuple[float, float, float]:
     """Accuracy of B minus accuracy of A on the same questions, with its interval.
 
@@ -43,7 +43,7 @@ def paired_bootstrap_diff(a_flags: list[bool | int], b_flags: list[bool | int], 
     """
     if len(a_flags) != len(b_flags):
         raise ValueError("paired comparison needs the same questions in the same order")
-    diffs = [int(b) - int(a) for a, b in zip(a_flags, b_flags)]
+    diffs = [float(b) - float(a) for a, b in zip(a_flags, b_flags)]
     rng = random.Random(seed)
     n = len(diffs)
     stats = sorted(sum(diffs[rng.randrange(n)] for _ in range(n)) / n for _ in range(n_boot))
