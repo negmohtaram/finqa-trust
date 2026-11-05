@@ -16,3 +16,4 @@ __pycache__/
 .env
 .DS_Store
 !results/comparison.md
+!results/retrieval.md

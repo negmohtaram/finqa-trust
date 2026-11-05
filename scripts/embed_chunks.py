@@ -1,5 +1,6 @@
 """Embed every chunk set and report how much text the model never reads."""
 import json
+import sys
 import time
 from pathlib import Path
 
@@ -9,7 +10,7 @@ from sentence_transformers import SentenceTransformer
 from finqa_trust.chunks import STRATEGIES, chunk_page, load_pages
 from finqa_trust.embed import embed_texts, load_cache, save_cache
 
-MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+MODEL = sys.argv[1] if len(sys.argv) > 1 else "sentence-transformers/all-MiniLM-L6-v2"
 OUT = Path(__file__).resolve().parents[1] / "results" / "embeddings" / MODEL.split("/")[-1]
 
 
