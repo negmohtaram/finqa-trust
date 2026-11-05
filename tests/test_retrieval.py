@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 from finqa_trust.chunks import Chunk
-from finqa_trust.retrieval import BM25, fuse, rank, recall_at_k, reciprocal_rank, tokenize
+from finqa_trust.prompts import STRUCTURED_SYSTEM, retrieved_messages
+from finqa_trust.retrieval import BM25, fuse, rank, recall_at_k, reciprocal_rank, rerank, tokenize
 from finqa_trust.stats import bootstrap_ci, paired_bootstrap_diff
 
 
@@ -76,3 +78,42 @@ def test_intervals_keep_fractions():
     # int(0.5) would be 0, so these would both read as zero
     assert bootstrap_ci([0.5, 0.5])[0] == 0.5
     assert paired_bootstrap_diff([0.0, 0.0], [0.5, 0.5])[0] == 0.5
+
+
+def scored_chunks(*texts: str) -> list[Chunk]:
+    return [Chunk(page="p", strategy="s", order=i, text=text, units=[]) for i, text in enumerate(texts)]
+
+
+def test_rerank_orders_candidates_by_the_new_score():
+    chunks = scored_chunks("a", "b", "c")
+    scores = {"a": 0.1, "b": 0.9, "c": 0.5}
+    assert rerank([0, 1, 2], chunks, "q", lambda pairs: [scores[text] for _, text in pairs]) == [1, 2, 0]
+
+
+def test_rerank_sends_the_question_with_each_candidate_only():
+    chunks = scored_chunks("a", "b", "c")
+    seen = []
+
+    def score(pairs):
+        seen.extend(pairs)
+        return [0.0] * len(pairs)
+
+    rerank([2, 0], chunks, "q", score)
+    assert seen == [("q", "c"), ("q", "a")]
+
+
+def test_rerank_ties_keep_the_old_order_and_empty_makes_no_call():
+    chunks = scored_chunks("a", "b", "c")
+    assert rerank([2, 0, 1], chunks, "q", lambda pairs: [1.0] * len(pairs)) == [2, 0, 1]
+    assert rerank([], chunks, "q", lambda pairs: 1 / 0) == []
+
+
+def test_rerank_refuses_nan_scores():
+    with pytest.raises(ValueError):
+        rerank([0, 1], scored_chunks("a", "b"), "q", lambda pairs: [float("nan"), 1.0])
+
+
+def test_retrieved_prompt_changes_only_the_context():
+    system, user = retrieved_messages("what was revenue?", ["first chunk", "second chunk"])
+    assert system == ("system", STRUCTURED_SYSTEM)
+    assert user[1] == "Excerpt 1:\nfirst chunk\n\nExcerpt 2:\nsecond chunk\n\nQuestion: what was revenue?"

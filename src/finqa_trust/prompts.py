@@ -30,3 +30,9 @@ STRUCTURED_SYSTEM = (
 def structured_messages(record: Record) -> tuple[tuple[str, str], ...]:
     user = direct_messages(record)[1][1]
     return (("system", STRUCTURED_SYSTEM), ("user", user))
+
+
+def retrieved_messages(question: str, chunks: list[str]) -> tuple[tuple[str, str], ...]:
+    """Same instructions and answer shape as the full-page prompt, so only the context changes."""
+    excerpts = "\n\n".join(f"Excerpt {n}:\n{chunk}" for n, chunk in enumerate(chunks, start=1))
+    return (("system", STRUCTURED_SYSTEM), ("user", f"{excerpts}\n\nQuestion: {question}"))

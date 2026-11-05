@@ -2,6 +2,7 @@
 import math
 import re
 from collections import Counter, defaultdict
+from collections.abc import Callable, Sequence
 
 import numpy as np
 
@@ -56,6 +57,17 @@ def fuse(rankings: list[list[int]], k: int = 60, depth: int = 50) -> list[int]:
         for position, chunk in enumerate(ranking, start=1):
             scores[chunk] += 1 / (k + position)
     return sorted(scores, key=lambda chunk: (-scores[chunk], chunk))[:depth]
+
+
+def rerank(ranking: list[int], chunks: list[Chunk], question: str,
+           score_pairs: Callable[[list[tuple[str, str]]], Sequence[float]]) -> list[int]:
+    """Reorder one question's candidates by a score that reads question and chunk together. Ties keep the old order."""
+    if not ranking:
+        return []
+    scores = score_pairs([(question, chunks[i].text) for i in ranking])
+    if any(math.isnan(score) for score in scores):
+        raise ValueError("reranker returned NaN")  # sorting NaN gives a wrong order without any error
+    return [ranking[p] for p in sorted(range(len(ranking)), key=lambda p: -scores[p])]
 
 
 def recall_at_k(ranking: list[int], chunks: list[Chunk], gold: list[str], page: str, k: int) -> float:

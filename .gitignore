@@ -17,3 +17,5 @@ __pycache__/
 .DS_Store
 !results/comparison.md
 !results/retrieval.md
+!results/rerank.md
+!results/gold_vs_retrieved.md
