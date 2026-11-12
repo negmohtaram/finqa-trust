@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nthe following table sets forth information concerning increases in the total number of our aap stores during the past five years: .\n\nExcerpt 2:\n | 2012 | 2011 | 2010 | 2009 | 2008\nbeginning stores | 3460 | 3369 | 3264 | 3243 | 3153\nnew stores ( 1 ) | 116 | 95 | 110 | 75 | 109\nstores closed | 2014 | -4 ( 4 ) | -5 ( 5 ) | -54 ( 54 ) | -19 ( 19 )\nending stores | 3576 | 3460 | 3369 | 3264 | 3243\n\nExcerpt 3:\n( 1 ) does not include stores that opened as relocations of previously existing stores within the same general market area or substantial renovations of stores .\nstore technology .\nour store-based information systems are comprised of a proprietary and integrated point of sale , electronic parts catalog , or epc , and store-level inventory management system ( collectively \"store system\" ) .\ninformation maintained by our store system is used to formulate pricing , marketing and merchandising strategies and to replenish inventory accurately and rapidly .\nour fully integrated system enables our store team members to assist our customers in their parts selection and ordering based on the year , make , model and engine type of their vehicles .\n\nExcerpt 4:\npurchasing for virtually all of the merchandise for our stores is handled by our merchandise teams located in three primary locations : 2022 store support center in roanoke , virginia ; 2022 regional office in minneapolis , minnesota ; and 2022 global sourcing office in taipei , taiwan .\nour roanoke team is primarily responsible for the parts categories and our minnesota team is primarily responsible for accessories , oil and chemicals .\nour global sourcing team works closely with both teams .\nin fiscal 2012 , we purchased merchandise from approximately 450 vendors , with no single vendor accounting for more than 9% ( 9 % ) of purchases .\nour purchasing strategy involves negotiating agreements with most of our vendors to purchase merchandise over a specified period of time along with other terms , including pricing , payment terms and volume .\n\nExcerpt 5:\ncompany/index | december 30 2006 | december 29 2007 | january 3 2009 | january 2 2010 | january 1 2011 | december 31 2011\nadvance auto parts | $ 100.00 | $ 108.00 | $ 97.26 | $ 116.01 | $ 190.41 | $ 201.18\ns&p 500 index | 100.00 | 104.24 | 65.70 | 78.62 | 88.67 | 88.67\ns&p retail index | 100.00 | 82.15 | 58.29 | 82.36 | 101.84 | 104.81\n\nQuestion: what is the growth rate in the number of stores during 2011?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"beginning stores 2011\",\"value\":3369},{\"name\":\"ending stores 2011\",\"value\":3460}],\"formula\":\"(3460-3369)/3369*100\",\"answer\":2.703}",
+    "input_tokens": 886,
+    "output_tokens": 144,
+    "latency_s": 1.271,
+    "error": ""
+  }
+}

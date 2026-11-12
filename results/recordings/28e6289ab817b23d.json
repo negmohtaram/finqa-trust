@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nthe following table presents common stock repurchases during each month for the fourth quarter of 2011 : period total number of shares purchased [a] average price paid per share total number of shares purchased as part of a publicly announced plan or program [b] maximum number of shares that may yet be purchased under the plan or program [b] .\n\nExcerpt 2:\n[a] total number of shares purchased during the quarter includes approximately 30137 shares delivered or attested to upc by employees to pay stock option exercise prices , satisfy excess tax withholding obligations for stock option exercises or vesting of retention units , and pay withholding obligations for vesting of retention shares .\n[b] on april 1 , 2011 , our board of directors authorized the repurchase of up to 40 million shares of our common stock by march 31 , 2014 .\nthese repurchases may be made on the open market or through other transactions .\nour management has sole discretion with respect to determining the timing and amount of these transactions. .\n\nExcerpt 3:\nfive-year performance comparison 2013 the following graph provides an indicator of cumulative total shareholder returns for the corporation as compared to the peer group index ( described above ) , the dj trans , and the s&p 500 .\nthe graph assumes that $ 100 was invested in the common stock of union pacific corporation and each index on december 31 , 2006 and that all dividends were reinvested .\npurchases of equity securities 2013 during 2011 , we repurchased 15340810 shares of our common stock at an average price of $ 96.08 .\n\nExcerpt 4:\nare allocated using appropriate statistical bases .\ntotal expense for repairs and maintenance incurred was $ 2.2 billion for 2011 , $ 2.0 billion for 2010 , and $ 1.9 billion for 2009 .\nassets held under capital leases are recorded at the lower of the net present value of the minimum lease payments or the fair value of the leased asset at the inception of the lease .\namortization expense is computed using the straight-line method over the shorter of the estimated useful lives of the assets or the period of the related lease .\n12 .\naccounts payable and other current liabilities dec .\n31 , dec .\n31 , millions 2011 2010 .\n\nExcerpt 5:\nas a result , the company deferred a substantial portion of its 2011-2013 income tax expense , contributing to the positive operating cash flow in those years .\ncongress extended 50% ( 50 % ) bonus depreciation for 2014 , but this extension occurred in december and did not have a significant benefit on our income tax payments during 2014 .\ninvesting activities higher capital investments , including the early buyout of the long-term operating lease of our headquarters building for approximately $ 261 million , drove the increase in cash used in investing activities compared to 2013 .\nsignificant investments also were made for new locomotives , freight cars and containers , and capacity and commercial facility projects .\n\nQuestion: for all of 2011 , approximately how much was spent on stock repurchases?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"shares repurchased\",\"value\":15340810},{\"name\":\"average price per share\",\"value\":96.08}],\"formula\":\"15340810 * 96.08\",\"answer\":1473945024.8}",
+    "input_tokens": 884,
+    "output_tokens": 230,
+    "latency_s": 1.445,
+    "error": ""
+  }
+}

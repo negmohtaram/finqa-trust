@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nshorewood net sales of $ 670 million were down from $ 691 million in 2005 and $ 687 million in 2004 .\nsales volumes in 2006 were down from 2005 levels due to weak demand in the home entertainment and consumer products markets , although demand was strong in the tobacco segment .\naverage sales prices for the year were lower than in 2005 .\noperating prof- its were down significantly from both 2005 and 2004 due to the decline in sales , particularly in the higher margin home entertainment markets , higher raw material costs for bleached board and certain inventory adjustment costs .\nentering 2007 , coated paperboard first-quarter sales volumes are expected to be seasonally stronger than in the fourth quarter 2006 for folding carton board and bristols .\naverage sales price realizations are expected to rise with a price increase announced in january .\n\nExcerpt 2:\nthe impact of the higher sales prices along with more favorable manufacturing operations due to strong performance at the mills more than offset higher input costs for energy and freight .\nfoodservice net sales declined to $ 396 million in 2006 , compared with $ 437 million in 2005 and $ 480 million in 2004 , due principally to the sale of the jackson , tennessee plant in july 2005 .\nsales vol- umes were lower in 2006 than in 2005 , although average sales prices were higher due to the realiza- tion of price increases implemented during 2005 .\noperating profits for 2006 improved over 2005 and 2004 levels largely due to the benefits from higher sales prices .\nraw material costs for bleached board were higher than in 2005 , but manufacturing costs were more favorable due to increased productivity and reduced waste .\n\nExcerpt 3:\nnorth american industrial packaging net sales for 2007 were $ 3.9 billion , compared with $ 3.7 billion in 2006 and $ 3.6 billion in 2005 .\noperating profits in 2007 were $ 407 million , up from $ 327 mil- lion in 2006 and $ 170 million in 2005 .\ncontainerboard shipments were higher in 2007 compared with 2006 , including production from the paper machine at pensacola that was converted to lightweight linerboard during 2007 .\naverage sales price realizations were significantly higher than in 2006 reflecting price increases announced early in 2006 and in the third quarter of 2007 .\nmargins improved reflecting stronger export demand .\nmanu- facturing performance was strong , although costs associated with planned mill maintenance outages were higher due to timing of outages .\nraw material costs for wood , energy , chemicals and recycled fiber increased significantly .\n\nExcerpt 4:\nhowever , additional mill maintenance outages are planned for the first quarter , and freight and input costs are expected to rise , particularly for wood and energy .\nmanufacturing operations should be favorable compared with the fourth quarter .\neuropean industrial packaging net sales for 2007 were $ 1.1 billion , up from $ 1.0 billion in 2006 and $ 880 million in 2005 .\nsales volumes were about flat as early stronger demand in the industrial segment weakened in the second half of the year .\noperating profits in 2007 were $ 88 million compared with $ 69 million in 2006 and $ 53 million in 2005 .\nsales margins improved reflecting increased sales prices for boxes .\nconversion costs were favorable as the result of manufacturing improvement programs .\n\nExcerpt 5:\ncoated paperboard net sales of $ 1.5 billion in 2006 were higher than $ 1.3 billion in 2005 and $ 1.1 billion in 2004 .\nsales volumes increased in 2006 compared with 2005 , particularly in the folding car- ton board segment , reflecting improved demand for coated paperboard products .\nin 2006 , our coated paperboard mills took 4000 tons of lack-of-order downtime , compared with 82000 tons of lack-of-order downtime in 2005 .\naverage sales price realizations were substantially improved in the cur- rent year , principally for folding carton board and cupstock board .\noperating profits were 51% ( 51 % ) higher in 2006 than in 2005 , and 7% ( 7 % ) better than in 2004 .\n\nQuestion: what was the percentage reduction in net sales for shorewood in 2006 from 2005 s"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"Shorewood 2006 net sales\",\"value\":\"670\"},{\"name\":\"Shorewood 2005 net sales\",\"value\":\"691\"}],\"formula\":\"(670-691)/691*100\",\"answer\":\"-3.04\"}",
+    "input_tokens": 1174,
+    "output_tokens": 121,
+    "latency_s": 1.872,
+    "error": ""
+  }
+}

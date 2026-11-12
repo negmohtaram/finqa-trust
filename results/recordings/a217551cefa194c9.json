@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nin millions | 2009 | 2008 | 2007\nsales | $ 3060 | $ 3195 | $ 3015\noperating profit | 433 | 17 | 112\n\nExcerpt 2:\nin millions | 2006 | 2005 | 2004\nsales | $ 2455 | $ 2245 | $ 2295\noperating profit | $ 131 | $ 121 | $ 155\n\nExcerpt 3:\nin millions | 2007 | 2006 | 2005\nsales | $ 5245 | $ 4925 | $ 4625\noperating profit | $ 501 | $ 399 | $ 219\n\nExcerpt 4:\nthe impact of divestitures ( $ 32 million ) , principally the fine papers and industrial pa- pers businesses , and other items ( $ 36 million ) also had a negative impact in 2005 .\nsegment operating profit ( in millions ) .\n\nExcerpt 5:\nbenefits from higher average sales price realizations ( $ 114 million ) , lower raw material and energy costs ( $ 114 million ) , lower freight costs ( $ 21 million ) , lower costs associated with the reorganiza- tion of the shorewood business ( $ 23 million ) , favor- able foreign exchange effects ( $ 14 million ) and other items ( $ 12 million ) were partially offset by lower sales volumes and increased lack-of-order downtime ( $ 145 million ) and costs associated with the perma- nent shutdown of the franklin mill ( $ 67 million ) .\nadditionally , operating profits in 2009 included $ 330 million of alternative fuel mixture credits .\nconsumer packaging in millions 2009 2008 2007 .\n\nQuestion: considering the years 2008 and 2009 , what is the variation observed in the operating profit , in millions?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"operating profit 2009\",\"value\":433},{\"name\":\"operating profit 2008\",\"value\":17}],\"formula\":\"433 - 17\",\"answer\":416}",
+    "input_tokens": 642,
+    "output_tokens": 111,
+    "latency_s": 1.47,
+    "error": ""
+  }
+}

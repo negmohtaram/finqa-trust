@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nthe joint venture is controlled by a holding company of which a wholly owned subsidiary of the company ( the 201catc uganda subsidiary 201d ) holds a 51% ( 51 % ) interest and a wholly owned subsidiary of mtn group ( the 201cmtn uganda subsidiary 201d ) holds a 49% ( 49 % ) interest .\nthe joint venture is managed and controlled by the company and owns a tower operations company in uganda .\npursuant to the agreement , the joint venture agreed to purchase a total of up to 1000 existing communications sites from mtn group 2019s operating subsidiary in uganda , subject to customary closing conditions .\non june 29 , 2012 , the joint venture acquired 962 communications sites for an aggregate purchase price of $ 171.5 million , subject to post-closing adjustments .\n\nExcerpt 2:\nthe aggregate purchase price was subsequently increased to $ 173.2 million , subject to future post-closing adjustments .\nunder the terms of the purchase agreement , legal title to certain of these communications sites will be transferred upon fulfillment of certain conditions by mtn group .\nprior to the fulfillment of these conditions , the company will operate and maintain control of these communications sites , and accordingly , reflect these sites in the allocation of purchase price and the consolidated operating results .\nthe following table summarizes the preliminary allocation of the aggregate purchase price consideration paid and the amounts of assets acquired and liabilities assumed based upon their estimated fair value at the date of acquisition ( in thousands ) : preliminary purchase price allocation .\n\nExcerpt 3:\non february 11 , 2011 , the closing price of our common stock was $ 56.73 per share as reported on the nyse .\nas of february 11 , 2011 , we had 397612895 outstanding shares of common stock and 463 registered holders .\ndividends we have not historically paid a dividend on our common stock .\npayment of dividends in the future , when , as and if authorized by our board of directors , would depend upon many factors , including our earnings and financial condition , restrictions under applicable law and our current and future loan agreements , our debt service requirements , our capital expenditure requirements and other factors that our board of directors may deem relevant from time to time , including the potential determination to elect reit status .\n\nExcerpt 4:\namerican tower corporation and subsidiaries notes to consolidated financial statements ( 3 ) consists of customer-related intangibles of approximately $ 15.5 million and network location intangibles of approximately $ 19.8 million .\nthe customer-related intangibles and network location intangibles are being amortized on a straight-line basis over periods of up to 20 years .\n( 4 ) the company expects that the goodwill recorded will be deductible for tax purposes .\nthe goodwill was allocated to the company 2019s international rental and management segment .\nuganda acquisition 2014on december 8 , 2011 , the company entered into a definitive agreement with mtn group to establish a joint venture in uganda .\n\nExcerpt 5:\non february 13 , 2009 , the closing price of our common stock was $ 28.85 per share as reported on the nyse .\nas of february 13 , 2009 , we had 397097677 outstanding shares of common stock and 499 registered holders .\ndividends we have never paid a dividend on our common stock .\nwe anticipate that we may retain future earnings , if any , to fund the development and growth of our business .\nthe indentures governing our 7.50% ( 7.50 % ) senior notes due 2012 ( 201c7.50% ( 201c7.50 % ) notes 201d ) and our 7.125% ( 7.125 % ) senior notes due 2012 ( 201c7.125% ( 201c7.125 % ) notes 201d ) may prohibit us from paying dividends to our stockholders unless we satisfy certain financial covenants .\n\nQuestion: for the mtn deal , what was the total post closing adjustments , in millions?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"initial purchase price\",\"value\":171.5},{\"name\":\"increased purchase price\",\"value\":173.2}],\"formula\":\"173.2 - 171.5\",\"answer\":1.7}",
+    "input_tokens": 1095,
+    "output_tokens": 122,
+    "latency_s": 1.217,
+    "error": ""
+  }
+}

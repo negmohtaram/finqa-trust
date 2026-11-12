@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\n | 2017 | 2016 | 2015\nweighted average common shares outstanding for basic computations | 287.8 | 299.3 | 310.3\nweighted average dilutive effect of equity awards | 2.8 | 3.8 | 4.4\nweighted average common shares outstanding for diluted computations | 290.6 | 303.1 | 314.7\n\nExcerpt 2:\n | 2013 | 2012 | 2011\nweighted average common shares outstanding for basic computations | 320.9 | 323.7 | 335.9\nweighted average dilutive effect of equity awards | 5.6 | 4.7 | 4.0\nweighted average common shares outstanding for diluted computations | 326.5 | 328.4 | 339.9\n\nExcerpt 3:\nwe compute basic and diluted earnings per common share by dividing net earnings by the respectiveweighted average number of common shares outstanding for the periods presented .\nour calculation of diluted earnings per common share also includes the dilutive effects for the assumed vesting of outstanding restricted stock units ( rsus ) , performance stock units ( psus ) and exercise of outstanding stock options based on the treasury stock method .\nthere were no significant anti-dilutive equity awards for the years ended december 31 , 2017 , 2016 and 2015 .\nnote 3 2013 acquisitions and divestitures acquisition of sikorsky aircraft corporation on november 6 , 2015 , we completed the acquisition of sikorsky from united technologies corporation ( utc ) and certain of utc 2019s subsidiaries .\nthe purchase price of the acquisition was $ 9.0 billion , net of cash acquired .\n\nExcerpt 4:\n2016-02 , leases ( topic 842 ) , which requires the recognition of lease assets and lease liabilities on the balance sheet and disclosure of key information about leasing arrangements for both lessees and lessors .\nthe new standard is effective january 1 , 2019 for public companies , with early adoption permitted .\nthe new standard currently requires the application of a modified retrospective approach to the beginning of the earliest period presented in the financial statements .\nwe are continuing to evaluate the expected impact to our consolidated financial statements and related disclosures .\nwe plan to adopt the new standard effective january 1 , 2019 .\nnote 2 2013 earnings per share theweighted average number of shares outstanding used to compute earnings per common sharewere as follows ( in millions ) : .\n\nExcerpt 5:\nthe workforce reductions at the business segments also reflected changes in program lifecycles , where several of our major programs were either transitioning out of development and into production or were ending .\nupon separation , terminated employees received lump-sum severance payments based on years of service .\nduring 2011 , we made approximately half of the severance payments associated with these 2011 severance actions , and paid the remaining amounts in 2012 .\nnote 3 2013 earnings per share the weighted average number of shares outstanding used to compute earnings per common share were as follows ( in millions ) : .\n\nQuestion: what was the change in millions of weighted average common shares outstanding for diluted computations from 2016 to 2017?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"2017 diluted\",\"value\":290.6},{\"name\":\"2016 diluted\",\"value\":303.1}],\"formula\":\"290.6 - 303.1\",\"answer\":-12.5}",
+    "input_tokens": 914,
+    "output_tokens": 113,
+    "latency_s": 1.144,
+    "error": ""
+  }
+}

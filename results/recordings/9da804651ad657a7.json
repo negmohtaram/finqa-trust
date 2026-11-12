@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\nwe may not be able to consummate those dispositions or to obtain the proceeds that we could realize from them , and these proceeds may not be adequate to meet any debt service obligations then due .\nitem 1b .\nunresolved staff comments item 2 .\nproperties a summary of our significant locations at december 31 , 2013 is shown in the following table .\nall facilities are leased , except for 165000 square feet of our office in alpharetta , georgia .\nsquare footage amounts are net of space that has been sublet or part of a facility restructuring. .\n\nExcerpt 2:\nlocation | approximate square footage\nalpharetta georgia | 254000\njersey city new jersey | 107000\narlington virginia | 102000\nsandy utah | 66000\nmenlo park california | 63000\nnew york new york | 39000\nchicago illinois ( 1 ) | 36000\n\nExcerpt 3:\nchicago , illinois ( 1 ) 36000 ( 1 ) includes approximately 25000 square footage related to g1 execution services , llc .\nwe entered into a definitive agreement to sell g1 execution services , llc to an affiliate of susquehanna .\nthe lease was assigned to susquehanna upon closing of the sale on february 10 , all of our facilities are used by either our trading and investing or balance sheet management segments , in addition to the corporate/other category .\nall other leased facilities with space of less than 25000 square feet are not listed by location .\nin addition to the significant facilities above , we also lease all 30 e*trade branches , ranging in space from approximately 2500 to 8000 square feet .\nwe believe our facilities space is adequate to meet our needs in 2014 .\nitem 3 .\n\nExcerpt 4:\nin connection with our annual impairment test of goodwill , we concluded that the goodwill was not impaired as the fair value of the reporting units was in excess of the book value of those reporting units as of december 31 , 2011 .\nthe fair value of the reporting units exceeded the book value of those reporting units by substantial amounts ( fair value as a percent of book value ranged from approximately 150% ( 150 % ) to 700% ( 700 % ) ) and therefore did not indicate a significant risk of goodwill impairment based on current projections and valuations .\nwe also evaluate the remaining useful lives on intangible assets each reporting period to determine whether events and circumstances warrant a revision to the remaining period of amortization .\n\nExcerpt 5:\nthe company recorded a $ 0.7 million loss on early extinguishment of debt relating to the write-off of the unamortized debt offering costs .\nthe company did not have any early extinguishments of debt in 2005 .\nother corporate debt the company also has multiple term loans from financial institutions .\nthese loans are collateralized by equipment and are included within other borrowings on the consolidated balance sheet .\nsee note 14 2014securities sold under agreement to repurchase and other borrowings .\nfuture maturities of corporate debt scheduled principal payments of corporate debt as of december 31 , 2007 are as follows ( dollars in thousands ) : years ending december 31 .\n\nQuestion: at december 31 , 2013 what was the percent of square feet of our office in alpharetta , georgia not leased"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 0
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"office_not_leased\",\"value\":\"165000\"}],\"formula\":\"(165000/165000)*100\",\"answer\":100}",
+    "input_tokens": 946,
+    "output_tokens": 175,
+    "latency_s": 1.273,
+    "error": ""
+  }
+}

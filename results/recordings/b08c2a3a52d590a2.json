@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\n | total\ngoodwill | $ 13536\ncustomer-related intangible assets | 4091\ncontract-based intangible assets | 1031\nproperty and equipment | 267\nother current assets | 502\ntotal assets acquired | 19427\ncurrent liabilities | -2347 ( 2347 )\nminority interest in equity of subsidiary ( at historical cost ) | -486 ( 486 )\nnet assets acquired | $ 16594\n\nExcerpt 2:\ngoodwill of $ 203.8 million arising from the acquisition , included in the asia-pacific segment , was attributable to expected growth opportunities in australia and new zealand , as well as growth opportunities and operating synergies in integrated payments in our existing asia-pacific and north america markets .\ngoodwill associated with this acquisition is not deductible for income tax purposes .\nthe customer-related intangible assets have an estimated amortization period of 15 years .\nthe acquired technology has an estimated amortization period of 15 years .\nthe trade name has an estimated amortization period of 5 years .\nnote 3 2014 settlement processing assets and obligations funds settlement refers to the process of transferring funds for sales and credits between card issuers and merchants .\n\nExcerpt 3:\nthe estimated acquisition-date fair values of major classes of assets acquired and liabilities assumed , including a reconciliation to the total purchase consideration , are as follows ( in thousands ) : .\n\nExcerpt 4:\ncash | $ 45826\ncustomer-related intangible assets | 42721\nacquired technology | 27954\ntrade name | 2901\nother assets | 2337\ndeferred income tax assets ( liabilities ) | -9788 ( 9788 )\nother liabilities | -49797 ( 49797 )\ntotal identifiable net assets | 62154\ngoodwill | 203828\ntotal purchase consideration | $ 265982\n\nExcerpt 5:\nduring fiscal 2009 , we recognized $ 1.2 million of such deferred sales proceeds as other long-term liabilities .\nother 2008 acquisitions during fiscal 2008 , we acquired a majority of the assets of euroenvios money transfer , s.a .\nand euroenvios conecta , s.l. , which we collectively refer to as lfs spain .\nlfs spain consisted of two privately- held corporations engaged in money transmittal and ancillary services from spain to settlement locations primarily in latin america .\nthe purpose of the acquisition was to further our strategy of expanding our customer base and market share by opening additional branch locations .\nduring fiscal 2008 , we acquired a series of money transfer branch locations in the united states .\nthe purpose of these acquisitions was to increase the market presence of our dolex-branded money transfer offering .\n\nQuestion: what percent of assets acquired by the acquisition are non-tangible assets?"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"total assets acquired\",\"value\":19427},{\"name\":\"property and equipment\",\"value\":267},{\"name\":\"other current assets\",\"value\":502}],\"formula\":\"(19427-(267+502))/19427*100\",\"answer\":96.05}",
+    "input_tokens": 815,
+    "output_tokens": 241,
+    "latency_s": 1.462,
+    "error": ""
+  }
+}

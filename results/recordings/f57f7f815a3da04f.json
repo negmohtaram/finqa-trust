@@ -1,0 +1,27 @@
+{
+  "request": {
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      [
+        "system",
+        "You answer questions about company financial reports. Use only the given text and table. Reply with one JSON object and nothing else, with these keys:\n  \"values\": the numbers you took from the report, as a list of {\"name\": short label, \"value\": number exactly as written in the report}. Empty list if none.\n  \"formula\": the calculation using those numbers, in plain arithmetic with + - * / and parentheses, e.g. \"(5829 - 5735) / 5735 * 100\". Empty string if no calculation.\n  \"answer\": the final answer, a number (no unit words) or a short phrase; a list of phrases if the question asks for several items."
+      ],
+      [
+        "user",
+        "Excerpt 1:\noperating profit for the americas as a percentage of net sales increased to 48.3 percent in 2002 from 47.4 percent in year ended december 31 , 2003 2001 , reflecting improved gross profit margins due to higher compared to year ended december 31 , 2002 average selling prices and increased sales of higher margin operating profit for the americas as a percentage of net products , and lower selling expenses as a percent of sales sales increased due to improved gross margins driven by due to lower costs associated with the u.s .\ndistributor higher average selling prices and increased sales of higher network .\nthe americas continued to invest in strategic margin products , leveraged operating expenses and the initiatives such as mis technologies , field sales personnel , favorable impact of the change in accounting principle for medical education programs and new product launches .\ninstruments .\n\nExcerpt 2:\nz i m m e r h o l d i n g s , i n c .\na n d s u b s i d i a r i e s 2 0 0 3 f o r m 1 0 - k the following table sets forth the operating profit margin by cost of products sold .\nincluded in cost of product sold are segment for the years ended december 31 , 2003 , losses on foreign exchange hedge contracts , which increased 2002 and 2001 : in 2003 relative to 2002 .\nin the fourth quarter , the company reported operating profit as a percent of net sales of percent of net sales 47.1 percent for asia pacific. .\n\nExcerpt 3:\nin the fourth quarter , the company reported in the utilization of instruments ( more frequent use of operating profit as a percent of net sales of 50.4 percent for instruments resulted in fewer placements and less expense ) .\nthe americas .\noperating profit for europe as a percentage of net sales liquidity and capital resources increased due to improved gross profit margins driven by cash flows provided by operations were $ 494.8 million higher zimmer standalone average selling prices and in 2003 , compared with $ 220.2 million in 2002 .\nthe principal favorable product and country mix , leveraged operating source of cash was net earnings before cumulative effect of expenses and the favorable impact of the change in change in accounting principle of $ 291.2 million .\nnon-cash accounting principle for instruments .\n\nExcerpt 4:\n | year ended december 31 2015 ( in millions )\nnet sales | $ 7517.8\nnet earnings | $ 330.2\n\nExcerpt 5:\nthe change in accounting principle for operating profit for asia pacific as a percentage of net instruments increased operating profit by 1.7 percentage sales increased to 46.1 percent in 2002 from 45.4 percent points .\nwith respect to sales growth , increased zimmer in 2001 .\nthis increase reflects lower selling , general and standalone average selling prices of 4 percent in 2003 and administrative expenses as a percent of sales in japan as favorable effects of volume and mix , 15 percent increase in a result of a sales force and dealer reorganization , partially 2003 , represent the most significant factors in improved offset by lower gross profit margins as a result of lower yen operating profit in the americas .\nas reconstructive implant hedge gains compared to 2001 .\n\nQuestion: what is the company's net earnings as a percent of net sales in 2015 ? ( net profit margin )"
+      ]
+    ],
+    "temperature": 1.0,
+    "max_tokens": 2048,
+    "reasoning_effort": "low",
+    "json_mode": true,
+    "run": 1
+  },
+  "response": {
+    "text": "{\"values\":[{\"name\":\"net earnings\",\"value\":330.2},{\"name\":\"net sales\",\"value\":7517.8}],\"formula\":\"(330.2/7517.8)*100\",\"answer\":4.394}",
+    "input_tokens": 957,
+    "output_tokens": 147,
+    "latency_s": 1.292,
+    "error": ""
+  }
+}
