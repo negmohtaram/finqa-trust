@@ -26,7 +26,7 @@ def saved_rankings() -> dict[tuple[str, str, str], list[int]]:
 def main() -> None:
     from sentence_transformers import CrossEncoder
 
-    model = CrossEncoder(CROSS_ENCODER, local_files_only=True, device="cpu")
+    model = CrossEncoder(CROSS_ENCODER, device="cpu")
     model.model.double()  # this model returns NaN in 32-bit floats on this torch build
     score_pairs = lambda pairs: model.predict(pairs, batch_size=64, show_progress_bar=False)  # noqa: E731
 

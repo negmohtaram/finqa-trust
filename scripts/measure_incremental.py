@@ -139,7 +139,7 @@ def markdown(rows: list[dict]) -> str:
 
 
 def main() -> None:
-    encode = CountingEncoder(SentenceTransformer(MODEL, local_files_only=True))
+    encode = CountingEncoder(SentenceTransformer(MODEL))
     pages = list({item["filename"]: item for item in load_pages("dev")}.values())  # many questions share a page
     rows = []
     for strategy in STRATEGIES:

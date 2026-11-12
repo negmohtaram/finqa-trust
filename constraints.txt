@@ -1,0 +1,15 @@
+# Exact versions the published results were produced with (Python 3.14, macOS arm64).
+# Used by scripts/reproduce.sh: pip install -c constraints.txt
+certifi==2026.7.22
+matplotlib==3.11.2
+numpy==2.5.4
+psycopg==3.3.8
+psycopg-binary==3.3.8
+pydantic==2.14.0
+pytest==9.1.1
+ruff==0.15.20
+scikit-learn==1.9.1
+scipy==1.18.1
+sentence-transformers==6.2.0
+torch==2.11.0
+transformers==5.22.1

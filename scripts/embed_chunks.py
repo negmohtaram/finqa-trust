@@ -15,7 +15,7 @@ OUT = Path(__file__).resolve().parents[1] / "results" / "embeddings" / MODEL.spl
 
 
 def main() -> None:
-    model = SentenceTransformer(MODEL, local_files_only=True)
+    model = SentenceTransformer(MODEL)
     limit = model.max_seq_length
     pages = {item["filename"]: item for item in load_pages("dev")}
     cache_path = OUT / "cache.npz"
