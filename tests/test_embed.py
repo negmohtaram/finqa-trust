@@ -1,5 +1,6 @@
 import numpy as np
 
+from finqa_trust.chunks import chunk_page
 from finqa_trust.embed import embed_texts, load_cache, normalize, save_cache, text_key
 
 
@@ -56,3 +57,53 @@ def test_cache_survives_a_save_and_load(tmp_path):
 
 def test_missing_cache_file_is_an_empty_cache(tmp_path):
     assert load_cache(tmp_path / "none.npz") == {}
+
+
+def report_page(sentences: int = 12, words: int = 25) -> dict:
+    """A page of distinct sentences, long enough for several chunks under every chunking."""
+    lines = [" ".join(f"s{i}w{j}" for j in range(words)) for i in range(sentences)]
+    return {"filename": "X/2010/page_1.pdf", "pre_text": lines, "post_text": [], "table": []}
+
+
+def insert_words(item: dict, line: int, extra: str = "in that year") -> dict:
+    edited = {**item, "pre_text": list(item["pre_text"])}
+    words = edited["pre_text"][line].split()
+    edited["pre_text"][line] = " ".join(words[:5] + extra.split() + words[5:])
+    return edited
+
+
+def reembedded(before: dict, after: dict, strategy: str) -> tuple[list[str], set[str]]:
+    """Texts the encoder saw on the second run, and the chunk texts that really are new."""
+    encoder, cache = FakeEncoder(), {}
+    old = [c.text for c in chunk_page(before, strategy)]
+    embed_texts(old, encoder, cache)
+    encoder.seen.clear()
+    new = [c.text for c in chunk_page(after, strategy)]
+    embed_texts(new, encoder, cache)
+    return encoder.seen, set(new) - set(old)
+
+
+def test_a_one_line_edit_re_embeds_only_the_chunk_that_holds_it():
+    page = report_page(words=24)  # 6 sentences = 144 words, so 3 more still fit in the chunk
+    seen, changed = reembedded(page, insert_words(page, 7), "sentence")
+    assert len(seen) == 1 and set(seen) == changed
+
+
+def test_a_word_inserted_early_shifts_every_later_fixed_window():
+    page = report_page()
+    seen, changed = reembedded(page, insert_words(page, 0), "fixed")
+    assert set(seen) == changed
+    assert len(seen) == len(chunk_page(page, "fixed"))  # no window keeps its old words
+
+
+def test_a_word_inserted_late_leaves_earlier_fixed_windows_alone():
+    page = report_page()
+    seen, _ = reembedded(page, insert_words(page, 11), "fixed")
+    assert 0 < len(seen) < len(chunk_page(page, "fixed"))
+
+
+def test_an_edit_that_overfills_a_sentence_chunk_pushes_its_last_sentence_on():
+    page = report_page(words=25)  # 6 sentences = exactly 150 words, the limit
+    seen, changed = reembedded(page, insert_words(page, 7), "sentence")
+    assert set(seen) == changed
+    assert len(seen) == 2  # the edited chunk, and a new one holding the sentence that no longer fits
