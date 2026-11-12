@@ -1,0 +1,128 @@
+[
+ {
+  "strategy": "fixed",
+  "pages": 279,
+  "chunks": 1679,
+  "cold": {
+   "encoded": 1679,
+   "seconds": 40.76
+  },
+  "warm": {
+   "encoded": 0,
+   "seconds": 0.12
+  },
+  "edit_random": {
+   "mean": 3.76,
+   "max": 9,
+   "share_of_page": 0.644,
+   "more_than_one": 44
+  },
+  "edit_top": {
+   "mean": 5.86,
+   "max": 13,
+   "share_of_page": 1.003,
+   "more_than_one": 48
+  },
+  "edit_bottom": {
+   "mean": 1.28,
+   "max": 4,
+   "share_of_page": 0.219,
+   "more_than_one": 12
+  },
+  "reindex_after_edits": {
+   "encoded": 175,
+   "seconds": 3.84,
+   "stale_keys": 174
+  },
+  "add_pages": {
+   "pages": 20,
+   "encoded": 128,
+   "seconds": 2.64,
+   "their_chunks": 128
+  }
+ },
+ {
+  "strategy": "sentence",
+  "pages": 279,
+  "chunks": 1536,
+  "cold": {
+   "encoded": 1536,
+   "seconds": 30.62
+  },
+  "warm": {
+   "encoded": 0,
+   "seconds": 0.04
+  },
+  "edit_random": {
+   "mean": 1.2,
+   "max": 4,
+   "share_of_page": 0.221,
+   "more_than_one": 7
+  },
+  "edit_top": {
+   "mean": 1.28,
+   "max": 6,
+   "share_of_page": 0.236,
+   "more_than_one": 5
+  },
+  "edit_bottom": {
+   "mean": 1.02,
+   "max": 2,
+   "share_of_page": 0.188,
+   "more_than_one": 1
+  },
+  "reindex_after_edits": {
+   "encoded": 64,
+   "seconds": 1.32,
+   "stale_keys": 62
+  },
+  "add_pages": {
+   "pages": 20,
+   "encoded": 121,
+   "seconds": 2.16,
+   "their_chunks": 123
+  }
+ },
+ {
+  "strategy": "table_whole",
+  "pages": 279,
+  "chunks": 1757,
+  "cold": {
+   "encoded": 1757,
+   "seconds": 29.33
+  },
+  "warm": {
+   "encoded": 0,
+   "seconds": 0.04
+  },
+  "edit_random": {
+   "mean": 1.34,
+   "max": 5,
+   "share_of_page": 0.218,
+   "more_than_one": 8
+  },
+  "edit_top": {
+   "mean": 1.16,
+   "max": 5,
+   "share_of_page": 0.189,
+   "more_than_one": 4
+  },
+  "edit_bottom": {
+   "mean": 1.02,
+   "max": 2,
+   "share_of_page": 0.166,
+   "more_than_one": 1
+  },
+  "reindex_after_edits": {
+   "encoded": 63,
+   "seconds": 0.81,
+   "stale_keys": 60
+  },
+  "add_pages": {
+   "pages": 20,
+   "encoded": 137,
+   "seconds": 2.35,
+   "their_chunks": 142
+  }
+ }
+]
