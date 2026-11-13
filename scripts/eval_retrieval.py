@@ -33,7 +33,7 @@ def question_vectors(model_name: str, questions: list[str]) -> np.ndarray:
     def encode(texts: list[str]) -> np.ndarray:
         from sentence_transformers import SentenceTransformer
 
-        model = SentenceTransformer(model_name, local_files_only=True)
+        model = SentenceTransformer(model_name)
         return model.encode(texts, batch_size=64, convert_to_numpy=True, show_progress_bar=False)
 
     vectors = embed_texts(questions, encode, cache)
