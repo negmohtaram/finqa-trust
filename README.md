@@ -19,6 +19,13 @@ python scripts/download_data.py
 pytest -q
 ```
 
+To rebuild every committed result from the recorded model calls, with no API key:
+```bash
+scripts/reproduce.sh          # about 15 minutes on a laptop CPU
+scripts/reproduce.sh --all    # adds the cross-encoder reranker, about 90 minutes more
+```
+It installs the exact versions in `constraints.txt` (tested on Python 3.14) and ends by listing any result file that differs from the committed one. Only the seconds columns change between runs. The pgvector index tuning needs a running Postgres and is not part of it.
+
 ## Baseline: where the model fails
 Model: `openai/gpt-oss-120b` (reasoning effort low, temperature 1.0), asked for the numbers it used, its formula and its answer as JSON. 100 arithmetic questions (55 FinQA, 45 TAT-QA) from a fixed stratified dev sample, each asked twice. Every wrong answer is labelled by the first step that broke, checked against the gold calculation:
 
